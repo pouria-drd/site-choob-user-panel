@@ -1,0 +1,135 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* ---------------------------------------------------------------------- */
+/* Scroll area */
+
+::-webkit-scrollbar {
+    width: 3.25px;
+    height: 3.25px;
+    cursor: pointer;
+    background: #d9d9d9;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    border-radius: 6px;
+    background: #959ea6;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    border-radius: 6px;
+    background: #959ea6;
+}
+
+* {
+    scroll-behavior: smooth;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Fonts area */
+
+@font-face {
+    font-family: 'Bahij Nazanin';
+    src: url('../fonts/BahijNazanin/Bahij-Nazanin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'iransans';
+    src: url('../fonts/Iransans/iransans.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANYekanWeb';
+    src: url('../fonts/IranYekan/IRANYekanWebRegular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Peyda';
+    src: url('../fonts/Peyda/01-Standard/TTF/Peyda-Regular.ttf') format('truetype'), url('../fonts/Peyda/woff/PeydaWeb-Regular.woff') format('woff'), url('../fonts/Peyda/woff2/PeydaWeb-Regular.woff2') format('truetype');
+}
+
+@font-face {
+    font-family: 'tanha';
+    src: url('../fonts/Tanha/Tanha-FD-WOL.woff2') format('woff2'), url('../fonts/Tanha/Tanha-FD-WOL.woff') format('woff'), url('../fonts/Tanha/Tanha-FD-WOL.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'IRANYekanX';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/IRANYekanX/IRANYekanX-Regular.woff') format('woff'), url('../fonts/IRANYekanX/IRANYekanX-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IRANYekanX';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/IRANYekanX/IRANYekanX-Bold.woff') format('woff'), url('../fonts/IRANYekanX/IRANYekanX-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'satisfy';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Satisfy/Satisfy-Regular.ttf') format('truetype');
+}
+
+.ss02 {
+    font-feature-settings: 'ss02';
+    -moz-font-feature-settings: 'ss02';
+    -webkit-font-feature-settings: 'ss02';
+}
+
+.r2l {
+    direction: rtl;
+}
+
+.l2r {
+    direction: ltr;
+}
+
+/* ---------------------------------------------------------------------- */
+/* base-input area */
+
+.base-input {
+    @apply font-peyda bg-sc-purple-normal text-sc-blue-normal transition-all outline-none focus:outline focus:outline-sc-blue-normal placeholder:text-gray-400 rounded px-4 py-2 r2l;
+}
+
+/* Checkbox buttons area */
+input[type='checkbox'] {
+    @apply h-4 w-4 rounded border-gray-400 accent-sc-blue-normal text-sc-blue-normal focus:ring-offset-sc-blue-normal cursor-pointer;
+}
+
+/* ---------------------------------------------------------------------- */
+/* base-button area */
+
+.base-button {
+    @apply transition-all disabled:cursor-not-allowed disabled:bg-sc-gray-normal text-white text-sm sm:text-base flex items-center justify-center rounded-lg px-5 py-1 w-auto;
+    &.primary {
+        @apply bg-sc-blue-normal hover:bg-blue-900;
+    }
+
+    &.success {
+        @apply bg-sc-green-normal hover:bg-green-900;
+    }
+
+    &.success-reverse {
+        @apply hover:bg-sc-green-normal hover:text-white  bg-sc-green-100 text-sc-green-normal;
+    }
+
+    &.error {
+        @apply bg-sc-red-900 hover:bg-sc-red-600;
+    }
+    &.info {
+        @apply bg-sc-purple-normal hover:bg-sc-blue-normal text-sc-blue-normal hover:text-white;
+    }
+
+    &.outlined {
+        @apply hover:bg-sc-purple-normal border border-sc-purple-400 text-sc-blue-normal;
+    }
+
+    &.outlined-success {
+        @apply hover:bg-sc-green-normal hover:text-white border border-sc-green-normal bg-sc-green-100 text-sc-green-normal;
+    }
+}

@@ -1,0 +1,33 @@
+import { ReactNode } from "react";
+import ModalBackDrop from "./ModalBackDrop";
+import CloseIcon from "../../icons/CloseIcon";
+
+interface NewCutModalProps {
+  title: string;
+  isOpen: boolean;
+  children: ReactNode;
+  onClose: () => void;
+}
+
+const Modal = ({ title, isOpen, children, onClose }: NewCutModalProps) => {
+  return (
+    <>
+      {isOpen && (
+        <ModalBackDrop onClose={onClose}>
+          <div className="bg-white flex flex-col items-center justify-start rounded-lg relative z-20 w-full sm:w-auto min-w-[340px] max-h-[70vh] mx-auto p-6 gap-4">
+            <div className="flex items-center justify-between w-full">
+              <span className="cursor-pointer text-sc-purple-400 hover:text-gray-400" onClick={onClose}>
+                <CloseIcon size={12} />
+              </span>
+              <h2 className="font-bold r2l">{title}</h2>
+            </div>
+
+            <div className="w-full overflow-y-auto p-2">{children}</div>
+          </div>
+        </ModalBackDrop>
+      )}
+    </>
+  );
+};
+
+export default Modal;
