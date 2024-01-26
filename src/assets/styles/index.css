@@ -133,3 +133,14 @@ input[type='checkbox'] {
         @apply hover:bg-sc-green-normal hover:text-white border border-sc-green-normal bg-sc-green-100 text-sc-green-normal;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* pagination area */
+
+.pagination {
+    @apply font-yekanX text-sc-purple-400  w-8 h-8 rounded-md border-b-2;
+
+    &.active {
+        @apply border-sc-blue-normal border-b-2 text-sc-blue-normal;
+    }
+}
