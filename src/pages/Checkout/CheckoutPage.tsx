@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import CheckoutService from '../../services/CheckoutService';
 import CheckoutProductTable from './Components/CheckoutProductTable';
+import CheckoutCosts from './Components/CheckoutCosts';
+import CheckoutInteralPrices from './Components/CheckoutInteralPrices';
 
 function AdminPage() {
     const checkoutService = new CheckoutService();
@@ -34,12 +36,15 @@ function AdminPage() {
     }, []);
 
     return (
-        <div className="flex flex-col gap-4 font-peyda">
+        <div className="flex flex-col gap-4 font-peyda pb-14">
             <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right">صورت حساب</h4>
             {checkoutData.length > 0 && (
-                <div className="flex flex-col gap-2 bg-white rounded-lg p-4">
-                    <CheckoutProductTable sellers={checkoutData[0].zoneSellers} />
-                </div>
+                <>
+                    <div className="flex flex-col gap-4 bg-white rounded-lg p-4">
+                        <CheckoutProductTable sellers={checkoutData[0].zoneSellers} />
+                        <CheckoutInteralPrices checkoutData={checkoutData[0]} />
+                    </div>
+                </>
             )}
         </div>
     );
