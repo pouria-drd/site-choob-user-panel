@@ -19,3 +19,9 @@ interface DistrctChild {
     id: number;
     name: string;
 }
+
+interface AddressSelectInputProp {
+    name: string;
+    value: number;
+    valueString: string;
+}
