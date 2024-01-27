@@ -10,8 +10,8 @@ function CutMapImagePagination({ images, onImageChangeClicked }: { images: strin
     };
 
     return (
-        <>
-            <div className="flex gap-2 rounded-lg p-4 justify-center items-center ss02">
+        <div className="flex justify-center border-b pb-2 mb-2 w-full ">
+            <div className="flex gap-2 rounded-lg p-4 justify-center items-center ss02 max-w-2xl flex-wrap">
                 {images.map((img, index) => (
                     <button
                         key={index}
@@ -21,7 +21,7 @@ function CutMapImagePagination({ images, onImageChangeClicked }: { images: strin
                     </button>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 
