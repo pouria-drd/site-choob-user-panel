@@ -57,6 +57,6 @@ interface SellerProduct {
     productGuid: string;
     productName: string;
     status: string;
-    DimensionModel: DimensionDetailModel;
+    dimensionModel: DimensionDetailModel;
     warehouses: any[];
 }

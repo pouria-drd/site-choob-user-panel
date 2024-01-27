@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './checkoutTable.css';
+import StatusChip from '../../../components/uiComp/chips/StatusChip';
+import { StatusEnum } from '../../../enums/StatusEnum';
 function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
     const [totalPrice, setTotalPrice] = useState('');
     const formatPrice = (price: number) => {
@@ -64,8 +66,8 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
                     {sellers.map((seller, index) =>
                         seller.products.map((sellerItem, sellerItemIndex) => (
                             <tr key={`${sellerItemIndex}${index}`}>
-                                <td data-label="وضعیت">
-                                    {sellerItem.status && <span className="ss02 font-yekanX">از {sellerItem.warehouses.length} انبار</span>}
+                                <td data-label="توضیحات">
+                                    {sellerItem.status && <span className="ss02 font-yekanX">از {Object.keys(sellerItem.warehouses).length} انبار</span>}
 
                                     {!sellerItem.status && <span className="text-sc-red-800">{sellerItem.description}</span>}
                                 </td>
@@ -81,13 +83,29 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
                                     {formatPrice(sellerItem.fee)}
                                 </td>
 
-                                <td data-label="تعداد">{sellerItem.count}</td>
+                                <td
+                                    data-label="تعداد"
+                                    className="font-yekanX ss02">
+                                    {sellerItem.count}
+                                </td>
 
                                 <td data-label="فروشنده">{seller.sellerName}</td>
 
-                                <td data-label="برش">
-                                    {sellerItem.hasDimensions && sellerItem.DimensionModel && sellerItem.DimensionModel.title && <span className="r2l text-sc-dark-200 rounded-lg border border-sc-dark-200 px-2 py-1">({sellerItem.DimensionModel.title}) برش</span>}
-                                    {(!sellerItem.hasDimensions || !sellerItem.DimensionModel || !sellerItem.DimensionModel.title) && <span>بدون برش</span>}
+                                <td
+                                    data-label="برش"
+                                    className="flex justify-center">
+                                    {sellerItem.hasDimensions && (
+                                        <StatusChip
+                                            type={StatusEnum.Warning}
+                                            text={sellerItem.dimensionModel.title}
+                                        />
+                                    )}
+                                    {!sellerItem.hasDimensions && (
+                                        <StatusChip
+                                            type={StatusEnum.Info}
+                                            text="بدون برش"
+                                        />
+                                    )}
                                 </td>
 
                                 <td

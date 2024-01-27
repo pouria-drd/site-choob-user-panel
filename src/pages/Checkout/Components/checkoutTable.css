@@ -63,10 +63,14 @@ checkoutTable td {
 
     .checkoutTable td {
         border-bottom: 1px solid #ddd;
-        display: block;
+        display: flex;
+        gap: 10px;
 
+        justify-content: space-between;
+        direction: rtl;
         font-size: 0.8em;
-        text-align: left;
+        text-align: justify;
+        white-space: wrap;
     }
 
     .checkoutTable td::after {
