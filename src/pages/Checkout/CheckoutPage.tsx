@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import CheckoutService from '../../services/CheckoutService';
 import CheckoutProductTable from './Components/CheckoutProductTable';
-import CheckoutCosts from './Components/CheckoutCosts';
 import CheckoutInteralPrices from './Components/CheckoutInteralPrices';
+import Spinner from '../../components/uiComp/spinner/Spinner';
+import Button from '../../components/uiComp/buttons/Button';
+import { StatusEnum } from '../../enums/StatusEnum';
 
-function AdminPage() {
+function CheckoutPage() {
     const checkoutService = new CheckoutService();
 
     const [checkoutData, setCheckoutData] = useState<CheckoutModel[]>([]);
+    const [dataIsLoading, setDataIsLoading] = useState(false);
+
+    const [isInShipment, setIsInShipment] = useState(false);
 
     const loadCheckout = async () => {
+        setDataIsLoading(true);
         try {
             const result = await checkoutService.GetCheckout<any>();
 
@@ -24,11 +30,14 @@ function AdminPage() {
             }
 
             setCheckoutData(result.data as CheckoutModel[]);
-            console.log(checkoutData[0]);
         } catch (e) {
             const exp = e as any;
             console.error(exp);
         }
+        //Fake delay
+        setTimeout(() => {
+            setDataIsLoading(false);
+        }, 1000);
     };
 
     useEffect(() => {
@@ -36,18 +45,65 @@ function AdminPage() {
     }, []);
 
     return (
-        <div className="flex flex-col gap-4 font-peyda pb-14">
-            <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right">صورت حساب</h4>
-            {checkoutData.length > 0 && (
-                <>
-                    <div className="flex flex-col gap-4 bg-white rounded-lg p-4">
-                        <CheckoutProductTable sellers={checkoutData[0].zoneSellers} />
-                        <CheckoutInteralPrices checkoutData={checkoutData[0]} />
-                    </div>
-                </>
+        <>
+            {dataIsLoading && (
+                <Spinner
+                    flex={true}
+                    containerCss="h-10"
+                />
             )}
-        </div>
+            {!dataIsLoading && (
+                <div className="flex flex-col gap-4 font-peyda pb-14">
+                    <div className="flex justify-between items-center">
+                        {isInShipment && (
+                            <Button
+                                text="بازگشت"
+                                onClick={() => {
+                                    setIsInShipment(false);
+                                }}
+                            />
+                        )}
+                        {!isInShipment && (
+                            <Button
+                                text="ادامه و پرداخت"
+                                onClick={() => {
+                                    setIsInShipment(true);
+                                }}
+                            />
+                        )}
+                        <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right ">صورت حساب</h4>
+                    </div>
+
+                    {checkoutData.length > 0 && (
+                        <>
+                            {isInShipment && <p>asd</p>}
+                            {!isInShipment && (
+                                <>
+                                    <div className="flex flex-col gap-4 bg-white rounded-lg p-2 sm:p-4">
+                                        <CheckoutProductTable sellers={checkoutData[0].zoneSellers} />
+
+                                        {checkoutData[0].hasInternalShipment && <CheckoutInteralPrices checkoutData={checkoutData[0]} />}
+                                    </div>
+                                </>
+                            )}
+                        </>
+                    )}
+
+                    <div className="flex w-full bg-white rounded-lg p-4">
+                        {!isInShipment && (
+                            <Button
+                                text="پرداخت"
+                                Type={StatusEnum.Success}
+                                onClick={() => {
+                                    setIsInShipment(true);
+                                }}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
-export default AdminPage;
+export default CheckoutPage;

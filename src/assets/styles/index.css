@@ -105,7 +105,7 @@ input[type='checkbox'] {
 /* base-button area */
 
 .base-button {
-    @apply transition-all disabled:cursor-not-allowed disabled:bg-sc-gray-normal text-white text-sm sm:text-base flex items-center justify-center rounded-lg px-5 py-1 w-auto;
+    @apply transition-all disabled:cursor-not-allowed disabled:bg-sc-gray-normal text-white text-sm sm:text-base flex items-center justify-center rounded-lg px-5 py-2;
     &.primary {
         @apply bg-sc-blue-normal hover:bg-blue-900;
     }
