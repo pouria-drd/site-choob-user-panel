@@ -5,6 +5,7 @@ import CheckoutInteralPrices from './Components/CheckoutInteralPrices';
 import Spinner from '../../components/uiComp/spinner/Spinner';
 import Button from '../../components/uiComp/buttons/Button';
 import { StatusEnum } from '../../enums/StatusEnum';
+import CheckoutShipment from './Components/CheckoutShipment';
 
 function CheckoutPage() {
     const checkoutService = new CheckoutService();
@@ -48,35 +49,38 @@ function CheckoutPage() {
         <>
             {dataIsLoading && (
                 <Spinner
+                    size={40}
                     flex={true}
-                    containerCss="h-10"
                 />
             )}
             {!dataIsLoading && (
                 <div className="flex flex-col gap-4 font-peyda pb-14">
-                    <div className="flex justify-between items-center">
-                        {isInShipment && (
-                            <Button
-                                text="بازگشت"
-                                onClick={() => {
-                                    setIsInShipment(false);
-                                }}
-                            />
-                        )}
-                        {!isInShipment && (
-                            <Button
-                                text="ادامه و پرداخت"
-                                onClick={() => {
-                                    setIsInShipment(true);
-                                }}
-                            />
-                        )}
-                        <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right ">صورت حساب</h4>
-                    </div>
-
                     {checkoutData.length > 0 && (
                         <>
-                            {isInShipment && <p>asd</p>}
+                            <div className="flex justify-between items-center">
+                                {isInShipment && (
+                                    <Button
+                                        text="بازگشت"
+                                        Type={StatusEnum.Info}
+                                        onClick={() => {
+                                            setIsInShipment(false);
+                                        }}
+                                    />
+                                )}
+                                {!isInShipment && (
+                                    <Button
+                                        text={checkoutData[0].shopCartHasError ? 'تسویه غیر فعال' : 'ادامه و پرداخت'}
+                                        Type={checkoutData[0].shopCartHasError ? StatusEnum.Error : StatusEnum.Info}
+                                        onClick={() => {
+                                            setIsInShipment(true);
+                                        }}
+                                        isDisabled={checkoutData[0].shopCartHasError}
+                                    />
+                                )}
+                                <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right ">صورت حساب</h4>
+                            </div>
+
+                            {isInShipment && <CheckoutShipment />}
                             {!isInShipment && (
                                 <>
                                     <div className="flex flex-col gap-4 bg-white rounded-lg p-2 sm:p-4">
@@ -86,20 +90,21 @@ function CheckoutPage() {
                                     </div>
                                 </>
                             )}
+
+                            {isInShipment && (
+                                <div className="flex w-full bg-white rounded-lg p-4">
+                                    <Button
+                                        text={checkoutData[0].shopCartHasError ? 'تسویه غیر فعال' : 'پرداخت'}
+                                        Type={checkoutData[0].shopCartHasError ? StatusEnum.Error : StatusEnum.Success}
+                                        onClick={() => {
+                                            setIsInShipment(true);
+                                        }}
+                                        isDisabled={checkoutData[0].shopCartHasError}
+                                    />
+                                </div>
+                            )}
                         </>
                     )}
-
-                    <div className="flex w-full bg-white rounded-lg p-4">
-                        {!isInShipment && (
-                            <Button
-                                text="پرداخت"
-                                Type={StatusEnum.Success}
-                                onClick={() => {
-                                    setIsInShipment(true);
-                                }}
-                            />
-                        )}
-                    </div>
                 </div>
             )}
         </>

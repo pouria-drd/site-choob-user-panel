@@ -69,7 +69,7 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
                                 <td data-label="توضیحات">
                                     {sellerItem.status && <span className="ss02 font-yekanX">از {Object.keys(sellerItem.warehouses).length} انبار</span>}
 
-                                    {!sellerItem.status && <span className="text-sc-red-800">{sellerItem.description}</span>}
+                                    {!sellerItem.status && <span className="text-sc-red-900">{sellerItem.description}</span>}
                                 </td>
                                 <td
                                     data-label="قیمت کل"
