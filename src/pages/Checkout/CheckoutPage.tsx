@@ -4,16 +4,25 @@ import CheckoutProductTable from './Components/CheckoutProductTable';
 import CheckoutInteralPrices from './Components/CheckoutInteralPrices';
 import Spinner from '../../components/uiComp/spinner/Spinner';
 import Button from '../../components/uiComp/buttons/Button';
-import { StatusEnum } from '../../enums/StatusEnum';
-import CheckoutShipment from './Components/CheckoutShipment';
+
+import CheckoutShipmentSelect from './Components/CheckoutShipmentSelect';
+import CheckoutTotalCostAndPay from './Components/CheckoutTotalCostAndPay';
+import { ButtonTypes } from '../../enums/ButtonTypes';
 
 function CheckoutPage() {
     const checkoutService = new CheckoutService();
 
     const [checkoutData, setCheckoutData] = useState<CheckoutModel[]>([]);
+    const [calculatedShipment, setCalculatedShipment] = useState<ExternalShipmentModel>();
+
+    //Address full province data
+    const [provinceFullData, setProvinceFullData] = useState<ProvinceModel[]>([]);
+
     const [dataIsLoading, setDataIsLoading] = useState(false);
 
     const [isInShipment, setIsInShipment] = useState(false);
+
+    const [canPay, setCanPay] = useState(false);
 
     const loadCheckout = async () => {
         setDataIsLoading(true);
@@ -30,15 +39,18 @@ function CheckoutPage() {
                 return;
             }
 
+            //get province full data..
+            //TODO: no need if checkout has error..
+
+            var addressData = await checkoutService.GetCityZones<ProvinceModel[]>();
+            setProvinceFullData(addressData);
+
             setCheckoutData(result.data as CheckoutModel[]);
         } catch (e) {
             const exp = e as any;
             console.error(exp);
         }
-        //Fake delay
-        setTimeout(() => {
-            setDataIsLoading(false);
-        }, 1000);
+        setDataIsLoading(false);
     };
 
     useEffect(() => {
@@ -61,7 +73,7 @@ function CheckoutPage() {
                                 {isInShipment && (
                                     <Button
                                         text="بازگشت"
-                                        Type={StatusEnum.Info}
+                                        Type={ButtonTypes.OulinedInfo}
                                         onClick={() => {
                                             setIsInShipment(false);
                                         }}
@@ -70,7 +82,7 @@ function CheckoutPage() {
                                 {!isInShipment && (
                                     <Button
                                         text={checkoutData[0].shopCartHasError ? 'تسویه غیر فعال' : 'ادامه و پرداخت'}
-                                        Type={checkoutData[0].shopCartHasError ? StatusEnum.Error : StatusEnum.Info}
+                                        Type={checkoutData[0].shopCartHasError ? ButtonTypes.Error : ButtonTypes.OulinedInfo}
                                         onClick={() => {
                                             setIsInShipment(true);
                                         }}
@@ -80,7 +92,16 @@ function CheckoutPage() {
                                 <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-sc-blue-normal text-right ">صورت حساب</h4>
                             </div>
 
-                            {isInShipment && <CheckoutShipment />}
+                            {isInShipment && (
+                                <CheckoutShipmentSelect
+                                    ProvinceFullData={provinceFullData}
+                                    onValueChanged={(item) => {
+                                        console.log(item);
+                                        setCalculatedShipment(item);
+                                    }}
+                                    onCanPay={(value) => setCanPay(value)}
+                                />
+                            )}
                             {!isInShipment && (
                                 <>
                                     <div className="flex flex-col gap-4 bg-white rounded-lg p-2 sm:p-4">
@@ -92,16 +113,11 @@ function CheckoutPage() {
                             )}
 
                             {isInShipment && (
-                                <div className="flex w-full bg-white rounded-lg p-4">
-                                    <Button
-                                        text={checkoutData[0].shopCartHasError ? 'تسویه غیر فعال' : 'پرداخت'}
-                                        Type={checkoutData[0].shopCartHasError ? StatusEnum.Error : StatusEnum.Success}
-                                        onClick={() => {
-                                            setIsInShipment(true);
-                                        }}
-                                        isDisabled={checkoutData[0].shopCartHasError}
-                                    />
-                                </div>
+                                <CheckoutTotalCostAndPay
+                                    ProductsData={checkoutData[0]}
+                                    ExternalShipmentData={calculatedShipment}
+                                    canPay={canPay}
+                                />
                             )}
                         </>
                     )}

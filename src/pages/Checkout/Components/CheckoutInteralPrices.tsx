@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AlertIcon from '../../../components/icons/AlertIcon';
 
 function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }) {
@@ -11,7 +11,7 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
 
     return (
         <div className="flex flex-col">
-            <div className="flex border justify-between items-center border-gray-400 px-2 py-3 bg-sc-purple-normal">
+            <div className="flex border justify-between items-center rounded-t-lg border-gray-400 px-2 py-3 bg-sc-purple-normal">
                 <h4 className="text-sm sm:text-base ">جمع کل: {formatPrice(checkoutData.internalShipmentPrice)}</h4>
                 <h4 className="text-sm sm:text-base r2l">باربری داخلی {checkoutData.zoneName}</h4>
             </div>
@@ -38,7 +38,7 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
                 </div>
             </div>
 
-            <div className="flex justify-center sm:justify-start items-center bg-sc-purple-normal text-sc-blue-normal border border-gray-400 border-t-0 gap-1  px-2 py-3 r2l">
+            <div className="flex justify-center sm:justify-start items-center bg-sc-purple-normal text-sc-blue-normal rounded-b-lg border border-gray-400 border-t-0 gap-1  px-2 py-3 r2l">
                 <AlertIcon size={16} />
                 <p className="text-xs sm:text-base font-bold sm:font-normal">فاکتور برش بعد از اتمام فرآیند آن، پرداخت خواهد شد.</p>
             </div>

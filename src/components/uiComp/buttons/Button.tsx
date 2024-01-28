@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Spinner from '../spinner/Spinner';
-import { StatusEnum } from '../../../enums/StatusEnum';
+import { ButtonTypes } from '../../../enums/ButtonTypes';
 
 interface ButtonProps {
-    text: string;
+    text: string | ReactNode;
     onClick: () => void;
     isBusy?: boolean;
     isDisabled?: boolean;
     fullWidth?: boolean;
-    Type?: StatusEnum;
+    Type?: ButtonTypes;
+    isOutlined?: boolean;
 }
 
 const Button = ({ text, onClick, isBusy = false, isDisabled = false, fullWidth = false, Type = undefined }: ButtonProps) => {
@@ -20,17 +21,23 @@ const Button = ({ text, onClick, isBusy = false, isDisabled = false, fullWidth =
 
     useEffect(() => {
         switch (Type) {
-            case StatusEnum.Info:
+            case ButtonTypes.Info:
                 setCssClass('info');
                 break;
-            case StatusEnum.Success:
+            case ButtonTypes.Success:
                 setCssClass('success');
                 break;
-            case StatusEnum.Error:
+            case ButtonTypes.Error:
                 setCssClass('error');
                 break;
-            case StatusEnum.Warning:
+            case ButtonTypes.Warning:
                 setCssClass('warning');
+                break;
+            case ButtonTypes.OulinedSuccess:
+                setCssClass('outlined-success');
+                break;
+            case ButtonTypes.OulinedInfo:
+                setCssClass('outlined-info');
                 break;
             default:
                 setCssClass('primary');

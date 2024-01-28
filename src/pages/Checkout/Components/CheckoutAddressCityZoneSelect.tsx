@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
-import CheckoutService from '../../../services/CheckoutService';
+
 import Modal from '../../../components/uiComp/modals/Modal';
 import AddressSelectContent from '../../../contents/checkout/AddressSelectContent';
 
-function CheckoutShipment() {
-    const checkoutService = new CheckoutService();
-
+function CheckoutAddressCityZoneSelect({ ProvinceFullData, onValueChanged, user }: { ProvinceFullData: ProvinceModel[]; onValueChanged: (selectedCityZone: AddressSelectInputProp | undefined) => void; user: any }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-
-    const [provinceFullData, setProvinceFullData] = useState<ProvinceModel[]>([]);
 
     const [addressSelectTitle, setAddressSelectTitle] = useState('');
     const [addressSelectData, setAddressSelectData] = useState<AddressSelectInputProp[]>([]);
@@ -33,38 +29,60 @@ function CheckoutShipment() {
     const [cityZoneDistricts, setCityZoneDistricts] = useState<AddressSelectInputProp[]>([]);
     const [selectedCityZoneDistrict, setSelectedCityZoneDistrict] = useState<AddressSelectInputProp>({ name: '', value: 0, valueString: 'none' });
 
-    const [totalPrice, setTotalPrice] = useState('');
-    const formatPrice = (price: number) => {
-        const formater = new Intl.NumberFormat('fa-Ir');
-        return `${formater.format(price)} تومان`;
-    };
-
-    const loadCityZones = async () => {
-        try {
-            var result = await checkoutService.GetCityZones<ProvinceModel[]>();
-            setProvinceFullData(result);
-
-            setProvinces(result.map((p) => ({ name: p.name, value: p.id, valueString: p.id.toString() })));
-        } catch (e) {
-            console.log(e);
-        }
+    const LoadData = async () => {
+        setProvinces(ProvinceFullData.map((p) => ({ name: p.name, value: p.id, valueString: p.id.toString() })));
     };
 
     useEffect(() => {
-        loadCityZones();
+        LoadData();
     }, []);
+
+    useEffect(() => {
+        if (!user) return;
+        //check for the user address.
+        //get last address from user saved session item
+        const userAddress = user.addressList[user.addressList.length - 1];
+
+        //dont continue if user has no city (??)
+        if (!userAddress.city) return;
+
+        const userCityId = userAddress.city.id;
+        const userProvinceId = userAddress.city.provinceId;
+
+        //find related province -> city -> cityZone -> district..
+        const userRelatedProvince = ProvinceFullData.find((p) => p.id == userProvinceId);
+        if (!userRelatedProvince) return;
+
+        const userRelatedCity = userRelatedProvince?.cities.find((c) => c.id == userCityId);
+        if (!userRelatedCity) return;
+
+        const userRelatedCityZone = userRelatedCity?.districts.filter((z) => z.childs.filter((child) => child.id == userAddress.cityZoneId));
+        if (!userRelatedCityZone) return;
+
+        const userRelatedCityZoneDistrict = userRelatedCityZone[0].childs.find((d) => d.id == userAddress.cityZoneId);
+        if (!userRelatedCityZoneDistrict) return;
+
+        //set related items to their props..
+        setSelectedProvince({ name: userRelatedProvince.name, value: userRelatedProvince.id, valueString: userRelatedProvince.id.toString() });
+
+        setSelectedCity({ name: userRelatedCity.name, value: userRelatedCity.id, valueString: userRelatedCity.id.toString() });
+
+        setSelectedCityZone({ name: userRelatedCityZone[0].number.toString(), value: userRelatedCityZone[0].number, valueString: userRelatedCityZone[0].number.toString() });
+
+        setSelectedCityZoneDistrict({ name: userRelatedCityZoneDistrict.name, value: userRelatedCityZoneDistrict.id, valueString: userRelatedCityZoneDistrict.id.toString() });
+    }, [provinces]);
 
     const ShowProvinceSelectModal = () => {
         setAddressSelectTitle('استان');
         setAddressSelectType('province');
         setAddressSelectedValue(selectedProvince.value);
         setAddressSelectData(provinces);
-        setIsModalOpen(true);
+        openModal();
     };
 
     useEffect(() => {
         if (selectedProvince.value) {
-            const relatedCities: CityModel[] = provinceFullData.filter((p) => p.id === selectedProvince.value).flatMap((p) => p.cities);
+            const relatedCities: CityModel[] = ProvinceFullData.filter((p) => p.id === selectedProvince.value).flatMap((p) => p.cities);
 
             setCities(
                 relatedCities.map((c) => ({
@@ -81,13 +99,12 @@ function CheckoutShipment() {
         setAddressSelectType('city');
         setAddressSelectData(cities);
         setAddressSelectedValue(selectedCity.value);
-        setIsModalOpen(true);
+        openModal();
     };
 
     useEffect(() => {
         if (selectedCity.value) {
-            const relatedCityZones: DistrictsModel[] = provinceFullData
-                .filter((p) => p.id === selectedProvince.value)
+            const relatedCityZones: DistrictsModel[] = ProvinceFullData.filter((p) => p.id === selectedProvince.value)
                 .flatMap((p) => p.cities)
                 .filter((c) => c.id === selectedCity.value)
                 .flatMap((c) => c.districts);
@@ -109,13 +126,12 @@ function CheckoutShipment() {
         setAddressSelectType('cityZone');
         setAddressSelectData(cityZones);
         setAddressSelectedValue(selectedCityZone.value);
-        setIsModalOpen(true);
+        openModal();
     };
 
     useEffect(() => {
         if (selectedCity.value) {
-            const relatedCityZoneDistricts: DistrctChild[] = provinceFullData
-                .filter((p) => p.id === selectedProvince.value)
+            const relatedCityZoneDistricts: DistrctChild[] = ProvinceFullData.filter((p) => p.id === selectedProvince.value)
                 .flatMap((p) => p.cities)
                 .filter((c) => c.id === selectedCity.value)
                 .flatMap((c) => c.districts)
@@ -139,13 +155,13 @@ function CheckoutShipment() {
         setAddressSelectType('cityZoneDistrict');
         setAddressSelectData(cityZoneDistricts);
         setAddressSelectedValue(selectedCityZoneDistrict.value);
-        setIsModalOpen(true);
+        openModal();
     };
 
     const AddressSelectionDone = (selectionType: string, item: AddressSelectInputProp) => {
         setAddressSelectedValue(item.value);
         HandleSelectionTypes(selectionType, item);
-        setIsModalOpen(false);
+        closeModal();
     };
 
     const HandleSelectionTypes = (selectionType: string, item: AddressSelectInputProp) => {
@@ -156,6 +172,7 @@ function CheckoutShipment() {
                     setSelectedCity(emptySelectProp());
                     setSelectedCityZone(emptySelectProp());
                     setSelectedCityZoneDistrict(emptySelectProp());
+                    selectedCityZoneChanged();
                 }
                 setSelectedProvince(item);
                 break;
@@ -164,6 +181,7 @@ function CheckoutShipment() {
                 if (selectedCity.value !== item.value) {
                     setSelectedCityZone(emptySelectProp());
                     setSelectedCityZoneDistrict(emptySelectProp());
+                    selectedCityZoneChanged();
                 }
                 setSelectedCity(item);
                 break;
@@ -171,11 +189,13 @@ function CheckoutShipment() {
                 //check if selected data new and if so, set selected city zone to empty
                 if (selectedCityZone.value !== item.value) {
                     setSelectedCityZoneDistrict(emptySelectProp());
+                    selectedCityZoneChanged();
                 }
                 setSelectedCityZone(item);
                 break;
             case 'cityZoneDistrict':
                 setSelectedCityZoneDistrict(item);
+                selectedCityZoneChanged(item);
                 break;
         }
     };
@@ -185,30 +205,45 @@ function CheckoutShipment() {
         return emptyProp;
     };
 
+    const selectedCityZoneChanged = (item?: AddressSelectInputProp) => {
+        onValueChanged(item);
+    };
+
     return (
         <>
-            {provinceFullData && (
+            {ProvinceFullData && (
                 <>
                     <div className="flex flex-col sm:flex-row gap-4 justify-start items-center r2l">
                         <button
-                            className="border rounded-lg bg-white px-4 py-2"
+                            className="border rounded-lg bg-white hover:bg-sc-purple-normal
+                            disabled:cursor-not-allowed disabled:text-gray-500
+                            px-4 py-2 w-full"
                             onClick={ShowProvinceSelectModal}>
                             استان: {selectedProvince.value == 0 ? 'انتخاب کنید' : selectedProvince.name}
                         </button>
                         <button
-                            className="border rounded-lg bg-white px-4 py-2"
-                            onClick={ShowCitySelectModal}>
+                            className="border rounded-lg bg-white hover:bg-sc-purple-normal
+                            disabled:cursor-not-allowed disabled:text-gray-500
+                            px-4 py-2 w-full"
+                            onClick={ShowCitySelectModal}
+                            disabled={selectedProvince.value == 0}>
                             شهر: {selectedCity.value == 0 ? 'انتخاب کنید' : selectedCity.name}
                         </button>
                         <button
-                            className="border rounded-lg bg-white px-4 py-2"
-                            onClick={ShowCityZoneSelectModal}>
-                            منطقه: {selectedCityZone.valueString == 'none' ? 'انتخاب کنید' : selectedCityZone.name}
+                            className="border rounded-lg bg-white hover:bg-sc-purple-normal
+                            disabled:cursor-not-allowed disabled:text-gray-500
+                            px-4 py-2 w-full"
+                            onClick={ShowCityZoneSelectModal}
+                            disabled={selectedCity.value == 0}>
+                            منطقه: {selectedCityZone.valueString == 'none' ? 'انتخاب کنید' : selectedCityZone.name === '0' ? 'سایر' : selectedCityZone.name}
                         </button>
                         <button
-                            className="border rounded-lg bg-white px-4 py-2"
-                            onClick={ShowCityZoneDistrictSelectModal}>
-                            محله: {selectedCityZoneDistrict.value == 0 ? 'انتخاب کنید' : selectedCityZoneDistrict.name}
+                            className="border rounded-lg bg-white hover:bg-sc-purple-normal
+                            disabled:cursor-not-allowed disabled:text-gray-500
+                            px-4 py-2 w-full"
+                            onClick={ShowCityZoneDistrictSelectModal}
+                            disabled={selectedCityZone.valueString == 'none'}>
+                            محله: {selectedCityZoneDistrict.value == 0 ? 'انتخاب کنید' : selectedCityZoneDistrict.name === '0' ? 'سایر' : selectedCityZoneDistrict.name}
                         </button>
                     </div>
 
@@ -229,4 +264,4 @@ function CheckoutShipment() {
     );
 }
 
-export default CheckoutShipment;
+export default CheckoutAddressCityZoneSelect;

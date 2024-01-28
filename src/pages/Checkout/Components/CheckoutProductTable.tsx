@@ -20,7 +20,7 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
 
     return (
         <div className="flex flex-col gap-1">
-            <table className="checkoutTable font-peyda ">
+            <table className="checkoutTable font-peyda">
                 <thead>
                     <tr>
                         <th
@@ -118,7 +118,7 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
                     )}
                 </tbody>
             </table>
-            <div className="flex border border-gray-400 p-2 bg-sc-purple-normal">
+            <div className="flex rounded-b-lg border border-gray-400 p-2 bg-sc-purple-normal">
                 <h4 className="sm:text-lg">جمع کل: {totalPrice}</h4>
             </div>
         </div>

@@ -1,8 +1,8 @@
 /*Responsive table*/
 
 .checkoutTable {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
+    border-radius: 10px; /* Adjust the value to your preference */
+
     margin: 0;
     padding: 0;
     width: 100%;
@@ -16,12 +16,13 @@
 .checkoutTable tr {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
+
     text-align: center;
     white-space: nowrap;
     padding: 0.35em;
 }
 .checkoutTable thead tr {
-    @apply bg-sc-purple-normal border border-gray-400;
+    @apply bg-sc-purple-normal border border-gray-400 rounded-t-lg;
 }
 .checkoutTable th,
 checkoutTable td {
@@ -56,8 +57,8 @@ checkoutTable td {
 
     .checkoutTable tr {
         border-bottom: 3px solid #ddd;
-        display: block;
-
+        display: flex;
+        flex-direction: column-reverse;
         margin-bottom: 0.625em;
     }
 
@@ -84,7 +85,7 @@ checkoutTable td {
         text-transform: uppercase;
     }
 
-    .checkoutTable td:last-child {
+    .checkoutTable td:first-child {
         border-bottom: 0;
     }
 }

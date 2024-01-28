@@ -101,6 +101,11 @@ input[type='checkbox'] {
     @apply h-4 w-4 rounded border-gray-400 accent-sc-blue-normal text-sc-blue-normal focus:ring-offset-sc-blue-normal cursor-pointer;
 }
 
+/* Checkbox buttons area */
+input[type='radio'] {
+    @apply h-4 w-4 rounded border-gray-400 accent-sc-blue-normal text-sc-blue-normal focus:ring-offset-sc-blue-normal cursor-pointer;
+}
+
 /* ---------------------------------------------------------------------- */
 /* base-button area */
 
@@ -111,26 +116,30 @@ input[type='checkbox'] {
     }
 
     &.success {
-        @apply bg-sc-green-normal hover:bg-green-900;
+        @apply bg-sc-green-normal hover:bg-green-900 disabled:bg-sc-gray-normal;
     }
 
     &.success-reverse {
-        @apply hover:bg-sc-green-normal hover:text-white  bg-sc-green-100 text-sc-green-normal;
+        @apply hover:bg-sc-green-normal hover:text-white  bg-sc-green-100 text-sc-green-normal disabled:bg-sc-gray-normal;
     }
 
     &.error {
         @apply bg-sc-red-900 hover:bg-sc-red-600;
     }
     &.info {
-        @apply bg-sc-purple-normal hover:bg-sc-blue-normal text-sc-blue-normal hover:text-white;
+        @apply bg-sc-purple-normal hover:bg-sc-blue-normal text-sc-blue-normal hover:text-white disabled:bg-sc-gray-normal;
     }
 
     &.outlined {
-        @apply hover:bg-sc-purple-normal border border-sc-purple-400 text-sc-blue-normal;
+        @apply hover:bg-sc-purple-normal border border-sc-purple-400 text-sc-blue-normal disabled:bg-sc-gray-normal;
     }
 
     &.outlined-success {
-        @apply hover:bg-sc-green-normal hover:text-white border border-sc-green-normal bg-sc-green-100 text-sc-green-normal;
+        @apply hover:bg-sc-green-normal hover:text-white border border-sc-green-normal bg-sc-green-100 text-sc-green-normal disabled:bg-sc-gray-normal;
+    }
+
+    &.outlined-info {
+        @apply bg-sc-purple-normal border border-sc-blue-normal hover:bg-sc-blue-normal text-sc-blue-normal hover:text-white disabled:bg-sc-gray-normal;
     }
 }
 

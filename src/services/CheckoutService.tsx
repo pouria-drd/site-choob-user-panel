@@ -10,6 +10,11 @@ class CheckoutService extends AxiosBase {
         const url = 'Address/fullProvinces';
         return this.request<T>({ method: 'get', url });
     }
+
+    public async CalculateShipment<T>(data: addShipmentDTO) {
+        const url = 'Customer/AddShipment';
+        return this.request<T>({ method: 'post', url, data: data });
+    }
 }
 
 export default CheckoutService;

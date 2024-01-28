@@ -60,3 +60,23 @@ interface SellerProduct {
     dimensionModel: DimensionDetailModel;
     warehouses: any[];
 }
+
+interface ExternalShipmentModel {
+    cityZoneId: number;
+    externalShipmentCargoLoadPrice: number;
+    externalShipmentCargoReloadPrice: number;
+    externalShipmentPrice: number;
+    externalShipmentPriceId: number;
+    externalTotalPrice: number;
+    externalVehicleId: number;
+    externalVehicleName: string;
+    hasCut: boolean;
+    hasInternalShipment: boolean;
+    zoneId: number;
+    zoneName: string;
+}
+
+interface addShipmentDTO {
+    cityZoneId: number;
+    details: string;
+}
