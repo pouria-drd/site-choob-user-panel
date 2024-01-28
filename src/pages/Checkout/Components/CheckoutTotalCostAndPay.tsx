@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import Button from '../../../components/uiComp/buttons/Button';
 import { ButtonTypes } from '../../../enums/ButtonTypes';
 
+import { BASE_URL } from '../../../config';
+
 import mellatLogo from '../../../assets/images/mellat.png';
 interface CheckoutTotalCostAndPayProp {
     ProductsData: CheckoutModel;
     ExternalShipmentData?: ExternalShipmentModel;
+    ShipmentDTO?: addShipmentDTO;
     canPay: boolean;
 }
 
-function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay }: CheckoutTotalCostAndPayProp) {
+function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay, ShipmentDTO }: CheckoutTotalCostAndPayProp) {
     const [totalPrice, setTotalPrice] = useState('');
     const [totalProductsPrice, setTotalProductPrice] = useState('');
     const [ePayTotal, setEpayTotal] = useState('');
@@ -36,19 +39,27 @@ function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay }:
         setTotalPrice(formatPrice(tPrice));
     }, [ProductsData, ExternalShipmentData]);
 
+    const GoToPayment = () => {
+        if (ExternalShipmentData) {
+            window.open(BASE_URL + 'user/Checkout/PayInvoice?cityZoneId=' + ShipmentDTO?.cityZoneId + '&details=' + ShipmentDTO?.details, '_self');
+        } else {
+            window.open(BASE_URL + 'user/Checkout/PayInvoice', '_self');
+        }
+    };
+
     return (
         <>
             <div className={`flex flex-col border  rounded-lg ${canPay ? 'bg-white  border-sc-green-normal' : 'blur-[5px] border-sc-gray-normal cursor-not-allowed'}`}>
                 <h4 className="text-sm sm:text-base font-bold border-b p-4 r2l">جمع کل فاکتور</h4>
 
-                <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap gap-4   p-2 py-6 sm:px-4 r2l">
+                <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap gap-4   p-4 py-6 sm:px-4 r2l">
                     <div className="flex gap-1 items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">تعداد کل:</span>
                         <span className="font-yekanX ss02">{ProductsData.totalItems}</span>
                     </div>
 
                     <div className="flex gap-1 items-center r2l">
-                        <span className="text-sc-gray-normal whitespace-nowrap">هزینه داخلی:</span>
+                        <span className="text-sc-gray-normal whitespace-nowrap">هزینه به احتساب داخلی:</span>
                         <p className="font-yekanX ss02 ">{totalProductsPrice}</p>
                     </div>
 
@@ -87,7 +98,7 @@ function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay }:
                         }
                         fullWidth={true}
                         Type={ProductsData.shopCartHasError ? ButtonTypes.Error : ButtonTypes.OulinedSuccess}
-                        onClick={() => {}}
+                        onClick={GoToPayment}
                         isDisabled={ProductsData.shopCartHasError || !canPay}
                     />
                 </div>

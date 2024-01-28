@@ -35,7 +35,7 @@ checkoutTable td {
     text-align: center;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1220px) {
     .checkoutTable {
         border: 0;
     }

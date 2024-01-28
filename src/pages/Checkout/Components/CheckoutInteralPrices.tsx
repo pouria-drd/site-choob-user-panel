@@ -7,7 +7,9 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
         return `${formater.format(price)} تومان`;
     };
 
-    useEffect(() => {}, [checkoutData]);
+    useEffect(() => {
+        console.log(checkoutData);
+    }, [checkoutData]);
 
     return (
         <div className="flex flex-col">
@@ -18,7 +20,7 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
             <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap  bg-sc-gray gap-4 border border-gray-400 border-t-0  p-2 py-6 sm:px-4 r2l">
                 <div className="flex gap-1 items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">تعداد کل:</span>
-                    <span className="font-yekanX ss02">{checkoutData.totalItems}</span>
+                    <span className="font-yekanX ss02">{`${checkoutData.totalItems} (از ${checkoutData.totalZoneWarehouses} انبار)`}</span>
                 </div>
                 <div className="flex gap-1 items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه بارگیری:</span>
@@ -26,7 +28,11 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
                 </div>
                 <div className="flex gap-1 items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه باربری:</span>
-                    <p className="font-yekanX ss02 ">{`${formatPrice(checkoutData.internalShipmentFee)} (از ${checkoutData.totalZoneWarehouses} انبار)`}</p>
+                    <p className="font-yekanX ss02 ">{`${formatPrice(checkoutData.internalShipmentFee)}`}</p>
+                </div>
+                <div className="flex gap-1 items-center r2l">
+                    <span className="text-sc-gray-normal whitespace-nowrap">هزینه توقف:</span>
+                    <p className="font-yekanX ss02 ">{`${formatPrice(checkoutData.cargoReloadPrice)}`}</p>
                 </div>
                 <div className="flex gap-1 items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">خودرو:</span>

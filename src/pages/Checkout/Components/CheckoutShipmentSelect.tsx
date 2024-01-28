@@ -4,7 +4,7 @@ import CheckoutService from '../../../services/CheckoutService';
 import Spinner from '../../../components/uiComp/spinner/Spinner';
 import CheckoutExternalCosts from './CheckoutExternalCosts';
 
-function CheckoutShipmentSelect({ ProvinceFullData, onValueChanged, onCanPay }: { ProvinceFullData: ProvinceModel[]; onValueChanged: (callbackResut: ExternalShipmentModel) => void; onCanPay: (value: boolean) => void }) {
+function CheckoutShipmentSelect({ ProvinceFullData, onValueChanged, onCanPay }: { ProvinceFullData: ProvinceModel[]; onValueChanged: (callbackResut: ExternalShipmentModel, dto: addShipmentDTO | undefined) => void; onCanPay: (value: boolean) => void }) {
     const checkoutService = new CheckoutService();
     const [user, setUser] = useState<any>();
 
@@ -58,12 +58,11 @@ function CheckoutShipmentSelect({ ProvinceFullData, onValueChanged, onCanPay }: 
     }, [user]);
 
     useEffect(() => {
-        // onValueChanged(calculatedShipment[0]);
-        //calculateShipment();
+        onValueChanged(calculatedShipment[0], dto);
     }, [dto]);
 
     useEffect(() => {
-        onValueChanged(calculatedShipment[0]);
+        onValueChanged(calculatedShipment[0], dto);
     }, [calculatedShipment]);
 
     useEffect(() => {
@@ -145,7 +144,7 @@ function CheckoutShipmentSelect({ ProvinceFullData, onValueChanged, onCanPay }: 
                     <div className="flex flex-col bg-white rounded-lg border p-1">
                         <span className="text-right text-sm sm:text-base text-sc-gray-normal w-full pr-2 py-1 border-b">جزئیات آدرس</span>
                         <input
-                            className="font-peyda bg-sc-white hover:bg-sc-purple-normal text-sc-blue-normal transition-all outline-none  placeholder:text-gray-400 rounded px-4 py-2 r2l w-full mt-2"
+                            className="font-peyda bg-sc-white hover:bg-sc-purple-normal  transition-all outline-none  placeholder:text-gray-400 rounded px-4 py-2 r2l w-full mt-2"
                             placeholder="خیابان، کوچه، پلاک ..."
                             value={addressDetails}
                             maxLength={64}
