@@ -30,14 +30,17 @@ const Button = ({ text, onClick, isBusy = false, isDisabled = false, fullWidth =
             case ButtonTypes.Error:
                 setCssClass('error');
                 break;
-            case ButtonTypes.Warning:
-                setCssClass('warning');
+            case ButtonTypes.Brown:
+                setCssClass('brown');
                 break;
             case ButtonTypes.OulinedSuccess:
                 setCssClass('outlined-success');
                 break;
             case ButtonTypes.OulinedInfo:
                 setCssClass('outlined-info');
+                break;
+            case ButtonTypes.OutlinedBrown:
+                setCssClass('outlined-brown');
                 break;
             default:
                 setCssClass('primary');

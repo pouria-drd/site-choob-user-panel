@@ -141,6 +141,14 @@ input[type='radio'] {
     &.outlined-info {
         @apply bg-sc-purple-normal border border-sc-blue-normal hover:bg-sc-blue-normal text-sc-blue-normal  disabled:bg-sc-gray;
     }
+
+    &.brown {
+        @apply bg-sc-brown-500 hover:bg-sc-brown-800 text-sc-brown-800 hover:text-sc-brown-500 disabled:bg-sc-gray-normal;
+    }
+
+    &.outlined-brown {
+        @apply bg-sc-brown-500 hover:bg-sc-brown-800 text-sc-brown-800 hover:text-sc-brown-500 border border-sc-brown-800 disabled:bg-sc-gray-normal;
+    }
 }
 
 /* ---------------------------------------------------------------------- */

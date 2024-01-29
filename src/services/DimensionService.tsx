@@ -55,6 +55,12 @@ class DimensionService extends AxiosBase {
         const url = 'Calculation/Dimension/calculate?id=' + dimensionID;
         return this.request<T>({ method: 'get', url });
     }
+
+    public async UploadOptiCutFile<T>(dimensionID: string, data: FormData) {
+        const url = `Calculation/Dimension/ImportFromOpticut/${dimensionID}`;
+        this.contentType = 'multipart/form-data';
+        return this.request<T>({ method: 'put', url, data: data });
+    }
 }
 
 export default DimensionService;
