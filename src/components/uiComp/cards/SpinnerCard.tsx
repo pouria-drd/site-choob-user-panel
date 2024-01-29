@@ -1,5 +1,3 @@
-import Spinner from '../spinner/Spinner';
-
 interface SpinnerCardProps {
     text: string;
 }
