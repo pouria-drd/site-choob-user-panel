@@ -24,13 +24,12 @@ function DimensionDetailPage() {
     const openCopyModal = () => setIsModalOpen(true);
 
     const closeCopyModal = () => {
-        setIsModalOpen(false)
+        setIsModalOpen(false);
     };
-
 
     const onSuccessCopy = (copyDimensionId: string) => {
         setIsModalOpen(false);
-        navigate("/dimension/" + copyDimensionId);
+        navigate('/dimension/' + copyDimensionId);
     };
 
     const [canSendProcessRequest, setCanSendProcessRequest] = useState(false);
@@ -71,8 +70,9 @@ function DimensionDetailPage() {
                 }
             }
 
-            result.pvcColor = !result.pvcColor ? 'همرنگ' : result.pvcColor;
-            result.description = !result.description ? 'ندارد' : result.description;
+            if (!result.pvcColor) result.pvcColor = 'همرنگ';
+
+            if (!result.description) result.description = 'ندارد';
 
             setDimensionHeaderData(result);
         } catch (error) {
@@ -127,10 +127,8 @@ function DimensionDetailPage() {
 
     const handleCutMapClick = () => {
         if (!dimensionHeaderData) return;
-        navigate("/dimension/cut-map/" + dimensionHeaderData.id);
+        navigate('/dimension/cut-map/' + dimensionHeaderData.id);
     };
-
-
 
     useEffect(() => {
         handleLoadHeaderData();
@@ -186,14 +184,17 @@ function DimensionDetailPage() {
                 </>
             )}
 
-            {dimensionHeaderData && dimensionHeaderData.sentForCut &&
+            {dimensionHeaderData && dimensionHeaderData.sentForCut && (
                 <Modal
                     title={`کپی از: ${dimensionHeaderData?.title}`}
                     isOpen={isModalOpen}
                     onClose={closeCopyModal}>
-                    <CopyCutDimension dimensionID={dimensionHeaderData?.id} onSuccess={onSuccessCopy} />
+                    <CopyCutDimension
+                        dimensionID={dimensionHeaderData?.id}
+                        onSuccess={onSuccessCopy}
+                    />
                 </Modal>
-            }
+            )}
         </>
     );
 }

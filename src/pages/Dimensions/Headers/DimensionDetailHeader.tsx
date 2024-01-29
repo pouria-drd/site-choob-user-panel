@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusEnum } from '../../../enums/StatusEnum';
 import DimensionStatus from '../Components/DimensionStatus';
 import EditCutContent from '../../../contents/dimensions/EditCutContent';
@@ -24,6 +24,9 @@ interface DimensionHeaderProps {
 const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = false, onCopyClicked, onCalculateClicked, onCutMapClicked }: DimensionHeaderProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [pvcColor, setPvcColor] = useState('');
+    const [description, setDescription] = useState('');
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     const closeOnUpdate = () => {
@@ -42,6 +45,11 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
     const handleCopyClicked = () => {
         if (onCopyClicked) onCopyClicked();
     };
+
+    useEffect(() => {
+        setPvcColor(headerData.pvcColor);
+        setDescription(headerData.description);
+    }, []);
 
     return (
         <>
@@ -90,7 +98,7 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                             !headerData.isConfirmed ? (
                                 <button
                                     onClick={handleCalculateClick}
-                                    className="base-button info gap-1 sm:hidden"
+                                    className="base-button outlined-info gap-1 sm:hidden"
                                     disabled={!canSendProcessRequest}>
                                     محاسبه
                                     <CalculatorIcon size={18} />
@@ -140,17 +148,17 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
 
                         <div className="flex  items-center gap-1 text-sm sm:text-base">
                             <p>رنگ PVC:</p>
-                            <p className="text-gray-400">{headerData?.pvcColor}</p>
+                            <p className="text-gray-400">{pvcColor}</p>
                         </div>
 
                         <div className="flex  items-center gap-1 text-sm sm:text-base">
                             <p>ابعاد ورق:</p>
-                            <p className="text-gray-400">{headerData?.woodSheetDimensions}</p>
+                            <p className="text-gray-400">{headerData.woodSheetDimensions}</p>
                         </div>
 
                         <div className="flex  items-center gap-1 text-sm sm:text-base">
                             <p>نوع برش:</p>
-                            <p className="text-gray-400">{headerData?.isNotRotatable ? 'از راه چوب' : 'آزاد'}</p>
+                            <p className="text-gray-400">{headerData.isNotRotatable ? 'از راه چوب' : 'آزاد'}</p>
                         </div>
 
                         <div className="flex  items-center gap-1 text-sm sm:text-base">
@@ -165,7 +173,7 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
 
                         <div className="flex  items-center gap-1 text-sm sm:text-base">
                             <p>توضیحات:</p>
-                            <p className="text-gray-400">{headerData?.description}</p>
+                            <p className="text-gray-400">{description}</p>
                         </div>
                     </div>
                 </div>
@@ -175,7 +183,7 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                         !headerData.isConfirmed ? (
                             <button
                                 onClick={handleCalculateClick}
-                                className="base-button info gap-1"
+                                className="base-button outlined-info gap-1"
                                 disabled={!canSendProcessRequest}>
                                 محاسبه
                                 <CalculatorIcon size={18} />

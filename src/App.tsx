@@ -1,55 +1,64 @@
-import { useState } from "react";
-import routes from "./routes/Routes";
-import { useAuth } from "./context/AuthContext";
-import { UserRolesEnum } from "./enums/UserRolesEnum";
+import { useState } from 'react';
+import routes from './routes/Routes';
+import { useAuth } from './context/AuthContext';
+import { UserRolesEnum } from './enums/UserRolesEnum';
 
-import Navbar from "./components/nav/Navbar";
-import Sidebar from "./components/nav/Sidebar";
+import Navbar from './components/nav/Navbar';
+import Sidebar from './components/nav/Sidebar';
 
-import "./assets/styles/App.css";
+import './assets/styles/App.css';
 
 function App() {
-  const { userRole, logout } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
+    const { userRole, logout } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
 
-  const hasToken = sessionStorage.getItem("bearer");
+    const [navbarForcedIconToggle, setNavbarForcedIconToggle] = useState(false);
 
-  if (!hasToken) {
-    logout();
-  }
+    const hasToken = sessionStorage.getItem('bearer');
 
-  const isUserAuthenticated = userRole && userRole !== UserRolesEnum.GUEST;
+    if (!hasToken) {
+        logout();
+    }
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
+    const isUserAuthenticated = userRole && userRole !== UserRolesEnum.GUEST;
 
-  const sidebarOpenedClass = "h-auto w-full lg:w-72";
-  const sidebarClosedClass = "hidden h-auto w-72 lg:block";
+    const handleToggle = () => {
+        setNavbarForcedIconToggle(false);
+        setIsOpen(!isOpen);
+    };
 
-  const responsiveSidebarToggledClass = isOpen
-    ? sidebarOpenedClass
-    : sidebarClosedClass;
+    const handleSidbarItemClick = () => {
+        setNavbarForcedIconToggle(true);
+        setIsOpen(!isOpen);
+    };
 
-  return (
-    <main className="flex flex-col justify-between overflow-hidden h-screen ">
-      {/* Conditionally render the Navbar based on user authentication */}
-      {isUserAuthenticated && <Navbar onToggle={handleToggle} />}
+    const sidebarOpenedClass = 'h-auto w-full lg:w-72';
+    const sidebarClosedClass = 'hidden h-auto w-72 lg:block';
 
-      <div className="flex flex-col-reverse lg:flex-row transition-all w-full h-full">
-        <div className="bg-sc-gray overflow-auto w-full h-full p-8">
-          {routes}
-        </div>
+    const responsiveSidebarToggledClass = isOpen ? sidebarOpenedClass : sidebarClosedClass;
 
-        {/* Conditionally render the Sidebar based on user authentication */}
-        {isUserAuthenticated && (
-          <div className={responsiveSidebarToggledClass}>
-            <Sidebar />
-          </div>
-        )}
-      </div>
-    </main>
-  );
+    return (
+        <main className="flex flex-col justify-between overflow-hidden h-screen ">
+            {/* Conditionally render the Navbar based on user authentication */}
+            {isUserAuthenticated && (
+                <Navbar
+                    onForcedIconToggle={navbarForcedIconToggle}
+                    onToggle={handleToggle}
+                />
+            )}
+
+            <div className="flex flex-col-reverse lg:flex-row transition-all w-full h-full">
+                <div className="bg-sc-gray overflow-auto w-full h-full p-8">{routes}</div>
+
+                {/* Conditionally render the Sidebar based on user authentication */}
+                {isUserAuthenticated && (
+                    <div className={responsiveSidebarToggledClass}>
+                        <Sidebar onClick={handleSidbarItemClick} />
+                    </div>
+                )}
+            </div>
+        </main>
+    );
 }
 
 export default App;

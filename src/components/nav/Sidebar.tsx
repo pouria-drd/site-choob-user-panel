@@ -3,7 +3,7 @@ import SidebarItem from './SidebarItem';
 import CalculatorIcon from '../icons/CalculatorIcon';
 import CreditCardIcon from '../icons/CreditCardIcon';
 
-function Sidebar() {
+function Sidebar({ onClick }: { onClick?: () => void }) {
     // options for calculation section
     const calculationlinks = [
         { label: 'لیست ابعاد فعال', to: '/dimensions' },
@@ -18,17 +18,20 @@ function Sidebar() {
             <SidebarItem
                 label="خانه"
                 icon={<HomeIcon />}
+                onClick={onClick}
             />
             <SidebarItem
                 label="محاسبات"
                 icon={<CalculatorIcon />}
                 items={calculationlinks}
+                onClick={onClick}
             />
 
             <SidebarItem
                 label="مالی"
                 icon={<CreditCardIcon />}
                 items={paymentlinks}
+                onClick={onClick}
             />
         </div>
     );

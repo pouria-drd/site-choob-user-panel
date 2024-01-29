@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Burger from '../icons/Burger';
 import CloseIcon from '../icons/CloseIcon';
 import SiteChoobIcon from '../icons/SiteChoobIcon';
 
 interface NavbarProps {
     onToggle: () => void;
+    onForcedIconToggle: boolean;
 }
 
-const Navbar = ({ onToggle }: NavbarProps) => {
+const Navbar = ({ onToggle, onForcedIconToggle }: NavbarProps) => {
     const [isToggled, setIsToggled] = useState(false);
 
     const handleToggle = () => {
         onToggle();
         setIsToggled(!isToggled);
     };
+
+    useEffect(() => {
+        onForcedIconToggle ? setIsToggled(false) : setIsToggled(true);
+    }, [onForcedIconToggle]);
 
     return (
         <div className="flex items-center justify-between lg:justify-end border-b p-4 h-14">
