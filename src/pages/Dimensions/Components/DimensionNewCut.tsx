@@ -165,7 +165,7 @@ const DimensionNewCut = ({ dimensionId, onUpdate }: DimensionNewCutProps) => {
                         onClick={openModal}
                         text={
                             <div className="flex gap-1 items-center text-xs sm:text-sm">
-                                <p>بارگذاری فایل OptiCut</p>
+                                <p className="r2l">بارگذاری فایل OptiCut</p>
 
                                 <UploadIcon size={18} />
                             </div>

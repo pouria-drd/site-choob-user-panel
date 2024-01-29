@@ -35,10 +35,6 @@ function AuthPage() {
 
     const { showToast } = useToast();
 
-    const handleShowToast = () => {
-        showToast('خوش آمدید', StatusEnum.Success);
-    };
-
     const handleLogin = (role: UserRolesEnum) => {
         login(role);
     };
@@ -65,7 +61,7 @@ function AuthPage() {
 
                 handleLogin(UserRolesEnum.USER);
 
-                handleShowToast();
+                showToast('خوش آمدید', StatusEnum.Success);
 
                 // Redirect to the home page
                 navigate('/');

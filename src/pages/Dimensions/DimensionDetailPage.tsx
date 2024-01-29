@@ -121,8 +121,13 @@ function DimensionDetailPage() {
     const handleCalculateClick = () => {
         if (!dimensionHeaderData) return;
         setIsCalculating(true);
+
         dimensionService.CalculateDimensionList(dimensionHeaderData?.id);
-        handleLoadHeaderData();
+
+        setTimeout(() => {
+            console.log('timeoutSet');
+            handleLoadHeaderData();
+        }, 4000);
     };
 
     const handleCutMapClick = () => {
