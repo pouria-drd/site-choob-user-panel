@@ -110,8 +110,8 @@ function CheckoutProductTable({ sellers }: { sellers: ZoneSeller[] }) {
 
                                 <td
                                     data-label="محصول"
-                                    className="r2l max-w-50 sm:max-w-96 md:max-w-full">
-                                    {sellerItem.productName.replace(/-/g, ' ')}
+                                    className="r2l">
+                                    <p className="max-w-50 sm:max-w-96 md:max-w-full">{sellerItem.productName.replace(/-/g, ' ')}</p>
                                 </td>
                             </tr>
                         ))
