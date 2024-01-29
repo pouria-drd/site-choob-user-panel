@@ -1,94 +1,88 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { useAuth } from "../context/AuthContext";
-import { StatusEnum } from "../enums/StatusEnum";
-import { UserRolesEnum } from "../enums/UserRolesEnum";
-import { useToast } from "../components/uiComp/toasts/ToastProvider";
+import { useAuth } from '../context/AuthContext';
+import { StatusEnum } from '../enums/StatusEnum';
+import { UserRolesEnum } from '../enums/UserRolesEnum';
+import { useToast } from '../components/uiComp/toasts/ToastProvider';
 
-import AuthService from "../services/AuthService";
-import SpinnerCard from "../components/uiComp/cards/SpinnerCard";
-import AuthErrorCard from "../components/uiComp/cards/AuthErrorCard";
+import AuthService from '../services/AuthService';
+import SpinnerCard from '../components/uiComp/cards/SpinnerCard';
+import AuthErrorCard from '../components/uiComp/cards/AuthErrorCard';
 
 interface TokenValidationResult {
-  token: string;
-  email: string;
+    token: string;
+    email: string;
 }
 
 interface BearerResult {
-  data: {
-    token: string;
-    user: any;
-  };
+    data: {
+        token: string;
+        user: any;
+    };
 }
 
 function AuthPage() {
-  const navigate = useNavigate();
-  const authService = new AuthService();
+    const navigate = useNavigate();
+    const authService = new AuthService();
 
-  const params = useParams<{ token?: string; optionalParam?: string }>();
-  const { token, optionalParam } = Object.assign({}, params) as UrlParams;
+    const params = useParams<{ token?: string; optionalParam?: string }>();
+    const { token, optionalParam } = Object.assign({}, params) as UrlParams;
 
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  const { login, logout } = useAuth();
+    const { login, logout } = useAuth();
 
-  const { showToast } = useToast();
+    const { showToast } = useToast();
 
-  const handleShowToast = () => {
-    showToast("خوش آمدید", StatusEnum.Success);
-  };
+    const handleShowToast = () => {
+        showToast('خوش آمدید', StatusEnum.Success);
+    };
 
-  const handleLogin = (role: UserRolesEnum) => {
-    login(role);
-  };
+    const handleLogin = (role: UserRolesEnum) => {
+        login(role);
+    };
 
-  const handleLogout = () => {
-    logout();
-  };
+    const handleLogout = () => {
+        logout();
+    };
 
-  async function handleTokenValidation() {
-    try {
-      handleLogout();
+    async function handleTokenValidation() {
+        try {
+            handleLogout();
 
-      if (token) {
-        const result = await authService.ValidateToken<TokenValidationResult>(
-          token
-        );
-        // Store the token and optionalParam in sessionStorage
-        sessionStorage.setItem("token", JSON.stringify(result));
-        const bearerResult = await authService.RequestBearer<BearerResult>();
+            if (token) {
+                const result = await authService.ValidateToken<TokenValidationResult>(token);
+                // Store the token and optionalParam in sessionStorage
+                sessionStorage.setItem('token', JSON.stringify(result));
+                const bearerResult = await authService.RequestBearer<BearerResult>();
 
-        sessionStorage.setItem("bearer", bearerResult.data.token);
-        sessionStorage.setItem("user", JSON.stringify(bearerResult.data.user));
+                sessionStorage.setItem('bearer', bearerResult.data.token);
+                sessionStorage.setItem('user', JSON.stringify(bearerResult.data.user));
 
-        // TODO: redirect to optional param related page
-        if (optionalParam) sessionStorage.setItem("opt", optionalParam);
+                // TODO: redirect to optional param related page
+                if (optionalParam) sessionStorage.setItem('opt', optionalParam);
 
-        handleLogin(UserRolesEnum.USER);
+                handleLogin(UserRolesEnum.USER);
 
-        handleShowToast();
+                handleShowToast();
 
-        // Redirect to the home page
-        navigate("/");
-      }
-    } catch (error) {
-      handleLogout();
-      setLoading(false);
-      // Handle the error, e.g., display an error message
-      console.error("Token validation error:", error);
+                // Redirect to the home page
+                navigate('/');
+            }
+        } catch (error) {
+            handleLogout();
+            setLoading(false);
+            // Handle the error, e.g., display an error message
+            console.error('Token validation error:', error);
+        }
     }
-  }
 
-  useEffect(() => {
-    handleTokenValidation();
-  }, [token, authService, navigate]);
+    useEffect(() => {
+        handleTokenValidation();
+    }, [token, authService, navigate]);
 
-  return (
-    <div className="flex items-center justify-center h-full">
-      {loading ? <SpinnerCard text={"درحال اعتبار سنجی"} /> : <AuthErrorCard />}
-    </div>
-  );
+    return <div className="flex items-center justify-center h-full">{loading ? <SpinnerCard text={'درحال اعتبار سنجی'} /> : <AuthErrorCard />}</div>;
 }
 
 export default AuthPage;
