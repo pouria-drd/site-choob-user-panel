@@ -131,23 +131,25 @@ function DimensionsPage() {
                     size={30}
                 />
             ) : (
-                <div className="flex flex-col gap-6 overflow-hidden w-full h-full pb-16">
-                    <div className="flex flex-shrink-0 justify-between items-center font-peyda w-full">
-                        <Button
-                            text="ابعاد جدید"
-                            onClick={openModal}
-                        />
-                        <h2 className="text-xl md:text-2xl font-bold">لیست ابعاد</h2>
-                    </div>
+                <>
+                    <div className="flex flex-col gap-6 overflow-hidden w-full h-full pb-16">
+                        <div className="flex flex-shrink-0 justify-between items-center font-peyda w-full">
+                            <Button
+                                text="ابعاد جدید"
+                                onClick={openModal}
+                            />
+                            <h2 className="text-xl md:text-2xl font-bold">لیست ابعاد</h2>
+                        </div>
 
-                    <div className="flex flex-col flex-grow overflow-y-auto">
-                        {/* ResponsiveTable should handle its own height */}
-                        <ResponsiveTable
-                            data={tableData}
-                            addIndex={true}
-                        />
+                        <div className="flex flex-col flex-grow overflow-y-auto">
+                            {/* ResponsiveTable should handle its own height */}
+                            <ResponsiveTable
+                                data={tableData}
+                                addIndex={true}
+                            />
+                        </div>
                     </div>
-                </div>
+                </>
             )}
 
             <Modal

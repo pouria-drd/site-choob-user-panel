@@ -2,7 +2,7 @@ import RouteGuard from './RouteGuard';
 import { Route, Routes } from 'react-router-dom';
 import { UserRolesEnum } from '../enums/UserRolesEnum';
 
-import { HomePage, AboutPage, AuthPage, NotFoundPage, AdminPage, CutMapPage, DimensionsPage, UnauthorizedPage, DimensionDetailPage, DimensionsHistoryPage, CheckoutPage } from '../pages';
+import { HomePage, AboutPage, AuthPage, NotFoundPage, AdminPage, CutMapPage, DimensionsPage, UnauthorizedPage, DimensionDetailPage, DimensionsHistoryPage, CheckoutPage, UnitProjectsPage } from '../pages';
 
 const routes = (
     <Routes>
@@ -85,6 +85,16 @@ const routes = (
             element={
                 <RouteGuard
                     element={<CheckoutPage />}
+                    allowedRoles={[UserRolesEnum.ADMIN, UserRolesEnum.USER]}
+                />
+            }
+        />
+        /*unit project */
+        <Route
+            path="/unit-projects"
+            element={
+                <RouteGuard
+                    element={<UnitProjectsPage />}
                     allowedRoles={[UserRolesEnum.ADMIN, UserRolesEnum.USER]}
                 />
             }
