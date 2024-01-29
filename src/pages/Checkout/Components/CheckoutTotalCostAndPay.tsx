@@ -13,6 +13,7 @@ interface CheckoutTotalCostAndPayProp {
 }
 
 function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay, ShipmentDTO }: CheckoutTotalCostAndPayProp) {
+    const [totalProducts, setTotalProducts] = useState(0);
     const [totalPrice, setTotalPrice] = useState('');
     const [totalProductsPrice, setTotalProductPrice] = useState('');
     const [ePayTotal, setEpayTotal] = useState('');
@@ -37,6 +38,15 @@ function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay, S
         if (ExternalShipmentData) tPrice += ExternalShipmentData.externalTotalPrice;
 
         setTotalPrice(formatPrice(tPrice));
+
+        let totalPCount = 0;
+        ProductsData.zoneSellers.map((s) =>
+            s.products.map((p) => {
+                totalPCount += p.count;
+            })
+        );
+
+        setTotalProducts(totalPCount);
     }, [ProductsData, ExternalShipmentData]);
 
     const GoToPayment = () => {
@@ -53,28 +63,28 @@ function CheckoutTotalCostAndPay({ ProductsData, ExternalShipmentData, canPay, S
                 <h4 className="text-sm sm:text-base font-bold border-b p-4 r2l">جمع کل فاکتور</h4>
 
                 <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap gap-4   p-4 py-6 sm:px-4 r2l">
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">تعداد کل:</span>
-                        <span className="font-yekanX ss02">{ProductsData.totalItems}</span>
+                        <span className="font-yekanX ss02">{totalProducts}</span>
                     </div>
 
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">هزینه به احتساب داخلی:</span>
                         <p className="font-yekanX ss02 ">{totalProductsPrice}</p>
                     </div>
 
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">هزینه کل باربری خارجی:</span>
                         {ExternalShipmentData && <span className="font-yekanX ss02">{formatPrice(ExternalShipmentData.externalTotalPrice)}</span>}
                         {!ExternalShipmentData && <span className="font-yekanX ss02">0</span>}
                     </div>
 
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">جمع کل فاکتور:</span>
                         <p className="font-yekanX ss02 ">{totalPrice}</p>
                     </div>
 
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">پرداخت آنلاین:</span>
                         <p className="font-yekanX ss02 ">{ePayTotal}</p>
                     </div>

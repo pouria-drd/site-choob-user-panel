@@ -26,25 +26,25 @@ function CheckoutExternalCosts({ externalShipmentData }: { externalShipmentData:
                 <h4 className="text-sm sm:text-base r2l">باربری خارجی از {externalShipmentData.zoneName}</h4>
             </div>
             <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap  bg-sc-gray gap-4 border border-gray-400 border-t-0  p-2 py-6 sm:px-4 r2l">
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه بارگیری:</span>
                     <span className="font-yekanX ss02">{formatPrice(externalShipmentData.externalShipmentCargoLoadPrice)}</span>
                 </div>
                 {externalShipmentData.externalShipmentCargoReloadPrice > 0 && (
-                    <div className="flex gap-1 items-center r2l">
+                    <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                         <span className="text-sc-gray-normal whitespace-nowrap">هزینه توقف:</span>
                         <span className="font-yekanX ss02">{formatPrice(externalShipmentData.externalShipmentCargoReloadPrice)}</span>
                     </div>
                 )}
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه باربری:</span>
                     <p className="font-yekanX ss02 ">{`${formatPrice(externalShipmentData.externalShipmentPrice)}`}</p>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">خودرو:</span>
                     <span className="font-yekanX ss02">{externalShipmentData.externalVehicleName}</span>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه کل باربری خارجی:</span>
                     <span className="font-yekanX ss02">{formatPrice(externalShipmentData.externalTotalPrice)}</span>
                 </div>

@@ -18,27 +18,27 @@ function CheckoutInteralPrices({ checkoutData }: { checkoutData: CheckoutModel }
                 <h4 className="text-sm sm:text-base r2l">باربری داخلی {checkoutData.zoneName}</h4>
             </div>
             <div className="flex flex-col md:flex-row text-sm sm:text-base  flex-wrap  bg-sc-gray gap-4 border border-gray-400 border-t-0  p-2 py-6 sm:px-4 r2l">
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">تعداد کل:</span>
                     <span className="font-yekanX ss02">{`${checkoutData.totalItems} (از ${checkoutData.totalZoneWarehouses} انبار)`}</span>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه بارگیری:</span>
                     <span className="font-yekanX ss02">{formatPrice(checkoutData.cargoLoadPrice)}</span>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه باربری:</span>
                     <p className="font-yekanX ss02 ">{`${formatPrice(checkoutData.internalShipmentFee)}`}</p>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه توقف:</span>
                     <p className="font-yekanX ss02 ">{`${formatPrice(checkoutData.cargoReloadPrice)}`}</p>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">خودرو:</span>
                     <span className="font-yekanX ss02">{checkoutData.internalVehicleName}</span>
                 </div>
-                <div className="flex gap-1 items-center r2l">
+                <div className="flex gap-1 justify-between sm:justify-normal  items-center r2l">
                     <span className="text-sc-gray-normal whitespace-nowrap">هزینه کل باربری داخلی:</span>
                     <span className="font-yekanX ss02">{formatPrice(checkoutData.internalShipmentPrice)}</span>
                 </div>
