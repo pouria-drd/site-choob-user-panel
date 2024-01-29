@@ -13,3 +13,4 @@ export { default as DimensionsHistoryPage } from './Dimensions/DimensionsHistory
 export { default as CheckoutPage } from './Checkout/CheckoutPage';
 
 export { default as UnitProjectsPage } from './Units/UnitProjectsPage';
+export { default as UnitSingleProjectPage } from './Units/UnitSingleProjectPage';
