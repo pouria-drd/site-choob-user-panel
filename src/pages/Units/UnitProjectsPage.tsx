@@ -20,8 +20,6 @@ function UnitProjectsPage() {
     const unitProjectService = new UnitProjectService();
     const [isLoading, setIsLoading] = useState(true);
 
-    const [projectsList, setProjectsList] = useState<UnitProjectModel[]>([]);
-
     const [tableData, setTableData] = useState<{
         headers: string[];
         rows: Array<(string | JSX.Element)[]>;
@@ -33,7 +31,7 @@ function UnitProjectsPage() {
         try {
             const result = await unitProjectService.GetProjectsList<UnitProjectModel[]>();
 
-            if (result) setProjectsList(result);
+            if (!result) return;
 
             const updatedTableData = {
                 headers: ['عنوان', 'توضیحات', 'وضعیت', 'عملیات'],

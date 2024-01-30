@@ -56,15 +56,30 @@ function AuthPage() {
                 sessionStorage.setItem('bearer', bearerResult.data.token);
                 sessionStorage.setItem('user', JSON.stringify(bearerResult.data.user));
 
+                let navOptParam = null;
                 // TODO: redirect to optional param related page
-                if (optionalParam) sessionStorage.setItem('opt', optionalParam);
+                if (optionalParam) {
+                    navOptParam = optionalParam;
+                    sessionStorage.setItem('opt', optionalParam);
+                }
 
                 handleLogin(UserRolesEnum.USER);
 
                 showToast('خوش آمدید', StatusEnum.Success);
 
                 // Redirect to the home page
-                navigate('/');
+
+                if (navOptParam) {
+                    if (navOptParam === 'checkout') {
+                        navigate('/checkout');
+                    } else if (navOptParam === 'dimensions') {
+                        navigate('/dimensions');
+                    } else {
+                        navigate('/');
+                    }
+                } else {
+                    navigate('/');
+                }
             }
         } catch (error) {
             handleLogout();
