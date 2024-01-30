@@ -31,7 +31,10 @@ function UnitProjectsPage() {
         try {
             const result = await unitProjectService.GetProjectsList<UnitProjectModel[]>();
 
-            if (!result) return;
+            if (!result) {
+                setIsLoading(false);
+                return;
+            }
 
             const updatedTableData = {
                 headers: ['عنوان', 'توضیحات', 'وضعیت', 'عملیات'],

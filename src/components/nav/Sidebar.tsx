@@ -15,7 +15,10 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
     const paymentlinks = [{ label: 'تسویه حساب', to: '/checkout' }];
 
     // options for payment section
-    const unitLinks = [{ label: 'پروژه ها', to: '/unit-projects' }];
+    const unitLinks = [
+        { label: 'پروژه ها', to: '/unit-projects' },
+        { label: 'تنظیمات', to: '/unit-settings' },
+    ];
 
     return (
         <div className="flex flex-col bg-sc-purple-normal w-full h-full p-4 gap-4">
