@@ -49,12 +49,6 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
         setIsEditing(false);
     };
 
-    const handleEdit = async (prop: UnitProjectPropsModel) => {
-        setTimeout(() => {
-            console.log(prop);
-        }, 4200);
-    };
-
     return (
         <div className="flex  items-center justify-start  rounded-lg border gap-2 p-2 bg-white r2l">
             <div className="flex gap-0 items-center justify-end w-fit text-xs sm:text-sm md:text-base">

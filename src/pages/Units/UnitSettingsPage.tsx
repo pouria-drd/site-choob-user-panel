@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 import UnitProjectService from '../../services/UnitProjectService';
 import Spinner from '../../components/uiComp/spinner/Spinner';
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
 import UnitSetting from './Components/UnitSetting';
 import AlertIcon from '../../components/icons/AlertIcon';
 
 function UnitSettingsPage() {
     const unitProjectService = new UnitProjectService();
 
-    const { showToast } = useToast();
-
     const [isLoading, setIsLoading] = useState(true);
-    const [isSendingRequest, setIsSendingRequest] = useState(false);
 
     const [projectProps, setProjectProps] = useState<UnitProjectPropsModel[]>([]);
-
-    const handleInputChange = (fieldName: string, value: string) => {};
 
     const fetchProjectProps = async () => {
         setIsLoading(true);
