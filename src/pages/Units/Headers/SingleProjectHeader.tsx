@@ -60,36 +60,7 @@ function SingleProjectHeader({ project }: { project: UnitProjectModel }) {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col border-t py-2">
-                        <h4>تنظیمات خصوصی پروژه</h4>
 
-                        <div className="flex flex-col md:flex-row flex-wrap gap-4 p-1">
-                            {project.properties.map((p, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col border rounded-lg px-4 py-2">
-                                    <p>{p.index}</p>
-                                    <p>{p.title}</p>
-                                    <p className="whitespace-nowrap">{p.valueString}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="flex flex-col border-t py-2">
-                        <h4>تنظیمات عمومی پروژه</h4>
-
-                        <div className="flex flex-col md:flex-row flex-wrap gap-4 p-1">
-                            {projectProps.map((p, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col border rounded-lg px-4 py-2">
-                                    <p>{p.index}</p>
-                                    <p>{p.title}</p>
-                                    <p className="whitespace-nowrap">{p.valueString}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                     <div className="flex w-full md:w-auto justify-end">
                         <Button
                             text="بروزرسانی"

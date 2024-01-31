@@ -34,9 +34,15 @@ interface UnitProjectDimensionsModel {
     id: string;
     projectId: string;
     dimensions: DimensionCutModel[];
+    properties: UnitProjectDimensionsPropsModel[];
 }
 
 interface UnitProjectDimensionsPropsModel {
     name: string;
     value: string;
+}
+
+interface UnitProjectDimensionPropParsed {
+    title: string;
+    description: string;
 }
