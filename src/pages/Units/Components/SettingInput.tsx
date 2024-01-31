@@ -5,6 +5,7 @@ function SettingInput({ valueType, value, isDisabled, onValueChange }: { valueTy
     const [inputType, setInputType] = useState<InputTypes>(InputTypes.Number);
 
     const handleInputChange = (v: any) => {
+        if (!v) onValueChange(1);
         if (/^\d+$/.test(v)) onValueChange(v);
     };
     useEffect(() => {
