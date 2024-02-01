@@ -139,7 +139,7 @@ input[type='radio'] {
     }
 
     &.outlined-info {
-        @apply bg-sc-purple-normal border border-sc-blue-normal hover:bg-sc-blue-normal text-sc-blue-normal  disabled:bg-sc-gray;
+        @apply bg-sc-purple-normal border border-sc-blue-normal hover:bg-sc-blue-normal text-sc-blue-normal  hover:text-white disabled:bg-sc-gray disabled:text-sc-blue-normal;
     }
 
     &.brown {

@@ -52,16 +52,18 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
     return (
         <div className="flex  items-center justify-start  rounded-lg border gap-2 p-2 bg-white r2l">
             <div className="flex gap-0 items-center justify-end w-fit text-xs sm:text-sm md:text-base">
-                <h4 className="r2l whitespace-nowrap">{prop.title}</h4>
+                <h4 className="r2l whitespace-nowrap text-base md:text-base">{prop.title}</h4>
                 <span>{prop.valueType !== 'bool' ? `(${prop.valueType})` : ''}</span>
             </div>
 
-            <SettingInput
-                value={prop.value}
-                isDisabled={isEditing}
-                valueType={prop.valueType}
-                onValueChange={handleInputChange}
-            />
+            <div className="w-full flex justify-end">
+                <SettingInput
+                    value={prop.value}
+                    isDisabled={isEditing}
+                    valueType={prop.valueType}
+                    onValueChange={handleInputChange}
+                />
+            </div>
 
             <button
                 onClick={handleSaveChanges}

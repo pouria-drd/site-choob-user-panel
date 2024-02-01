@@ -46,7 +46,7 @@ function UnitSettingsPage() {
 
                         <p>سیستم محاسبه سایت چوب از مقادیر زیر برای محاسبه یونیت های شما استفاده خواهد کرد. درصورت نیاز می توانید آن ها را به نسبت نیاز خود تغییر دهید.</p>
                     </div>
-                    <div className="grid gird-cols-1 md:grid-cols-3 h-full r2l gap-4 px-0">
+                    <div className="grid gird-cols-1  md:grid-cols-4 h-full r2l gap-4 px-0">
                         {projectProps.map((p) => (
                             <UnitSetting
                                 data={p}

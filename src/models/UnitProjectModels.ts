@@ -46,3 +46,10 @@ interface UnitProjectDimensionPropParsed {
     title: string;
     description: string;
 }
+
+interface UnitPropsDTO {
+    name: string;
+    description: string;
+    image: string;
+    index: number;
+}

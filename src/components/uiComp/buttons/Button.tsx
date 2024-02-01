@@ -56,7 +56,7 @@ const Button = ({ text, onClick, isBusy = false, isDisabled = false, fullWidth =
             {isBusy && (
                 <span className="text-white">
                     <Spinner
-                        color="#fff"
+                        color={isBusy ? '#03045E' : '#fff'}
                         size={17}
                     />
                 </span>

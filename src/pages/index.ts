@@ -15,3 +15,4 @@ export { default as CheckoutPage } from './Checkout/CheckoutPage';
 export { default as UnitProjectsPage } from './Units/UnitProjectsPage';
 export { default as UnitSingleProjectPage } from './Units/UnitSingleProjectPage';
 export { default as UnitSettingsPage } from './Units/UnitSettingsPage';
+export { default as AddNewUnitPage } from './Units/AddNewUnitPage';

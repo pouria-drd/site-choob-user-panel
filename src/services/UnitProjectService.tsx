@@ -28,14 +28,24 @@ class UnitProjectService extends AxiosBase {
         return this.request<T>({ method: 'get', url });
     }
 
-    public async GetSingleProject<T>(projectId: string) {
-        const url = this.baseURL + 'Project/' + projectId;
+    public async GetSingleProject<T>(projectId: string, includeDimensions: boolean = true) {
+        const url = this.baseURL + 'Project/' + projectId + `?includeDimensions=${includeDimensions == true ? 'true' : 'false'}`;
         return this.request<T>({ method: 'get', url });
     }
 
     public async GetProjectUnits<T>(projectId: string) {
         const url = this.baseURL + 'Project/Units/' + projectId;
         return this.request<T>({ method: 'get', url });
+    }
+
+    public async GetUnits<T>() {
+        const url = this.baseURL + 'UnitList';
+        return this.request<T>({ method: 'get', url });
+    }
+
+    public async CalculatedSimpleGroundUnit<T>(dto: SimpleGroundUnitDTO) {
+        const url = this.baseURL + 'GroundUnit/New';
+        return this.request<T>({ method: 'post', url, data: dto });
     }
 }
 
