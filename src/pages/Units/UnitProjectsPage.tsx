@@ -31,6 +31,7 @@ function UnitProjectsPage() {
         try {
             const result = await unitProjectService.GetProjectsList<UnitProjectModel[]>();
 
+            console.log('result', result);
             if (!result) {
                 setIsLoading(false);
                 return;
@@ -94,8 +95,9 @@ function UnitProjectsPage() {
             const result = await unitProjectService.DeleteProject<any>(projectId);
 
             if (result.status === true) {
-                fetchData();
                 showToast(result.message, StatusEnum.Warning);
+                setTableData({ headers: [], rows: [] });
+                await fetchData();
             }
             if (result.status === false) {
                 showToast(result.message, StatusEnum.Error);
@@ -113,6 +115,8 @@ function UnitProjectsPage() {
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {}, [tableData, isLoading]);
 
     return (
         <>

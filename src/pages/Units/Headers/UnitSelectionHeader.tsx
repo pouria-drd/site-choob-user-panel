@@ -8,11 +8,11 @@ function UnitSelectionHeader({ units, onSelectionChanged }: { units: UnitPropsDT
     };
     return (
         <>
-            <div className="flex gap-2 p-2 bg-sc-purple-normal rounded-lg overflow-x-auto r2l">
+            <div className="flex  gap-2 p-2 bg-sc-purple-normal rounded-lg overflow-y-auto md:overflow-x-auto r2l w-full h-fit">
                 {units.map((u, index) => (
                     <div
                         key={index}
-                        className="relative flex  flex-shrink-0">
+                        className="relative flex  flex-shrink-0 col-span-2">
                         <div className="absolute flex justify-center items-end h-1/3 pb-2 w-full bg-gradient-to-t from-gray-500  bottom-0 rounded-b-lg">
                             <button
                                 onClick={() => onSelection(u)}

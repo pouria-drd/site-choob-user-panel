@@ -12,7 +12,7 @@ function App() {
     const { userRole, logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
-    const [navbarForcedIconToggle, setNavbarForcedIconToggle] = useState(false);
+    const [navbarForcedIconToggle, setNavbarForcedIconToggle] = useState(true);
 
     const hasToken = sessionStorage.getItem('bearer');
 

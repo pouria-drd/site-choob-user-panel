@@ -47,6 +47,15 @@ class UnitProjectService extends AxiosBase {
         const url = this.baseURL + 'GroundUnit/New';
         return this.request<T>({ method: 'post', url, data: dto });
     }
+
+    public async AddUnitToProject<T>(dto: AddUnitDTO) {
+        const url = this.baseURL + 'AddUnitToProject';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+    public async DeleteUnitFromProject<T>(projectId: string, unitID: string) {
+        const url = this.baseURL + 'DeleteUnit?projectId=' + projectId + '&unitId=' + unitID;
+        return this.request<T>({ method: 'delete', url });
+    }
 }
 
 export default UnitProjectService;

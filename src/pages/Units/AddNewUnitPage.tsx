@@ -20,13 +20,12 @@ interface AddNewUnitPageParams {
 function AddNewUnitPage() {
     const { showConfirmModal } = useConfirmModal();
 
-    const navigate = useNavigate();
-    const { showToast } = useToast();
-
     const unitProjectService = new UnitProjectService();
     const [isLoading, setIsLoading] = useState(true);
 
     const [units, setUnits] = useState<UnitPropsDTO[]>([]);
+
+    const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
 
     const params = useParams<{ token?: string; optionalParam?: string }>();
     const { projectID } = Object.assign({}, params) as AddNewUnitPageParams;
@@ -56,14 +55,15 @@ function AddNewUnitPage() {
             {isLoading ? (
                 <Spinner flex={true} />
             ) : (
-                <div className="flex flex-col gap-10 w-full font-peyda pb-16">
+                <div className="flex flex-col  gap-10 w-full font-peyda pb-16">
                     <UnitSelectionHeader
                         onSelectionChanged={(u) => {
                             console.log(u);
                         }}
                         units={units}
                     />
-                    <SimpleGroundUnit />
+
+                    <SimpleGroundUnit projectId={projectID} />
                 </div>
             )}
         </>

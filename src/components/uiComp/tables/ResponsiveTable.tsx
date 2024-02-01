@@ -24,6 +24,7 @@ const ResponsiveTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
         };
     }, []);
 
+    useEffect(() => {}, [data]);
     return (
         <>
             {data.headers.length > 0 && data.rows.length > 0 ? (

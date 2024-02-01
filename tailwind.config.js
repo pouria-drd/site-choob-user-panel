@@ -3,6 +3,11 @@ export default {
     content: ['./src/**/*.{js,jsx,ts,tsx,css,html}'],
     theme: {
         extend: {
+            screens: {
+                sm: '480px',
+                md: '976px',
+                lg: '1220px',
+            },
             animation: {
                 'spin-slow': 'spin 2s linear infinite',
             },

@@ -93,7 +93,7 @@
 /* base-input area */
 
 .base-input {
-    @apply font-peyda bg-sc-purple-normal text-sc-blue-normal transition-all outline-none focus:outline focus:outline-sc-blue-normal placeholder:text-gray-400 rounded px-4 py-2 r2l;
+    @apply text-xs sm:text-sm md:text-base font-peyda bg-sc-purple-normal text-sc-blue-normal transition-all outline-none focus:outline focus:outline-sc-blue-normal placeholder:text-gray-400 rounded px-4 py-2 r2l;
 }
 
 /* Checkbox buttons area */

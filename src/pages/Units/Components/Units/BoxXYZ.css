@@ -1,0 +1,13 @@
+.parallelogram {
+    width: 100px;
+    height: 50px;
+    transform: skew(30deg);
+    margin-right: 14px;
+}
+.parallelogram span {
+    transform: skew(-30deg);
+}
+.rectangle {
+    height: 60px;
+    width: 100px;
+}

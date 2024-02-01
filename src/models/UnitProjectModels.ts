@@ -33,6 +33,7 @@ interface UnitProjectDTO {
 interface UnitProjectDimensionsModel {
     id: string;
     projectId: string;
+    count: number;
     dimensions: DimensionCutModel[];
     properties: UnitProjectDimensionsPropsModel[];
 }
@@ -45,6 +46,7 @@ interface UnitProjectDimensionsPropsModel {
 interface UnitProjectDimensionPropParsed {
     title: string;
     description: string;
+    details: string;
 }
 
 interface UnitPropsDTO {
