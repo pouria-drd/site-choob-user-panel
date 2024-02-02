@@ -105,8 +105,9 @@ function DimensionsPage() {
             const result = await dimensionService.DeleteDimensionList<any>(dimensionID);
 
             if (result.status === true) {
-                fetchData();
                 showToast(result.message, StatusEnum.Success);
+                setTableData({ headers: [], rows: [] });
+                await fetchData();
             }
         } catch (error) {
             let e = error as any;

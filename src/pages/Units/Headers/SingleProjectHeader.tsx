@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { ButtonTypes } from '../../../enums/ButtonTypes';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import { useNavigate } from 'react-router-dom';
+import CalculatorIcon from '../../../components/icons/CalculatorIcon';
 
-function SingleProjectHeader({ project }: { project: UnitProjectModel }) {
+function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: () => void }) {
     const navigate = useNavigate();
     const [isSendingRequest, setIsSendingRequest] = useState(false);
 
@@ -12,6 +13,9 @@ function SingleProjectHeader({ project }: { project: UnitProjectModel }) {
 
     const goToNewUnitPage = () => {
         navigate('/unit-project/add-unit/' + project.id);
+    };
+    const calulateClicked = () => {
+        onCalculateClicked();
     };
     return (
         <>
@@ -25,6 +29,15 @@ function SingleProjectHeader({ project }: { project: UnitProjectModel }) {
                             </div>
                         }
                         onClick={goToNewUnitPage}
+                    />
+                    <Button
+                        text={
+                            <div className="flex items-center">
+                                محاسبه
+                                <CalculatorIcon />
+                            </div>
+                        }
+                        onClick={calulateClicked}
                     />
                     <h2 className="text-lg md:text-xl text-right font-semibold">مدیریت پروژه</h2>
                 </div>

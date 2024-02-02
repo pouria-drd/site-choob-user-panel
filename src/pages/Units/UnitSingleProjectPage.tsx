@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UnitProjectService from '../../services/UnitProjectService';
 import SingleProjectHeader from './Headers/SingleProjectHeader';
-import EditIcon from '../../components/icons/EditIcon';
 import BinIcon from '../../components/icons/BinIcon';
 import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
 import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
 import { useToast } from '../../components/uiComp/toasts/ToastProvider';
 import { StatusEnum } from '../../enums/StatusEnum';
 import EyeIcon from '../../components/icons/EyeIcon';
+import Spinner from '../../components/uiComp/spinner/Spinner';
 
 interface UnitSingleProjectPageParams {
     projectID: string;
@@ -122,15 +122,27 @@ function UnitSingleProjectPage() {
         return parseProp;
     };
 
+    const CalculateProject = async () => {
+        try {
+            var result = await unitProjectService.CalculateProject(projectID);
+
+            console.log(result);
+        } catch (e) {}
+    };
+
     useEffect(() => {
         fetchData();
     }, []);
 
     return (
         <>
-            {projectDTO?.project && (
+            {isLoading && <Spinner flex={true} />}
+            {projectDTO?.project && !isLoading && (
                 <div className="flex flex-col gap-4 w-full font-peyda pb-16">
-                    <SingleProjectHeader project={projectDTO.project} />
+                    <SingleProjectHeader
+                        project={projectDTO.project}
+                        onCalculateClicked={CalculateProject}
+                    />
                     <div className="flex flex-col flex-grow overflow-y-auto">
                         <ResponsiveTable
                             data={tableData}
