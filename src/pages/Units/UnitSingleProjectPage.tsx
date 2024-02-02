@@ -33,6 +33,8 @@ function UnitSingleProjectPage() {
     const [projectDTO, setProjectDTO] = useState<UnitProjectDTO>();
     const [isLoading, setIsLoading] = useState(false);
 
+    const [isCalculating, setIsCalculating] = useState(false);
+
     const [tableData, setTableData] = useState<{
         headers: string[];
         rows: Array<(string | JSX.Element)[]>;
@@ -130,12 +132,18 @@ function UnitSingleProjectPage() {
         return parseProp;
     };
 
-    const CalculateProject = async () => {
+    const CalculateProject = async (dto: CalculateUnitProjectDTO) => {
+        setIsCalculating(true);
         try {
-            var result = await unitProjectService.CalculateProject(projectID);
+            var result = await unitProjectService.CalculateProject<any>(dto);
 
-            console.log(result);
+            if (result.status) {
+                showToast(result.message, StatusEnum.Success);
+            } else {
+                showToast(result.message, StatusEnum.Error);
+            }
         } catch (e) {}
+        setIsCalculating(false);
     };
 
     useEffect(() => {
@@ -151,31 +159,37 @@ function UnitSingleProjectPage() {
     return (
         <>
             {isLoading && <Spinner flex={true} />}
-            {projectDTO?.project && !isLoading && (
-                <div className="flex flex-col gap-4 w-full font-peyda pb-16">
-                    <SingleProjectHeader
-                        project={projectDTO.project}
-                        onCalculateClicked={CalculateProject}
-                    />
-                    <div className="flex flex-col flex-grow overflow-y-auto">
-                        <ResponsiveTable
-                            data={tableData}
-                            addIndex={true}
-                        />
-                    </div>
-                </div>
-            )}
+            {!isCalculating ? (
+                <>
+                    {projectDTO?.project && !isLoading && (
+                        <div className="flex flex-col gap-4 w-full font-peyda pb-16">
+                            <SingleProjectHeader
+                                project={projectDTO.project}
+                                onCalculateClicked={CalculateProject}
+                            />
+                            <div className="flex flex-col flex-grow overflow-y-auto">
+                                <ResponsiveTable
+                                    data={tableData}
+                                    addIndex={true}
+                                />
+                            </div>
+                        </div>
+                    )}
 
-            {selectedUnit && !isLoading && (
-                <Modal
-                    title={parseProjectUnitProps(selectedUnit.properties).title}
-                    isOpen={isModalOpen}
-                    onClose={closeModal}>
-                    <UnitPropsContent
-                        projectId={projectID}
-                        unitId={selectedUnit.id}
-                    />
-                </Modal>
+                    {selectedUnit && !isLoading && (
+                        <Modal
+                            title={parseProjectUnitProps(selectedUnit.properties).title}
+                            isOpen={isModalOpen}
+                            onClose={closeModal}>
+                            <UnitPropsContent
+                                projectId={projectID}
+                                unitId={selectedUnit.id}
+                            />
+                        </Modal>
+                    )}
+                </>
+            ) : (
+                <p>Isacalulating</p>
             )}
         </>
     );

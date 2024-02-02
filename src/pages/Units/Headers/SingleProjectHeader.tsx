@@ -1,43 +1,51 @@
 import Button from '../../../components/uiComp/buttons/Button';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonTypes } from '../../../enums/ButtonTypes';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import { useNavigate } from 'react-router-dom';
 import CalculatorIcon from '../../../components/icons/CalculatorIcon';
+import Modal from '../../../components/uiComp/modals/Modal';
+import CalculateProjectModalContent from '../../../contents/UnitProject/CalculateProjectModalContent';
 
-function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: () => void }) {
+function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: (dto: CalculateUnitProjectDTO) => void }) {
     const navigate = useNavigate();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     useEffect(() => {}, [project]);
 
     const goToNewUnitPage = () => {
         navigate('/unit-project/add-unit/' + project.id);
     };
-    const calulateClicked = () => {
-        onCalculateClicked();
-    };
+
     return (
         <>
             <div className="flex flex-col gap-3 font-peyda">
-                <div className="flex justify-between items-center">
-                    <Button
-                        text={
-                            <div className="flex items-center">
-                                یونیت جدید
-                                <Cube2Icon />
-                            </div>
-                        }
-                        onClick={goToNewUnitPage}
-                    />
-                    <Button
-                        text={
-                            <div className="flex items-center">
-                                محاسبه
-                                <CalculatorIcon />
-                            </div>
-                        }
-                        onClick={calulateClicked}
-                    />
+                <div className="flex flex-col md:flex-row justify-between  md:items-center">
+                    <div className="flex justify-between items-center gap-2">
+                        <Button
+                            Type={ButtonTypes.OutlinedBrown}
+                            text={
+                                <div className="flex items-center">
+                                    یونیت جدید
+                                    <Cube2Icon />
+                                </div>
+                            }
+                            onClick={goToNewUnitPage}
+                        />
+                        <Button
+                            Type={ButtonTypes.OulinedSuccess}
+                            text={
+                                <div className="flex items-center">
+                                    محاسبه
+                                    <CalculatorIcon />
+                                </div>
+                            }
+                            onClick={openModal}
+                        />
+                    </div>
                     <h2 className="text-lg md:text-xl text-right font-semibold">مدیریت پروژه</h2>
                 </div>
 
@@ -76,6 +84,16 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                     </div>
                 </div>
             </div>
+
+            <Modal
+                title="محاسبه پروژه"
+                isOpen={isModalOpen}
+                onClose={closeModal}>
+                <CalculateProjectModalContent
+                    project={project}
+                    onCalculateClicked={(dto) => onCalculateClicked(dto)}
+                />
+            </Modal>
         </>
     );
 }

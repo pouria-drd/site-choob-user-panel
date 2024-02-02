@@ -7,6 +7,7 @@ interface UnitProjectModel {
     id: string;
     title: string;
     description?: string;
+    isCalculating: boolean;
     isCalculated: boolean;
     properties: UnitProjectPropsModel[];
 }

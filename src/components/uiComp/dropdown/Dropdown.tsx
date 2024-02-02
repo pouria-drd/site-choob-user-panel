@@ -92,7 +92,7 @@ const Dropdown = ({ title, options, defaultOption, onSelectOption }: DropdownPro
                 id="dropdown-content"
                 ref={contentRef}
                 style={{ height: isOpen ? `${contentHeight}px` : '0' }}
-                className={`bg-sc-purple-normal flex flex-col divide-y divide-dashed divide-gray-400 text-sm rounded overflow-hidden transition-all outline-none hover:outline hover:outline-sc-blue-normal px-2 gap-1 ${isOpen ? 'py-2' : ''}`}>
+                className={`bg-sc-purple-normal flex flex-col divide-y divide-dashed divide-gray-400 text-sm rounded overflow-hidden transition-all outline-none  px-2 gap-1 ${isOpen ? 'py-2' : ''}`}>
                 {options.map((option) => (
                     <div
                         key={option.label}

@@ -7,9 +7,9 @@ class UnitProjectService extends AxiosBase {
         const url = this.baseURL + 'NewProject';
         return this.request<T>({ method: 'post', url: url, data: data });
     }
-    public async CalculateProject<T>(projectId: string) {
-        const url = this.baseURL + 'CalculateProject?projectId=' + projectId;
-        return this.request<T>({ method: 'get', url });
+    public async CalculateProject<T>(dto: CalculateUnitProjectDTO) {
+        const url = this.baseURL + 'CalculateProject';
+        return this.request<T>({ method: 'post', url, data: dto });
     }
 
     public async GetUserProperties<T>() {
