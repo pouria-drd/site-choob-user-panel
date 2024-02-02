@@ -9,6 +9,8 @@ import { useToast } from '../../components/uiComp/toasts/ToastProvider';
 import { StatusEnum } from '../../enums/StatusEnum';
 import EyeIcon from '../../components/icons/EyeIcon';
 import Spinner from '../../components/uiComp/spinner/Spinner';
+import Modal from '../../components/uiComp/modals/Modal';
+import UnitPropsContent from '../../contents/UnitProject/UnitPropsContent';
 
 interface UnitSingleProjectPageParams {
     projectID: string;
@@ -18,6 +20,12 @@ function UnitSingleProjectPage() {
 
     const { showConfirmModal } = useConfirmModal();
     const { showToast } = useToast();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const [selectedUnit, setSelectedUnit] = useState<UnitProjectDimensionsModel>();
 
     const params = useParams<{ token?: string; optionalParam?: string }>();
     const { projectID } = Object.assign({}, params) as UnitSingleProjectPageParams;
@@ -56,7 +64,7 @@ function UnitSingleProjectPage() {
                 item.count.toString(),
                 <div className="flex r2l justify-end lg:justify-center gap-6">
                     <button
-                        onClick={() => {}}
+                        onClick={() => handleShowUnit(item)}
                         className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal">
                         <EyeIcon />
                     </button>
@@ -134,6 +142,12 @@ function UnitSingleProjectPage() {
         fetchData();
     }, []);
 
+    const handleShowUnit = (unit: UnitProjectDimensionsModel) => {
+        setSelectedUnit(unit);
+
+        openModal();
+    };
+
     return (
         <>
             {isLoading && <Spinner flex={true} />}
@@ -150,6 +164,18 @@ function UnitSingleProjectPage() {
                         />
                     </div>
                 </div>
+            )}
+
+            {selectedUnit && !isLoading && (
+                <Modal
+                    title={parseProjectUnitProps(selectedUnit.properties).title}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}>
+                    <UnitPropsContent
+                        projectId={projectID}
+                        unitId={selectedUnit.id}
+                    />
+                </Modal>
             )}
         </>
     );

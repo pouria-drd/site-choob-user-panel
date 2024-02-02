@@ -1,5 +1,5 @@
 import Button from '../../../components/uiComp/buttons/Button';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ButtonTypes } from '../../../enums/ButtonTypes';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,6 @@ import CalculatorIcon from '../../../components/icons/CalculatorIcon';
 
 function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: () => void }) {
     const navigate = useNavigate();
-    const [isSendingRequest, setIsSendingRequest] = useState(false);
 
     useEffect(() => {}, [project]);
 
@@ -73,7 +72,6 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                             text="بروزرسانی"
                             onClick={() => {}}
                             Type={ButtonTypes.OulinedInfo}
-                            isBusy={isSendingRequest}
                         />
                     </div>
                 </div>

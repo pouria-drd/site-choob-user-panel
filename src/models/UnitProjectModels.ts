@@ -40,6 +40,7 @@ interface UnitProjectDimensionsModel {
 
 interface UnitProjectDimensionsPropsModel {
     name: string;
+    title?: string;
     value: string;
 }
 

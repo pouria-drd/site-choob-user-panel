@@ -52,6 +52,11 @@ class UnitProjectService extends AxiosBase {
         return this.request<T>({ method: 'post', url, data: dto });
     }
 
+    public async GetUnitDetails<T>(projectId: string, unitId: string) {
+        const url = this.baseURL + 'GetUnitDetails?projectId=' + projectId + '&unitId=' + unitId;
+        return this.request<T>({ method: 'get', url });
+    }
+
     public async AddUnitToProject<T>(dto: AddUnitDTO) {
         const url = this.baseURL + 'AddUnitToProject';
         return this.request<T>({ method: 'post', url, data: dto });

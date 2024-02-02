@@ -14,7 +14,7 @@ const Modal = ({ title, isOpen, children, onClose }: NewCutModalProps) => {
         <>
             {isOpen && (
                 <ModalBackDrop onClose={onClose}>
-                    <div className="bg-white flex flex-col items-center justify-start rounded-lg relative z-20 w-full sm:w-auto min-w-[340px] max-h-[80vh] mx-auto p-6 gap-4">
+                    <div className="bg-white flex flex-col items-center justify-start rounded-lg relative z-20 w-full sm:w-auto min-w-[340px] max-h-[80vh] mx-auto p-6 gap-4 ">
                         <div className="flex items-center justify-between w-full">
                             <span
                                 className="cursor-pointer text-sc-purple-400 hover:text-gray-400"
@@ -24,7 +24,7 @@ const Modal = ({ title, isOpen, children, onClose }: NewCutModalProps) => {
                             <h2 className="font-bold r2l">{title}</h2>
                         </div>
 
-                        <div className="w-full overflow-y-auto p-2">{children}</div>
+                        <div className="w-full overflow-y-auto overflow-x-hidden p-2">{children}</div>
                     </div>
                 </ModalBackDrop>
             )}

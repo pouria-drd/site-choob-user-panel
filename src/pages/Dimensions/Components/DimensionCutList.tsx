@@ -55,7 +55,7 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
     return (
         <>
             {dimensionCutData && dimensionCutData.length > 0 && (
-                <div className="bg-white rounded-lg px-4 py-6 sm:p-6 w-full">
+                <div className="bg-white rounded-lg px-2 py-4 sm:p-2 w-full">
                     <div className="flex flex-col justify-end items-end gap-2 font-yekanX ss02">
                         {dimensionCutData.map((data, index) => (
                             <div
@@ -74,7 +74,7 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
                                 ) : (
                                     <h4 className="font-semibold">{index + 1}#</h4>
                                 )}
-                                <div className="flex flex-row-reverse gap-2 items-center justify-between sm:justify-start w-full">
+                                <div className="flex flex-row-reverse gap-2 items-center justify-between sm:justify-start w-full text-xs sm:text-sm">
                                     <div className="flex gap-1 items-center r2l w-full">
                                         <span>طول:</span>
                                         <span className="font-semibold"> {data.x}</span>
@@ -88,9 +88,9 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
                                         <span className="font-semibold">{data.count}</span> عدد
                                     </div>
                                 </div>
-                                <div className="flex gap-1 items-center r2l w-full">
+                                <div className="flex gap-1 items-center r2l w-full text-xs sm:text-sm">
                                     <span>توضیحات:</span>
-                                    {data.details ? <p className="font-semibold">{data.details}</p> : <p>---</p>}
+                                    {data.details ? <p className="font-semibold sm:whitespace-nowrap">{data.details}</p> : <p>---</p>}
                                 </div>
 
                                 <div className="flex items-center justify-center w-full">

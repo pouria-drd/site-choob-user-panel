@@ -32,7 +32,7 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
     const [dto, setDTO] = useState<SimpleGroundUnitDTO>({ depth: 0, width: 0, height: 0, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
 
-    const [doorOptions, setDoorOptions] = useState<DropdownOption[]>([
+    const doorOptions: DropdownOption[] = [
         {
             label: 'یک',
             value: '1',
@@ -41,7 +41,7 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
             label: 'دو',
             value: '2',
         },
-    ]);
+    ];
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
@@ -102,11 +102,20 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
     const handleOnSave = async () => {
         if (!dimensionCutList) return;
 
-        const Props: UnitProjectDimensionsPropsModel[] = [
-            { name: 'width', value: dto.width.toString() },
-            { name: 'height', value: dto.height.toString() },
-            { name: 'depth', value: dto.depth.toString() },
+        let Props: UnitProjectDimensionsPropsModel[] = [
+            { name: 'width', title: 'طول', value: dto.width.toString() + 'cm' },
+            { name: 'height', title: 'ارتفاع', value: dto.height.toString() + 'cm' },
+            { name: 'depth', title: 'عمق', value: dto.depth.toString() + 'cm' },
+            { name: 'doorCount', title: 'تعداد درب', value: dto.doors.length.toString() + ' عدد' },
         ];
+
+        doors.map((d, index) => {
+            Props.push({
+                name: `door-${index + 1}`,
+                title: d.name,
+                value: d.value,
+            });
+        });
 
         const addUnit: AddUnitDTO = {
             name: 'زمینی ساده',
@@ -148,10 +157,10 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
                                 />
                             </div>
                             <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عرض (سانتی متر)</label>
+                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عرض (سانتی متر)"
+                                    placeholder="ارتفاع (سانتی متر)"
                                     onChange={(e) => handleInputChange('height', Number(e.target.value))}
                                 />
                             </div>
@@ -210,14 +219,9 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
                 </div>
                 <div className="flex flex-col l2r w-full  bg-white  rounded-lg">
                     {!dimensionCutList && (
-                        <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-2">
+                        <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
                             <p className="">در انتظار محاسبه</p>
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-16 rounded-lg" />
+                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
                         </div>
                     )}
                     {isCalculating && (
