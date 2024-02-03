@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { StatusEnum } from '../../enums/StatusEnum';
+import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
+import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
+
+import BinIcon from '../../components/icons/BinIcon';
+import EditIcon from '../../components/icons/EditIcon';
 import NewProjectHeader from './Headers/NewProjectHeader';
-import UnitProjectService from '../../services/UnitProjectService';
 import Spinner from '../../components/uiComp/spinner/Spinner';
 import StatusChip from '../../components/uiComp/chips/StatusChip';
-import { StatusEnum } from '../../enums/StatusEnum';
-import EditIcon from '../../components/icons/EditIcon';
-import BinIcon from '../../components/icons/BinIcon';
+import UnitProjectService from '../../services/UnitProjectService';
 import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
-import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
-import { useNavigate } from 'react-router-dom';
+
 
 function UnitProjectsPage() {
     const { showConfirmModal } = useConfirmModal();
@@ -71,7 +73,7 @@ function UnitProjectsPage() {
                 ]),
             };
             setTableData(updatedTableData);
-        } catch (e) {}
+        } catch (e) { }
 
         setIsLoading(false);
     };
@@ -95,16 +97,16 @@ function UnitProjectsPage() {
             const result = await unitProjectService.DeleteProject<any>(projectId);
 
             if (result.status === true) {
-                showToast(result.message, StatusEnum.Warning);
+                showToast(result.message, ToastStatusEnum.Warning);
                 setTableData({ headers: [], rows: [] });
                 await fetchData();
             }
             if (result.status === false) {
-                showToast(result.message, StatusEnum.Error);
+                showToast(result.message, ToastStatusEnum.Error);
             }
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error);
+            showToast(e.response.data.message, ToastStatusEnum.Error);
         }
         setIsLoading(false);
     };
@@ -116,7 +118,7 @@ function UnitProjectsPage() {
         fetchData();
     }, []);
 
-    useEffect(() => {}, [tableData, isLoading]);
+    useEffect(() => { }, [tableData, isLoading]);
 
     return (
         <>

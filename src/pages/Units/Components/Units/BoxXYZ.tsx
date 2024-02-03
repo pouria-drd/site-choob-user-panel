@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
+
 import './BoxXYZ.css';
+
 interface BoxXYZProps {
     width: number;
     height: number;
     depth: number;
 }
+
 function BoxXYZ({ width, height, depth }: BoxXYZProps) {
-    useEffect(() => {}, [width, height, depth]);
+    useEffect(() => { }, [width, height, depth]);
     return (
         <div className="w-fit justify-center flex-items-center flex-col p-8 pl-12 pb-12 border rounded-md">
             <div className="flex flex-col items-center text-xs relative top-12 right-16  z-10 rotate-180 mr-4 rounded-lg ">

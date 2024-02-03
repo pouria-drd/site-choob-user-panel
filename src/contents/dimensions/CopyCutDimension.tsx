@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { StatusEnum } from "../../enums/StatusEnum";
-
-import DimensionService from "../../services/DimensionService";
+import { ToastStatusEnum, useToast } from "../../components/uiComp/Toast/ToastProvider";
 
 import Button from "../../components/uiComp/buttons/Button";
-import { useToast } from "../../components/uiComp/toasts/ToastProvider";
+import DimensionService from "../../services/DimensionService";
 
 
 const CopyCutDimension = ({ dimensionID, onSuccess }: { dimensionID: string, onSuccess: (copyDimensionId: string) => void }) => {
@@ -40,11 +38,11 @@ const CopyCutDimension = ({ dimensionID, onSuccess }: { dimensionID: string, onS
         formData,
         dimensionID
       );
-      showToast(result.message, StatusEnum.Success);
+      showToast(result.message, ToastStatusEnum.Success);
       onSuccess(result.data);
     } catch (error) {
       let e = error as any;
-      showToast(e.response.data.message, StatusEnum.Error);
+      showToast(e.response.data.message, ToastStatusEnum.Error);
       setIsProcessing(false);
     }
   };

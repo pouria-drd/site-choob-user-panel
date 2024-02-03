@@ -1,16 +1,16 @@
 import { ReactNode, useState } from 'react';
-import Dropdown from '../../../../components/uiComp/dropdown/Dropdown';
-import DoorColorSelect from './DoorColorSelect';
-import UnitProjectService from '../../../../services/UnitProjectService';
-import DimensionCutList from '../../../Dimensions/Components/DimensionCutList';
-import Button from '../../../../components/uiComp/buttons/Button';
-import CalculatorIcon from '../../../../components/icons/CalculatorIcon';
-import { ButtonTypes } from '../../../../enums/ButtonTypes';
-import BoxXYZ from './BoxXYZ';
-import Spinner from '../../../../components/uiComp/spinner/Spinner';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '../../../../components/uiComp/toasts/ToastProvider';
-import { StatusEnum } from '../../../../enums/StatusEnum';
+import { ButtonTypes } from '../../../../enums/ButtonTypes';
+import { ToastStatusEnum, useToast } from '../../../../components/uiComp/Toast/ToastProvider';
+
+import BoxXYZ from './BoxXYZ';
+import DoorColorSelect from './DoorColorSelect';
+import Button from '../../../../components/uiComp/buttons/Button';
+import Spinner from '../../../../components/uiComp/spinner/Spinner';
+import Dropdown from '../../../../components/uiComp/dropdown/Dropdown';
+import UnitProjectService from '../../../../services/UnitProjectService';
+import CalculatorIcon from '../../../../components/icons/CalculatorIcon';
+import DimensionCutList from '../../../Dimensions/Components/DimensionCutList';
 
 interface DropdownOption {
     label: string;
@@ -95,7 +95,7 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
             if (result) {
                 setDimensionCutList(result.data);
             }
-        } catch (e) {}
+        } catch (e) { }
         setIsCalculating(false);
     };
 
@@ -131,13 +131,13 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
 
             if (saveResult) {
                 if (saveResult.status) {
-                    showToast(saveResult.message, StatusEnum.Success, 'عملیات موفقیت آمیز بود');
+                    showToast(saveResult.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیز بود');
                     navigate('/unit-project/' + projectId);
                 } else {
-                    showToast(saveResult.message, StatusEnum.Error, 'خطا');
+                    showToast(saveResult.message, ToastStatusEnum.Error, 'خطا');
                 }
             }
-        } catch (e) {}
+        } catch (e) { }
     };
 
     return (

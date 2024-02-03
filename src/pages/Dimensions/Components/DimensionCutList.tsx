@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { StatusEnum } from '../../../enums/StatusEnum';
-import { useToast } from '../../../components/uiComp/toasts/ToastProvider';
 import { useConfirmModal } from '../../../components/uiComp/modals/ConfirmModalProvider';
+import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
 
 import BinIcon from '../../../components/icons/BinIcon';
 import CutPlane from '../../../contents/dimensions/CutPlane';
@@ -42,12 +41,12 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
             const result = await dimensionService.DeleteFromDimensionCutList<any>(dimensionId, cutGuid);
 
             if (result.status === true) {
-                showToast('ریز ابعاد حذف شد', StatusEnum.Warning);
+                showToast('ریز ابعاد حذف شد', ToastStatusEnum.Warning);
                 onDelete();
             }
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error);
+            showToast(e.response.data.message, ToastStatusEnum.Error);
         }
         setIsProcessing(false);
     };

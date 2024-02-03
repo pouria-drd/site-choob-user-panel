@@ -1,9 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
+
 import Button from '../../../components/uiComp/buttons/Button';
 import UnitProjectService from '../../../services/UnitProjectService';
-import { useState } from 'react';
-import { useToast } from '../../../components/uiComp/toasts/ToastProvider';
-import { StatusEnum } from '../../../enums/StatusEnum';
 
 function NewProjectHeader() {
     const unitProjectService = new UnitProjectService();
@@ -28,10 +28,10 @@ function NewProjectHeader() {
             const result = await unitProjectService.CreateNewUnitProject<any>(dto);
 
             if (result.status) {
-                showToast(result.message, StatusEnum.Success, 'عملیات موفقیت آمیز بود');
+                showToast(result.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیز بود');
                 navigate('/unit-project/' + result.data);
             } else {
-                showToast(result.message, StatusEnum.Error, 'عملیات موفقیت آمیز بود');
+                showToast(result.message, ToastStatusEnum.Error, 'عملیات موفقیت آمیز بود');
                 setIsSendingRequest(false);
             }
             console.log(result);

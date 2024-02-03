@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
 
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
 import AlertIcon from '../../components/icons/AlertIcon';
 import Button from '../../components/uiComp/buttons/Button';
 import DimensionService from '../../services/DimensionService';
-import { StatusEnum } from '../../enums/StatusEnum';
 
 const OptiCutImportContent = ({ dimensionId, onSuccess }: { dimensionId: string; onSuccess: () => void }) => {
     const { showToast } = useToast();
@@ -30,14 +29,14 @@ const OptiCutImportContent = ({ dimensionId, onSuccess }: { dimensionId: string;
             const result = await dimensionService.UploadOptiCutFile<any>(dimensionId, csvFile);
 
             if (!result.status) {
-                showToast(result.message, StatusEnum.Error, 'خطا در انجام عملیات');
+                showToast(result.message, ToastStatusEnum.Error, 'خطا در انجام عملیات');
             } else {
-                showToast(result.message, StatusEnum.Success, 'عملیات موفقیت آمیز بود');
+                showToast(result.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیز بود');
                 onSuccess();
             }
         } catch (e) {
             const exp = e as any;
-            showToast(exp.response.data.message, StatusEnum.Error, 'خطا در انجام عملیات');
+            showToast(exp.response.data.message, ToastStatusEnum.Error, 'خطا در انجام عملیات');
         }
     };
 

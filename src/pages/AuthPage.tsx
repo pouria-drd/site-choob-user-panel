@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
 import { useAuth } from '../context/AuthContext';
-import { StatusEnum } from '../enums/StatusEnum';
 import { UserRolesEnum } from '../enums/UserRolesEnum';
-import { useToast } from '../components/uiComp/toasts/ToastProvider';
+import { ToastStatusEnum, useToast } from "../components/uiComp/Toast/ToastProvider";
 
 import AuthService from '../services/AuthService';
 import SpinnerCard from '../components/uiComp/cards/SpinnerCard';
@@ -65,7 +63,7 @@ function AuthPage() {
 
                 handleLogin(UserRolesEnum.USER);
 
-                showToast('خوش آمدید', StatusEnum.Success);
+                showToast('خوش آمدید', ToastStatusEnum.Success);
 
                 // Redirect to the home page
 

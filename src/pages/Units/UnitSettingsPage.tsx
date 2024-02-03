@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import UnitProjectService from '../../services/UnitProjectService';
-import Spinner from '../../components/uiComp/spinner/Spinner';
+
 import UnitSetting from './Components/UnitSetting';
 import AlertIcon from '../../components/icons/AlertIcon';
+import Spinner from '../../components/uiComp/spinner/Spinner';
+import UnitProjectService from '../../services/UnitProjectService';
 
 function UnitSettingsPage() {
     const unitProjectService = new UnitProjectService();

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
-import { ToastProvider } from './components/uiComp/toasts/ToastProvider.tsx';
+import { ToastProvider } from './components/uiComp/Toast/ToastProvider.tsx';
 import { ConfirmModalProvider } from './components/uiComp/modals/ConfirmModalProvider.tsx';
 
 import './assets/styles/index.css';

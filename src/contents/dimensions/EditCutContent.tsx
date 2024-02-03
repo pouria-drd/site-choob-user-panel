@@ -1,13 +1,12 @@
-import { StatusEnum } from '../../enums/StatusEnum';
 import { ReactNode, useState, useEffect } from 'react';
+import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
+import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
 
-import DimensionService from '../../services/DimensionService';
 
 import Button from '../../components/uiComp/buttons/Button';
 import Spinner from '../../components/uiComp/spinner/Spinner';
+import DimensionService from '../../services/DimensionService';
 import Dropdown from '../../components/uiComp/dropdown/Dropdown';
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
-import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
 
 interface DropdownOption {
     label: string;
@@ -74,11 +73,11 @@ const EditCutContent = ({ dimension, onUpdate }: { dimension: DimensionDetailMod
 
         try {
             const result = await dimensionService.UpdateCutDimension<any>(formData, dimension.id);
-            showToast(result.message, StatusEnum.Success);
+            showToast(result.message, ToastStatusEnum.Success);
             onUpdate();
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error);
+            showToast(e.response.data.message, ToastStatusEnum.Error);
             setIsProcessing(false);
         }
     };

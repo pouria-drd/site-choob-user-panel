@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import UnitProjectService from '../../services/UnitProjectService';
-import SingleProjectHeader from './Headers/SingleProjectHeader';
-import BinIcon from '../../components/icons/BinIcon';
-import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
 import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
-import { StatusEnum } from '../../enums/StatusEnum';
+import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
+
+import BinIcon from '../../components/icons/BinIcon';
 import EyeIcon from '../../components/icons/EyeIcon';
-import Spinner from '../../components/uiComp/spinner/Spinner';
 import Modal from '../../components/uiComp/modals/Modal';
+import Spinner from '../../components/uiComp/spinner/Spinner';
+import SingleProjectHeader from './Headers/SingleProjectHeader';
+import UnitProjectService from '../../services/UnitProjectService';
 import UnitPropsContent from '../../contents/UnitProject/UnitPropsContent';
+import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
 
 interface UnitSingleProjectPageParams {
     projectID: string;
 }
+
 function UnitSingleProjectPage() {
     const unitProjectService = new UnitProjectService();
 
@@ -102,21 +103,21 @@ function UnitSingleProjectPage() {
             const result = await unitProjectService.DeleteUnitFromProject<any>(projectID, unitId);
 
             if (result.status === true) {
-                showToast(result.message, StatusEnum.Warning);
+                showToast(result.message, ToastStatusEnum.Warning);
                 setTableData({ headers: [], rows: [] });
                 await fetchData();
             }
             if (result.status === false) {
-                showToast(result.message, StatusEnum.Error);
+                showToast(result.message, ToastStatusEnum.Error);
             }
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error);
+            showToast(e.response.data.message, ToastStatusEnum.Error);
         }
         setIsLoading(false);
     };
 
-    useEffect(() => {}, [tableData]);
+    useEffect(() => { }, [tableData]);
 
     const parseProjectUnitProps = (prop: UnitProjectDimensionsPropsModel[]) => {
         let parseProp: UnitProjectDimensionPropParsed = { title: '', description: '--', details: '' };
@@ -138,11 +139,11 @@ function UnitSingleProjectPage() {
             var result = await unitProjectService.CalculateProject<any>(dto);
 
             if (result.status) {
-                showToast(result.message, StatusEnum.Success);
+                showToast(result.message, ToastStatusEnum.Success);
             } else {
-                showToast(result.message, StatusEnum.Error);
+                showToast(result.message, ToastStatusEnum.Error);
             }
-        } catch (e) {}
+        } catch (e) { }
         setIsCalculating(false);
     };
 

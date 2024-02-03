@@ -1,3 +1,4 @@
-interface IconProp{
-    size?:number;
+interface IconProp {
+    size?: number;
+    className?: string;
 }

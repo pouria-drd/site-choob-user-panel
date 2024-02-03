@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
+
 import SettingInput from './SettingInput';
 import SaveIcon from '../../../components/icons/SaveIcon';
 import UnitProjectService from '../../../services/UnitProjectService';
-import { useToast } from '../../../components/uiComp/toasts/ToastProvider';
-import { StatusEnum } from '../../../enums/StatusEnum';
+
 
 function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate: () => void }) {
     const unitProjectService = new UnitProjectService();
@@ -38,9 +39,9 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
         try {
             var result = await unitProjectService.UpdateProperties<any>(prop.index, prop.value);
 
-            if (!result.status) showToast(result.message, StatusEnum.Error);
+            if (!result.status) showToast(result.message, ToastStatusEnum.Error);
             else {
-                showToast(result.message, StatusEnum.Success);
+                showToast(result.message, ToastStatusEnum.Success);
                 onUpdate();
             }
         } catch (e) {

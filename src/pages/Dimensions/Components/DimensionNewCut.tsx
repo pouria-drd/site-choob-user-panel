@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { StatusEnum } from '../../../enums/StatusEnum';
-import { useToast } from '../../../components/uiComp/toasts/ToastProvider';
+import { ButtonTypes } from '../../../enums/ButtonTypes';
+import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
 
 import CutPlane from '../../../contents/dimensions/CutPlane';
 import Button from '../../../components/uiComp/buttons/Button';
 import DimensionService from '../../../services/DimensionService';
 import UploadIcon from '../../../components/icons/UploadIcon';
-import { ButtonTypes } from '../../../enums/ButtonTypes';
 import Modal from '../../../components/uiComp/modals/Modal';
 import OptiCutImportContent from '../../../contents/dimensions/OptiCutImportContent';
 
@@ -49,15 +48,15 @@ const DimensionNewCut = ({ dimensionId, onUpdate }: DimensionNewCutProps) => {
 
     const addToTheList = async () => {
         if (!formData.x) {
-            showToast('طول را وارد کنید', StatusEnum.Error, 'خطا');
+            showToast('طول را وارد کنید', ToastStatusEnum.Error, 'خطا');
             return;
         }
         if (!formData.y) {
-            showToast('عرض را وارد کنید', StatusEnum.Error, 'خطا');
+            showToast('عرض را وارد کنید', ToastStatusEnum.Error, 'خطا');
             return;
         }
         if (!formData.count) {
-            showToast('تعداد را وارد کنید', StatusEnum.Error, 'خطا');
+            showToast('تعداد را وارد کنید', ToastStatusEnum.Error, 'خطا');
             return;
         }
 
@@ -81,7 +80,7 @@ const DimensionNewCut = ({ dimensionId, onUpdate }: DimensionNewCutProps) => {
             setIsProcessing(true);
 
             const result = await dimensionService.AddNewCutDimension<any>(addData);
-            showToast(result.message, StatusEnum.Success, 'عملیات موفقیت آمیزبود');
+            showToast(result.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیزبود');
 
             setFormData({
                 x: 0,
@@ -101,7 +100,7 @@ const DimensionNewCut = ({ dimensionId, onUpdate }: DimensionNewCutProps) => {
             document.getElementById('xInput')?.focus();
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error, 'خطا');
+            showToast(e.response.data.message, ToastStatusEnum.Error, 'خطا');
         }
         setIsProcessing(false);
     };

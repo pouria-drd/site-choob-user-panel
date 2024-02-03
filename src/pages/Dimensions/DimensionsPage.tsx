@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StatusEnum } from '../../enums/StatusEnum';
-import { useToast } from '../../components/uiComp/toasts/ToastProvider';
 import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
+import { ToastStatusEnum, useToast } from "../../components/uiComp/Toast/ToastProvider";
+
 
 import DimensionStatus from './Components/DimensionStatus';
 import Modal from '../../components/uiComp/modals/Modal';
@@ -105,13 +105,13 @@ function DimensionsPage() {
             const result = await dimensionService.DeleteDimensionList<any>(dimensionID);
 
             if (result.status === true) {
-                showToast(result.message, StatusEnum.Success);
+                showToast(result.message, ToastStatusEnum.Success);
                 setTableData({ headers: [], rows: [] });
                 await fetchData();
             }
         } catch (error) {
             let e = error as any;
-            showToast(e.response.data.message, StatusEnum.Error);
+            showToast(e.response.data.message, ToastStatusEnum.Error);
         }
         setIsLoading(false);
     };

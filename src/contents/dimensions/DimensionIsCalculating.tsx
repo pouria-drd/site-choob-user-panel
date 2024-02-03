@@ -1,4 +1,5 @@
 import Calculator from '../../assets/images/calculator.png';
+
 const DimensionIsCalculating = () => {
     return (
         <div className="flex justify-center w-full">
