@@ -1,4 +1,4 @@
-const Burger = () => {
+const Burger = ({ size = undefined, className = 'w-8 h-8' }: IconProp) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,9 @@ const Burger = () => {
       viewBox="0 0 24 24"
       strokeWidth={2.2}
       stroke="currentColor"
-      className="cursor-pointer w-8 h-8"
+      width={size}
+      height={size}
+      className={`${!size ? className : undefined} cursor-pointer`}
     >
       <path
         strokeLinecap="round"

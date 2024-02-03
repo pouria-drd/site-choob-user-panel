@@ -1,10 +1,10 @@
-const ArrowDownIcon = () => {
+const ArrowDownIcon = ({ size = undefined, className = 'w-4 h-2' }: IconProp) => {
   return (
     <svg
-      className="cursor-pointer"
       xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="8"
+      width={size}
+      height={size}
+      className={`${!size ? className : undefined} cursor-pointer`}
       viewBox="0 0 14 8"
       fill="none"
     >

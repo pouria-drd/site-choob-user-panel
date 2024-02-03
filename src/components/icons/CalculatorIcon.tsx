@@ -1,4 +1,4 @@
-const CalculatorIcon = ({ size = 24 }: IconProp) => {
+const CalculatorIcon = ({ size = undefined, className = 'w-6 h-6' }: IconProp) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,9 @@ const CalculatorIcon = ({ size = 24 }: IconProp) => {
             strokeWidth={1.5}
             stroke="currentColor"
             width={size}
-            height={size}>
+            height={size}
+            className={!size ? className : undefined}
+        >
             <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

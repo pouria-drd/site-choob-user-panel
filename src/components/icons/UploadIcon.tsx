@@ -1,4 +1,4 @@
-const UploadIcon = ({ size = 20 }: IconProp) => {
+const UploadIcon = ({ size = undefined, className = 'w-5 h-5' }: IconProp) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,9 @@ const UploadIcon = ({ size = 20 }: IconProp) => {
             strokeWidth={1.5}
             stroke="currentColor"
             width={size}
-            height={size}>
+            height={size}
+            className={!size ? className : undefined}
+        >
             <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

@@ -1,4 +1,4 @@
-const MapIcon = ({ size = 10 }: IconProp) => {
+const MapIcon = ({ size = undefined, className = 'w-3 h-3' }: IconProp) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,10 @@ const MapIcon = ({ size = 10 }: IconProp) => {
             strokeWidth={1.5}
             stroke="currentColor"
             width={size}
-            height={size}>
+            height={size}
+            className={!size ? className : undefined}
+
+        >
             <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
