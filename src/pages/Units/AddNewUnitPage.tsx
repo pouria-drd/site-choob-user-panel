@@ -5,10 +5,13 @@ import Spinner from '../../components/uiComp/spinner/Spinner';
 
 import { useParams } from 'react-router-dom';
 import UnitSelectionHeader from './Headers/UnitSelectionHeader';
-import SimpleGroundUnit from './Components/Units/SimpleGroundUnit';
+import SimpleGroundUnit from './Components/Units/GroundUnits/SimpleGroundUnit';
 import UnitUserPropsContent from '../../contents/UnitProject/UnitUserPropsContent';
 import Modal from '../../components/uiComp/modals/Modal';
 import WrenchIcon from '../../components/icons/WrenchIcon';
+import FixedGroundUnit from './Components/Units/GroundUnits/FixedGroundUnit';
+import FixedGroundUnitWithPillar from './Components/Units/GroundUnits/FixedGroundUnitWithPillar';
+import SimpleGroundUnitWithPillar from './Components/Units/GroundUnits/SimpleGroundUnitWithPillar';
 
 interface AddNewUnitPageParams {
     projectID: string;
@@ -54,6 +57,15 @@ function AddNewUnitPage() {
         switch (unit.index) {
             case 1:
                 setSelectedUnit(<SimpleGroundUnit projectId={projectID} />);
+                break;
+            case 2:
+                setSelectedUnit(<SimpleGroundUnitWithPillar projectId={projectID} />);
+                break;
+            case 3:
+                setSelectedUnit(<FixedGroundUnit projectId={projectID} />);
+                break;
+            case 4:
+                setSelectedUnit(<FixedGroundUnitWithPillar projectId={projectID} />);
                 break;
             default:
                 setSelectedUnit(<div className="flex">dastan</div>);

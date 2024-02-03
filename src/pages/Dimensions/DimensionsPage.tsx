@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
-import { ToastStatusEnum, useToast } from "../../components/uiComp/Toast/ToastProvider";
-
+import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
 
 import DimensionStatus from './Components/DimensionStatus';
 import Modal from '../../components/uiComp/modals/Modal';
@@ -63,16 +62,16 @@ function DimensionsPage() {
                     <div className="flex justify-end lg:justify-center">
                         <DimensionStatus dimension={item} />
                     </div>,
-                    <div className="flex r2l justify-end lg:justify-center gap-6">
+                    <div className="flex r2l justify-end lg:justify-center gap-4 md:gap-6">
                         <button
                             onClick={() => handleEditButton(item.id)}
-                            className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal">
-                            <EditIcon />
+                            className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal p-1">
+                            <EditIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                         <button
-                            className="text-sc-red-normal rounded-lg hover:bg-sc-purple-normal"
+                            className="text-sc-red-normal rounded-lg hover:bg-sc-purple-normal p-1"
                             onClick={() => handleDeleteButton(item)}>
-                            <BinIcon />
+                            <BinIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                     </div>,
                 ]),

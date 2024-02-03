@@ -65,18 +65,18 @@ function UnitSingleProjectPage() {
                 parseProjectUnitProps(item.properties).description,
                 parseProjectUnitProps(item.properties).details,
                 item.count.toString(),
-                <div className="flex r2l justify-end lg:justify-center gap-6">
+                <div className="flex r2l justify-end lg:justify-center gap-4 md:gap-6">
                     <button
                         onClick={() => handleShowUnit(item)}
                         className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal">
-                        <EyeIcon />
+                        <EyeIcon className="w-4 h-4 md:h-5 md:w-5" />
                     </button>
                     <button
                         className="text-sc-red-normal rounded-lg hover:bg-sc-purple-normal"
                         onClick={() => {
                             handleDeleteButton(parseProjectUnitProps(item.properties).title, item.id);
                         }}>
-                        <BinIcon />
+                        <BinIcon className="w-4 h-4 md:h-5 md:w-5" />
                     </button>
                 </div>,
             ]),
@@ -117,7 +117,7 @@ function UnitSingleProjectPage() {
         setIsLoading(false);
     };
 
-    useEffect(() => { }, [tableData]);
+    useEffect(() => {}, [tableData]);
 
     const parseProjectUnitProps = (prop: UnitProjectDimensionsPropsModel[]) => {
         let parseProp: UnitProjectDimensionPropParsed = { title: '', description: '--', details: '' };
@@ -143,7 +143,7 @@ function UnitSingleProjectPage() {
             } else {
                 showToast(result.message, ToastStatusEnum.Error);
             }
-        } catch (e) { }
+        } catch (e) {}
         setIsCalculating(false);
     };
 

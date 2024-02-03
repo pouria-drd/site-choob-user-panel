@@ -1,16 +1,16 @@
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ButtonTypes } from '../../../../enums/ButtonTypes';
-import { ToastStatusEnum, useToast } from '../../../../components/uiComp/Toast/ToastProvider';
+import { ButtonTypes } from '../../../../../enums/ButtonTypes';
+import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
-import BoxXYZ from './BoxXYZ';
-import DoorColorSelect from './DoorColorSelect';
-import Button from '../../../../components/uiComp/buttons/Button';
-import Spinner from '../../../../components/uiComp/spinner/Spinner';
-import Dropdown from '../../../../components/uiComp/dropdown/Dropdown';
-import UnitProjectService from '../../../../services/UnitProjectService';
-import CalculatorIcon from '../../../../components/icons/CalculatorIcon';
-import DimensionCutList from '../../../Dimensions/Components/DimensionCutList';
+import BoxXYZ from '../BoxXYZ';
+import DoorColorSelect from '../DoorColorSelect';
+import Button from '../../../../../components/uiComp/buttons/Button';
+import Spinner from '../../../../../components/uiComp/spinner/Spinner';
+import Dropdown from '../../../../../components/uiComp/dropdown/Dropdown';
+import UnitProjectService from '../../../../../services/UnitProjectService';
+import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
+import DimensionCutList from '../../../../Dimensions/Components/DimensionCutList';
 
 interface DropdownOption {
     label: string;
@@ -22,14 +22,14 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function SimpleGroundUnit({ projectId }: { projectId: string }) {
+function FixedGroundUnit({ projectId }: { projectId: string }) {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     const unitProjectService = new UnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<SimpleGroundUnitDTO>({ depth: 0, width: 0, height: 0, doors: [] });
+    const [dto, setDTO] = useState<FixedGroundUnitDTO>({ depth: 55, width: 100, height: 72, fixedWidth: 35, FixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 1, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
 
     const doorOptions: DropdownOption[] = [
@@ -45,7 +45,7 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
-    const handleInputChange = (fieldName: keyof SimpleGroundUnitDTO, value: number | SimpleDoorDTO) => {
+    const handleInputChange = (fieldName: keyof FixedGroundUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
@@ -77,11 +77,10 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
     };
 
     const calculate = async () => {
-        console.log(dto);
         if (dto.depth === 0 || dto.height === 0 || dto.width == 0) return;
         setIsCalculating(true);
         try {
-            let dtoDoors: SimpleDoorDTO[] = [];
+            let dtoDoors: SimpleColorDTO[] = [];
 
             doors.map((d) => {
                 dtoDoors.push({ colorName: d.value });
@@ -90,12 +89,13 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedSimpleGroundUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedFixedGroundUnit<any>(dtoToSend);
 
+            console.log('result', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
-        } catch (e) { }
+        } catch (e) {}
         setIsCalculating(false);
     };
 
@@ -118,7 +118,7 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
         });
 
         const addUnit: AddUnitDTO = {
-            name: 'زمینی ساده',
+            name: 'زمینی با ثابت',
             projectId: projectId,
             count: totalCount,
             details: `${dto.width}x${dto.height}x${dto.depth}`,
@@ -137,12 +137,12 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
                     showToast(saveResult.message, ToastStatusEnum.Error, 'خطا');
                 }
             }
-        } catch (e) { }
+        } catch (e) {}
     };
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی ساده</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی با ثابت</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
@@ -171,6 +171,15 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
                                     className="base-input w-full"
                                     placeholder="عمق (سانتی متر)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">تعداد طبقه</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="تعداد طبقه"
+                                    onChange={(e) => handleInputChange('shelfCount', Number(e.target.value))}
                                 />
                             </div>
 
@@ -258,4 +267,4 @@ function SimpleGroundUnit({ projectId }: { projectId: string }) {
     );
 }
 
-export default SimpleGroundUnit;
+export default FixedGroundUnit;

@@ -30,12 +30,12 @@ function DimensionsHistoryPage() {
     const openModal = () => setIsModalOpen(true);
 
     const closeModal = () => {
-        setIsModalOpen(false)
+        setIsModalOpen(false);
     };
 
     const onSuccessCopy = (copyDimensionId: string) => {
-        setIsModalOpen(false)
-        navigate("/dimension/" + copyDimensionId);
+        setIsModalOpen(false);
+        navigate('/dimension/' + copyDimensionId);
     };
 
     const dimensionService = new DimensionService();
@@ -45,9 +45,8 @@ function DimensionsHistoryPage() {
         rows: Array<(string | JSX.Element)[]>;
     }>({ headers: [], rows: [] });
 
-
-    const [selectedDimensionID, setSelectedDimensionID] = useState("");
-    const [selectedDimensionTitle, setSelectedDimensionTitle] = useState("");
+    const [selectedDimensionID, setSelectedDimensionID] = useState('');
+    const [selectedDimensionTitle, setSelectedDimensionTitle] = useState('');
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -69,16 +68,16 @@ function DimensionsHistoryPage() {
                     <div className="flex justify-end lg:justify-center">
                         <DimensionStatus dimension={item} />
                     </div>,
-                    <div className="flex r2l justify-end lg:justify-center gap-6">
+                    <div className="flex r2l justify-end lg:justify-center gap-4">
                         <button
                             onClick={() => handleEditButton(item.id)}
                             className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal">
-                            <EyeIcon />
+                            <EyeIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                         <button
                             onClick={() => handleShowCopyModal(item.id, item.title)}
                             className="text-sc-green-normal rounded-lg hover:bg-sc-purple-normal">
-                            <CopyIcon />
+                            <CopyIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                     </div>,
                 ]),
@@ -93,10 +92,10 @@ function DimensionsHistoryPage() {
     };
 
     const handleShowCopyModal = (dimensionID: string, dimensionTitle: string) => {
-        setSelectedDimensionID(dimensionID)
-        setSelectedDimensionTitle("کپی از: " + dimensionTitle);
+        setSelectedDimensionID(dimensionID);
+        setSelectedDimensionTitle('کپی از: ' + dimensionTitle);
         openModal();
-    }
+    };
 
     useEffect(() => {
         fetchData();
@@ -115,13 +114,9 @@ function DimensionsHistoryPage() {
                 />
             ) : (
                 <div className="flex flex-col gap-6 overflow-hidden w-full h-full pb-16">
-
-
                     <div className="flex flex-shrink-0 justify-end items-center font-peyda w-full">
-
                         <h2 className="text-xl md:text-2xl font-bold text-right py-1">تاریخچه ابعاد</h2>
                     </div>
-
 
                     <div className="flex flex-col flex-grow overflow-y-auto">
                         {/* ResponsiveTable should handle its own height */}
@@ -137,7 +132,10 @@ function DimensionsHistoryPage() {
                 title={selectedDimensionTitle}
                 isOpen={isModalOpen}
                 onClose={closeModal}>
-                <CopyCutDimension dimensionID={selectedDimensionID} onSuccess={onSuccessCopy} />
+                <CopyCutDimension
+                    dimensionID={selectedDimensionID}
+                    onSuccess={onSuccessCopy}
+                />
             </Modal>
         </>
     );

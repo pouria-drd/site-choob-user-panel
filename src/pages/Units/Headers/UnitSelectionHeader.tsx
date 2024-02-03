@@ -16,7 +16,8 @@ function UnitSelectionHeader({ units, onSelectionChanged }: { units: UnitPropsDT
                         <div className="absolute flex justify-center items-end h-1/3 pb-2 w-full bg-gradient-to-t from-gray-500  bottom-0 rounded-b-lg">
                             <button
                                 onClick={() => onSelection(u)}
-                                className="w-full text-center hover:text-white">
+                                className="w-full flex flex-col items-center text-center hover:text-white">
+                                <span className=""> {u.name}</span>
                                 انتخاب
                             </button>
                         </div>

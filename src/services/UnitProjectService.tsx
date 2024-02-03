@@ -47,11 +47,6 @@ class UnitProjectService extends AxiosBase {
         return this.request<T>({ method: 'get', url });
     }
 
-    public async CalculatedSimpleGroundUnit<T>(dto: SimpleGroundUnitDTO) {
-        const url = this.baseURL + 'GroundUnit/New';
-        return this.request<T>({ method: 'post', url, data: dto });
-    }
-
     public async GetUnitDetails<T>(projectId: string, unitId: string) {
         const url = this.baseURL + 'GetUnitDetails?projectId=' + projectId + '&unitId=' + unitId;
         return this.request<T>({ method: 'get', url });
@@ -64,6 +59,27 @@ class UnitProjectService extends AxiosBase {
     public async DeleteUnitFromProject<T>(projectId: string, unitID: string) {
         const url = this.baseURL + 'DeleteUnit?projectId=' + projectId + '&unitId=' + unitID;
         return this.request<T>({ method: 'delete', url });
+    }
+
+    //Calculate unit Stuff
+
+    public async CalculatedSimpleGroundUnit<T>(dto: SimpleGroundUnitDTO) {
+        const url = this.baseURL + 'SimpleGroundUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+    public async CalculatedSimpleGroundUnitWithPillar<T>(dto: SimpleGroundUnitWithPillarDTO) {
+        const url = this.baseURL + 'SimpleGroundUnitWithPillar';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
+    public async CalculatedFixedGroundUnit<T>(dto: FixedGroundUnitDTO) {
+        const url = this.baseURL + 'FixedGroundUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
+    public async CalculatedFixedGroundUnitWithPillar<T>(dto: FixedGroundUnitWithPillarDTO) {
+        const url = this.baseURL + 'FixedGroundUnitWithPillar';
+        return this.request<T>({ method: 'post', url, data: dto });
     }
 }
 

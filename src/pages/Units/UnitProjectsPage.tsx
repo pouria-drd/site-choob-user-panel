@@ -12,7 +12,6 @@ import StatusChip from '../../components/uiComp/chips/StatusChip';
 import UnitProjectService from '../../services/UnitProjectService';
 import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
 
-
 function UnitProjectsPage() {
     const { showConfirmModal } = useConfirmModal();
 
@@ -58,22 +57,22 @@ function UnitProjectsPage() {
                             />
                         )}
                     </div>,
-                    <div className="flex r2l justify-end lg:justify-center gap-6">
+                    <div className="flex r2l justify-end lg:justify-center gap-4 md:gap-6">
                         <button
                             onClick={() => handleNavigate(item.id)}
                             className="text-sc-blue-normal rounded-lg hover:bg-sc-purple-normal">
-                            <EditIcon />
+                            <EditIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                         <button
                             className="text-sc-red-normal rounded-lg hover:bg-sc-purple-normal"
                             onClick={() => handleDeleteButton(item.title, item.id)}>
-                            <BinIcon />
+                            <BinIcon className="w-4 h-4 md:h-5 md:w-5" />
                         </button>
                     </div>,
                 ]),
             };
             setTableData(updatedTableData);
-        } catch (e) { }
+        } catch (e) {}
 
         setIsLoading(false);
     };
@@ -118,7 +117,7 @@ function UnitProjectsPage() {
         fetchData();
     }, []);
 
-    useEffect(() => { }, [tableData, isLoading]);
+    useEffect(() => {}, [tableData, isLoading]);
 
     return (
         <>
