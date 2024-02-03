@@ -3,34 +3,34 @@
   hover:scale-105 transition-all cursor-default font-peyda p-4 sm:w-80 max-w-full;
 
   &.success {
-    @apply bg-green-100 text-green-700;
+    @apply bg-sc-green-100 text-sc-green-normal;
 
     &.toast-progress {
-      @apply after:bg-green-600;
+      @apply after:bg-sc-green-normal;
     }
   }
 
   &.warning {
-    @apply bg-yellow-50 text-yellow-600;
+    @apply bg-sc-brown-500 text-sc-brown-800;
 
     &.toast-progress {
-      @apply after:bg-yellow-600;
+      @apply after:bg-sc-brown-800;
     }
   }
 
   &.error {
-    @apply bg-red-100 text-red-600;
+    @apply bg-sc-red-200 text-sc-red-normal;
 
     &.toast-progress {
-      @apply after:bg-red-600;
+      @apply after:bg-sc-red-normal;
     }
   }
 
   &.info {
-    @apply bg-blue-50 text-blue-600;
+    @apply bg-sc-purple-normal text-sc-blue-normal;
 
     &.toast-progress {
-      @apply after:bg-blue-600;
+      @apply after:bg-sc-blue-normal;
     }
   }
 
@@ -40,19 +40,19 @@
   }
 
   &.success button {
-    @apply text-green-700;
+    @apply text-sc-green-normal;
   }
 
   &.warning button {
-    @apply text-yellow-600;
+    @apply text-sc-brown-800;
   }
 
   &.error button {
-    @apply text-red-700;
+    @apply text-sc-red-normal;
   }
 
   &.info button {
-    @apply text-blue-600;
+    @apply text-sc-blue-normal;
   }
 
   &.fadeIn {
