@@ -35,10 +35,16 @@ const CalculateProjectModalContent = ({ project, onCalculateClicked }: { project
         console.log(dimensionId, propIndex);
 
         if (!dto) return;
-        let props = dto.properties;
+        let props: UnitProjectPropsModel[] = [];
 
-        props.forEach((p) => {
-            p.index = p.index === propIndex ? dimensionId : p.value;
+        dto.properties.forEach((p) => {
+            if (p.index === propIndex) {
+                p.value = dimensionId;
+                p.valueId = dimensionId;
+                p.valueString = 'changed';
+            }
+
+            props.push(p);
         });
 
         setDTO((prevDTO) => ({
@@ -48,6 +54,8 @@ const CalculateProjectModalContent = ({ project, onCalculateClicked }: { project
     };
 
     const calculationClicked = () => {
+        console.log('dto', dto);
+        return;
         onCalculateClicked(dto);
     };
 
