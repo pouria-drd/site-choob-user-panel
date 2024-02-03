@@ -3,8 +3,10 @@ import SidebarItem from './SidebarItem';
 import CalculatorIcon from '../icons/CalculatorIcon';
 import CreditCardIcon from '../icons/CreditCardIcon';
 import CubeIcon from '../icons/CubeIcon';
+import { useEffect, useState } from 'react';
 
 function Sidebar({ onClick }: { onClick?: () => void }) {
+    const [isInDev, setIsInDev] = useState(false);
     // options for calculation section
     const calculationlinks = [
         { label: 'لیست ابعاد فعال', to: '/dimensions' },
@@ -20,6 +22,13 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
         { label: 'تنظیمات', to: '/unit-settings' },
     ];
 
+    useEffect(() => {
+        const env = import.meta.env;
+
+        if (env.MODE === 'development') {
+            setIsInDev(true);
+        }
+    }, []);
     return (
         <div className="flex flex-col bg-sc-purple-normal w-full h-full p-4 gap-4">
             <SidebarItem
@@ -34,12 +43,14 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
                 onClick={onClick}
             />
 
-            <SidebarItem
-                label="یونیت"
-                icon={<CubeIcon />}
-                items={unitLinks}
-                onClick={onClick}
-            />
+            {!isInDev && (
+                <SidebarItem
+                    label="یونیت"
+                    icon={<CubeIcon />}
+                    items={unitLinks}
+                    onClick={onClick}
+                />
+            )}
 
             <SidebarItem
                 label="مالی"
