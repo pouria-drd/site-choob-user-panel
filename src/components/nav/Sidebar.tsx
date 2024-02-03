@@ -43,7 +43,7 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
                 onClick={onClick}
             />
 
-            {!isInDev && (
+            {isInDev && (
                 <SidebarItem
                     label="یونیت"
                     icon={<CubeIcon />}

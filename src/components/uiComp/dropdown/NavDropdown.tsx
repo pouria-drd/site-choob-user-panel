@@ -43,14 +43,14 @@ const NavDropdown = ({ navLinks }: DropdownProps) => {
         //    setIsOpen(false);
     };
 
-    const arrowIconClass = isOpen ? '' : 'rotate-180';
+    const arrowIconClass = isOpen ? 'w-6 h-6' : 'w-6 h-6 rotate-180';
 
     return (
         <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02">
             <div
                 onClick={handleToggleClick}
                 className="flex items-center justify-between bg-white hover:bg-gray-50 text-base rounded-lg transition-colors cursor-pointer w-full py-4 pl-6 pr-4">
-                <ArrowUpIcon css={arrowIconClass} />
+                <ArrowUpIcon className={arrowIconClass} />
 
                 <div className="flex items-center justify-end gap-2">
                     {selectedLink?.label}

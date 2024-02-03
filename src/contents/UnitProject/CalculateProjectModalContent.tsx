@@ -12,8 +12,6 @@ const CalculateProjectModalContent = ({ project, onCalculateClicked }: { project
 
     const [dto, setDTO] = useState<CalculateUnitProjectDTO>({ projectId: project.id, properties: [] });
 
-    const [projectProps, setProjectProps] = useState<UnitProjectPropsModel[]>([]);
-
     const fetchData = async () => {
         setIsLoading(true);
         try {
