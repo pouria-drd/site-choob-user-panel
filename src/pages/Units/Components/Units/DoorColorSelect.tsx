@@ -15,10 +15,10 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
     };
 
     return (
-        <div className="flex items-center justify-between gap-2 bg-sc-purple-normal p-2 rounded-md">
-            <h6 className="px-2 whitespace-nowrap">{title}</h6>
+        <div className="flex items-center justify-between text-xs md:text-sm gap-2 bg-sc-purple-normal px-2 py-3 rounded-md">
+            <h6 className="px-2 whitespace-nowrap ">{title}:</h6>
             <fieldset className="flex items-center  gap-2 w-full justify-between r2l">
-                <div className="flex gap-1 w-full">
+                <div className="flex gap-1 w-full items-center">
                     <input
                         type="radio"
                         name={`colorOption${index}`}
@@ -27,12 +27,12 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         checked={selectedOption == 1 ? true : false}
                     />
                     <label
-                        className="text-sc-gray-normal"
+                        className={selectedOption == 1 ? 'text-sc-blue-normal' : 'text-gray-600'}
                         htmlFor="color1">
                         رنگ 1
                     </label>
                 </div>
-                <div className="flex gap-1 w-full">
+                <div className="flex gap-1 w-full items-center">
                     <input
                         type="radio"
                         name={`colorOption${index}`}
@@ -41,7 +41,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         checked={selectedOption == 2 ? true : false}
                     />
                     <label
-                        className="text-sc-gray-normal"
+                        className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}
                         htmlFor="color2">
                         رنگ 2
                     </label>

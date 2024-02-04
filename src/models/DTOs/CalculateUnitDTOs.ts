@@ -3,6 +3,8 @@ interface SimpleGroundUnitDTO {
     height: number;
     depth: number;
     shelfCount: number;
+    hasHiddenHandle: boolean;
+    hiddenHandleTopGap: number;
     legColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
 }
@@ -14,6 +16,8 @@ interface SimpleGroundUnitWithPillarDTO {
     pillarWidth: number;
     pillarDepth: number;
     shelfCount: number;
+    hasHiddenHandle: boolean;
+    hiddenHandleTopGap: number;
     legColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
 }
@@ -25,6 +29,8 @@ interface FixedGroundUnitDTO {
     fixedWidth: number;
     FixedWidthColor: SimpleColorDTO;
     shelfCount: number;
+    hasHiddenHandle: boolean;
+    hiddenHandleTopGap: number;
     legColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
 }
@@ -38,6 +44,8 @@ interface FixedGroundUnitWithPillarDTO {
     fixedWidth: number;
     FixedWidthColor: SimpleColorDTO;
     shelfCount: number;
+    hasHiddenHandle: boolean;
+    hiddenHandleTopGap: number;
     legColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
 }

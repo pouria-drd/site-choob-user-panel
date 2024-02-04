@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRolesEnum } from '../enums/UserRolesEnum';
-import { ToastStatusEnum, useToast } from "../components/uiComp/Toast/ToastProvider";
+import { ToastStatusEnum, useToast } from '../components/uiComp/Toast/ToastProvider';
 
 import AuthService from '../services/AuthService';
 import SpinnerCard from '../components/uiComp/cards/SpinnerCard';
@@ -42,11 +42,12 @@ function AuthPage() {
     };
 
     async function handleTokenValidation() {
+        let isSuccessful = false;
         try {
             handleLogout();
-
             if (token) {
                 const result = await authService.ValidateToken<TokenValidationResult>(token);
+                isSuccessful = true;
                 // Store the token and optionalParam in sessionStorage
                 sessionStorage.setItem('token', JSON.stringify(result));
                 const bearerResult = await authService.RequestBearer<BearerResult>();
@@ -80,6 +81,9 @@ function AuthPage() {
                 }
             }
         } catch (error) {
+            //odd catch happens but login is successfull, TODO: check it later..
+            if (isSuccessful) return;
+
             handleLogout();
             setLoading(false);
             // Handle the error, e.g., display an error message

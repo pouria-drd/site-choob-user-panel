@@ -66,7 +66,7 @@ const Dropdown = ({ title, options, defaultOption, onSelectOption }: DropdownPro
     };
 
     // CSS class for the arrow icon, rotated if the dropdown is active
-    const arrowIconClass = isOpen ? 'w-6 h-6' : 'w-6 h-6 rotate-180';
+    const arrowIconClass = isOpen ? 'w-4 h-4' : 'w-4 h-4 rotate-180';
 
     return (
         <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02">

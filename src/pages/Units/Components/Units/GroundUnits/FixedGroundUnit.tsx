@@ -29,8 +29,9 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     const unitProjectService = new UnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<FixedGroundUnitDTO>({ depth: 55, width: 100, height: 72, fixedWidth: 35, FixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 1, doors: [] });
+    const [dto, setDTO] = useState<FixedGroundUnitDTO>({ depth: 0, width: 0, height: 0, fixedWidth: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, legColor: { colorName: 'رنگ 1' }, FixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 1, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
+    const [description, setDescription] = useState('');
 
     const doorOptions: DropdownOption[] = [
         {
@@ -42,6 +43,7 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
             value: '2',
         },
     ];
+    const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
@@ -50,14 +52,27 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
             return { ...prevDTO, [fieldName]: value };
         });
     };
+
+    const handleHasHiddenDoor = (v: boolean) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
+        });
+    };
+
     const handleSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
         for (let i = 1; i <= dCount; i++) {
             newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ ${i}` });
         }
-
+        setDefaultDoorOption(option);
         setDoors(newDoors);
+    };
+
+    const handleLegColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, legColor: { colorName: v } };
+        });
     };
 
     const handleDoorColorChange = (v: any, index: number) => {
@@ -77,8 +92,13 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     };
 
     const calculate = async () => {
-        if (dto.depth === 0 || dto.height === 0 || dto.width == 0) return;
         setIsCalculating(true);
+        setDimensionCutList([]);
+        if (dto.depth <= 0 || dto.height <= 0 || dto.width <= 0 || dto.fixedWidth <= 0) {
+            showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
+            setIsCalculating(false);
+            return;
+        }
         try {
             let dtoDoors: SimpleColorDTO[] = [];
 
@@ -124,6 +144,7 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
             details: `${dto.width}x${dto.height}x${dto.depth}`,
             dimensions: dimensionCutList,
             properties: Props,
+            description: description.length > 0 ? description : undefined,
         };
 
         try {
@@ -173,6 +194,14 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
                                 />
                             </div>
+                            <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">طول ثابت (سانتی متر)</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="طول ثابت (سانتی متر)"
+                                    onChange={(e) => handleInputChange('fixedWidth', Number(e.target.value))}
+                                />
+                            </div>
 
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">تعداد طبقه</label>
@@ -183,11 +212,42 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                 />
                             </div>
 
+                            <div className="flex flex-col w-full">
+                                <div className="flex flex-row items-center gap-1">
+                                    <label className="text-xs sm:text-sm md:text-base">درب مخفی</label>
+
+                                    <input
+                                        className="base-input w-full"
+                                        type="checkbox"
+                                        checked={dto.hasHiddenHandle}
+                                        onChange={(e) => handleHasHiddenDoor(e.target.checked)}
+                                    />
+                                </div>
+
+                                {dto.hasHiddenHandle && (
+                                    <div className="flex flex-col w-full">
+                                        <label className="text-xs sm:text-sm md:text-base">فاصله بالای درب مخفی (mm)</label>
+                                        <input
+                                            className="base-input w-full"
+                                            placeholder="فاصله بالای درب مخفی (mm)"
+                                            onChange={(e) => handleInputChange('hiddenHandleTopGap', Number(e.target.value))}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col gap-4 w-full ">
+                                <DoorColorSelect
+                                    title="پاخور"
+                                    onValueChanged={handleLegColor}
+                                    index={0}
+                                />
+                            </div>
                             <div className="w-full  r2l">
                                 <Dropdown
                                     title={'تعداد درب'}
                                     options={doorOptions}
-                                    defaultOption={doorOptions[0]}
+                                    defaultOption={defaultDoorOption}
                                     onSelectOption={(opt) => handleSelectedOption(opt)}
                                 />
                             </div>
@@ -227,33 +287,55 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                     </div>
                 </div>
                 <div className="flex flex-col l2r w-full  bg-white  rounded-lg">
-                    {!dimensionCutList && (
+                    {!dimensionCutList ? (
                         <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
                             <p className="">در انتظار محاسبه</p>
                             <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
                         </div>
+                    ) : (
+                        dimensionCutList.length == 0 && (
+                            <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
+                                <p className="">در انتظار محاسبه</p>
+                                <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
+                            </div>
+                        )
                     )}
                     {isCalculating && (
                         <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-2">
                             <Spinner flex={true} />
                         </div>
                     )}
-                    {dimensionCutList && !isCalculating && (
+                    {dimensionCutList && dimensionCutList?.length > 0 && !isCalculating && (
                         <div className="flex flex-col gap-2 w-full  px-2 py-4">
-                            <div className="flex px-6 justify-between">
-                                <button
-                                    onClick={handleOnSave}
-                                    className="base-button outlined-success w-fit">
-                                    افزودن به پروژه
-                                </button>
-                                <input
-                                    type="number"
-                                    className="base-input"
-                                    placeholder="تعداد"
-                                    min={1}
-                                    value={totalCount}
-                                    onChange={(e) => setTotalCount(Number(e.target.value))}
-                                />
+                            <div className="flex flex-col  gap-2  px-2 items-end justify-between border-b pb-2">
+                                <div className="flex flex-col  r2l w-full">
+                                    <label className="text-xs sm:text-sm md:text-base">تعداد</label>
+                                    <input
+                                        type="number"
+                                        className="base-input w-full md:w-1/4"
+                                        placeholder="تعداد"
+                                        min={1}
+                                        value={totalCount}
+                                        onChange={(e) => setTotalCount(Number(e.target.value))}
+                                    />
+                                    <label className="text-xs sm:text-sm md:text-base mt-2">توضیحات</label>
+                                    <input
+                                        type="text"
+                                        className="base-input w-full"
+                                        placeholder="توضیحات"
+                                        maxLength={32}
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex w-full justify-start">
+                                    <button
+                                        onClick={handleOnSave}
+                                        className="base-button outlined-success w-fit whitespace-nowrap">
+                                        افزودن به پروژه
+                                    </button>
+                                </div>
                             </div>
                             <DimensionCutList
                                 dimensionCutData={dimensionCutList}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useConfirmModal } from '../../../components/uiComp/modals/ConfirmModalProvider';
 import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
 
@@ -20,6 +20,7 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
     const { showConfirmModal } = useConfirmModal();
     const [isProcessing, setIsProcessing] = useState(false);
 
+    const [data, setData] = useState<DimensionCutModel[]>([]);
     const handleDeleteButton = (item: DimensionCutModel) => {
         // Handle button click for a specific item
 
@@ -51,15 +52,36 @@ const DimensionCutList = ({ dimensionCutData, isDeletable = false, dimensionId, 
         setIsProcessing(false);
     };
 
+    useEffect(() => {
+        let dataList: DimensionCutModel[] = [];
+
+        if (dimensionCutData.length === 0) {
+            return;
+        }
+
+        dimensionCutData.map((d) => {
+            let dimension = d;
+            if (dimension.details) {
+                if (dimension.details.includes('#')) {
+                    dimension.details = dimension.details?.split('#')[1] + '-' + dimension.details?.split('#')[2];
+                }
+            }
+
+            dataList.push(dimension);
+        });
+
+        setData(dataList);
+    }, [dimensionCutData]);
+
     return (
         <>
-            {dimensionCutData && dimensionCutData.length > 0 && (
+            {data && data.length > 0 && (
                 <div className="bg-white rounded-lg px-2 py-2 sm:p-2 w-full">
                     <div className="flex flex-col justify-end items-end gap-2 font-yekanX ss02">
-                        {dimensionCutData.map((data, index) => (
+                        {data.map((data, index) => (
                             <div
                                 key={index}
-                                className="flex flex-col md:flex-row-reverse transition-all gap-2 items-end md:items-center justify-between p-2 md:px-4 md:py-3 rounded border border-gray-300 hover:bg-gray-200 odd:bg-gray-50 even:bg-gray-100 text-xs sm:text-base w-full">
+                                className="flex flex-col md:flex-row-reverse transition-all gap-2 items-end md:items-center justify-between p-4 md:px-4 md:py-3 rounded border border-gray-300 hover:bg-gray-200 odd:bg-gray-50 even:bg-gray-100 text-xs sm:text-base w-full">
                                 {isDeletable ? (
                                     <div className="flex justify-between md:justify-end gap-2 items-center r2l w-full md:w-auto mb-2 md:mb-0 border-b border-gray-300 md:border-0 pb-2 md:pb-0">
                                         <h4 className="font-semibold">{index + 1}#</h4>

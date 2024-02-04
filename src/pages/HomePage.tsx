@@ -8,6 +8,7 @@ import Shortcut from '../components/uiComp/shortcuts/Shortcut';
 import HomeShortcut from '../components/uiComp/shortcuts/HomeShortcut';
 import EventShortcut from '../components/uiComp/shortcuts/EventShortcut';
 import CreditCardIcon from '../components/icons/CreditCardIcon';
+import ListIcon from '../components/icons/ListIcon';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,6 +34,12 @@ function Home() {
             </HomeShortcut>
 
             <HomeShortcut label="محاسبات">
+                <Shortcut
+                    text="لیست ابعاد"
+                    to="dimensions"
+                    icon={<ListIcon />}
+                    isInApp={true}
+                />
                 <EventShortcut
                     text="تعریف ابعاد جدید"
                     icon={<CalculatorIcon />}
