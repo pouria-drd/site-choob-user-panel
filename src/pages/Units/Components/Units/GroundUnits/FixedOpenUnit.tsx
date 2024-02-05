@@ -22,7 +22,7 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function FixedGroundUnit({ projectId }: { projectId: string }) {
+function FixedOpenUnit({ projectId }: { projectId: string }) {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
@@ -115,7 +115,7 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedFixedGroundUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedFixedOpenUnit<any>(dtoToSend);
 
             console.log('result', result);
             if (result) {
@@ -169,7 +169,7 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی با ثابت</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت اپن با ثابت</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
@@ -208,7 +208,6 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                     onChange={(e) => handleInputChange('fixedWidth', Number(e.target.value))}
                                 />
                             </div>
-
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect
                                     title="ثابت"
@@ -363,4 +362,4 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     );
 }
 
-export default FixedGroundUnit;
+export default FixedOpenUnit;

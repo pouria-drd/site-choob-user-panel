@@ -12,6 +12,8 @@ import WrenchIcon from '../../components/icons/WrenchIcon';
 import FixedGroundUnit from './Components/Units/GroundUnits/FixedGroundUnit';
 import FixedGroundUnitWithPillar from './Components/Units/GroundUnits/FixedGroundUnitWithPillar';
 import SimpleGroundUnitWithPillar from './Components/Units/GroundUnits/SimpleGroundUnitWithPillar';
+import SimpleOpenUnit from './Components/Units/GroundUnits/SimpleOpenUnit';
+import FixedOpenUnit from './Components/Units/GroundUnits/FixedOpenUnit';
 
 interface AddNewUnitPageParams {
     projectID: string;
@@ -66,6 +68,12 @@ function AddNewUnitPage() {
                 break;
             case 4:
                 setSelectedUnit(<FixedGroundUnitWithPillar projectId={projectID} />);
+                break;
+            case 5:
+                setSelectedUnit(<SimpleOpenUnit projectId={projectID} />);
+                break;
+            case 6:
+                setSelectedUnit(<FixedOpenUnit projectId={projectID} />);
                 break;
             default:
                 setSelectedUnit(<div className="flex">dastan</div>);

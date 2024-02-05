@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
-import BoxXYZ from '../BoxXYZ';
 import DoorColorSelect from '../DoorColorSelect';
 import Button from '../../../../../components/uiComp/buttons/Button';
 import Spinner from '../../../../../components/uiComp/spinner/Spinner';
@@ -22,14 +21,14 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function FixedGroundUnit({ projectId }: { projectId: string }) {
+function SimpleOpenUnit({ projectId }: { projectId: string }) {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     const unitProjectService = new UnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<FixedGroundUnitDTO>({ depth: 0, width: 0, height: 0, fixedWidth: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, legColor: { colorName: 'رنگ 1' }, fixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 1, doors: [] });
+    const [dto, setDTO] = useState<SimpleGroundUnitDTO>({ depth: 0, width: 0, height: 0, shelfCount: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, legColor: { colorName: 'رنگ 1' }, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 
@@ -43,11 +42,12 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
             value: '2',
         },
     ];
+
     const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
-    const handleInputChange = (fieldName: keyof FixedGroundUnitDTO, value: number | SimpleColorDTO) => {
+    const handleInputChange = (fieldName: keyof SimpleGroundUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
@@ -58,7 +58,6 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
             return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
         });
     };
-
     const handleSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
@@ -72,12 +71,6 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     const handleLegColor = (v: any) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, legColor: { colorName: v } };
-        });
-    };
-
-    const handleFixedColor = (v: any) => {
-        setDTO((prevDTO) => {
-            return { ...prevDTO, FixedWidthColor: { colorName: v } };
         });
     };
 
@@ -100,11 +93,12 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     const calculate = async () => {
         setIsCalculating(true);
         setDimensionCutList([]);
-        if (dto.depth <= 0 || dto.height <= 0 || dto.width <= 0 || dto.fixedWidth <= 0) {
+        if (dto.depth <= 0 || dto.height <= 0 || dto.width <= 0) {
             showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
             setIsCalculating(false);
             return;
         }
+
         try {
             let dtoDoors: SimpleColorDTO[] = [];
 
@@ -115,13 +109,16 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedFixedGroundUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedSimpleOpenUnit<any>(dtoToSend);
 
-            console.log('result', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
-        } catch (e) {}
+        } catch (e) {
+            const ex = e as any;
+
+            showToast(ex.response.data.message, ToastStatusEnum.Error, 'خطا');
+        }
         setIsCalculating(false);
     };
 
@@ -144,7 +141,7 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
         });
 
         const addUnit: AddUnitDTO = {
-            name: 'زمینی با ثابت',
+            name: 'زمینی ساده',
             projectId: projectId,
             count: totalCount,
             details: `${dto.width}x${dto.height}x${dto.depth}`,
@@ -169,12 +166,12 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی با ثابت</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت اپن ساده</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
@@ -198,22 +195,6 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                     className="base-input w-full"
                                     placeholder="عمق (سانتی متر)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول ثابت (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول ثابت (سانتی متر)"
-                                    onChange={(e) => handleInputChange('fixedWidth', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-4 w-full ">
-                                <DoorColorSelect
-                                    title="ثابت"
-                                    onValueChanged={handleFixedColor}
-                                    index={55}
                                 />
                             </div>
 
@@ -254,9 +235,10 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                 <DoorColorSelect
                                     title="پاخور"
                                     onValueChanged={handleLegColor}
-                                    index={22}
+                                    index={0}
                                 />
                             </div>
+
                             <div className="w-full  r2l">
                                 <Dropdown
                                     title={'تعداد درب'}
@@ -277,11 +259,10 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
                                 ))}
                             </div>
                         </div>
-                        <div className="w-full flex items-center justify-center">
-                            <BoxXYZ
-                                width={dto.width}
-                                height={dto.height}
-                                depth={dto.depth}
+                        <div className="w-full flex items-center justify-center py-4 md:py-0">
+                            <img
+                                className="w-36 md:w-60"
+                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
                             />
                         </div>
                     </div>
@@ -363,4 +344,4 @@ function FixedGroundUnit({ projectId }: { projectId: string }) {
     );
 }
 
-export default FixedGroundUnit;
+export default SimpleOpenUnit;

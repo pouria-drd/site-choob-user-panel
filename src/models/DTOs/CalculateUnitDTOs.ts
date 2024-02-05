@@ -27,7 +27,7 @@ interface FixedGroundUnitDTO {
     height: number;
     depth: number;
     fixedWidth: number;
-    FixedWidthColor: SimpleColorDTO;
+    fixedWidthColor: SimpleColorDTO;
     shelfCount: number;
     hasHiddenHandle: boolean;
     hiddenHandleTopGap: number;
@@ -42,7 +42,7 @@ interface FixedGroundUnitWithPillarDTO {
     pillarWidth: number;
     pillarDepth: number;
     fixedWidth: number;
-    FixedWidthColor: SimpleColorDTO;
+    fixedWidthColor: SimpleColorDTO;
     shelfCount: number;
     hasHiddenHandle: boolean;
     hiddenHandleTopGap: number;

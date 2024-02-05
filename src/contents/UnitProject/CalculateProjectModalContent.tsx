@@ -30,8 +30,6 @@ const CalculateProjectModalContent = ({ project, onCalculateClicked }: { project
     }, [project]);
 
     const handleDimensionSelectionChange = (dimensionId: number, propIndex: number) => {
-        console.log(dimensionId, propIndex);
-
         if (!dto) return;
         let props: UnitProjectPropsModel[] = [];
 
@@ -52,8 +50,6 @@ const CalculateProjectModalContent = ({ project, onCalculateClicked }: { project
     };
 
     const calculationClicked = () => {
-        console.log('dto', dto);
-        return;
         onCalculateClicked(dto);
     };
 

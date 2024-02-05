@@ -40,14 +40,15 @@ function UnitSettingsPage() {
                 <div className="flex flex-col gap-4 w-full font-peyda pb-16 r2l">
                     <h1 className="font-bold text-right text-lg md:text-xl">تنظیمات پروژه</h1>
 
-                    <div className="flex items-center w-full sm:w-fit rounded-lg text-sc-brown-800 bg-sc-brown-500 border border-sc-orange-normal gap-2 p-4 r2l">
-                        <span className="hidden sm:block">
-                            <AlertIcon />
-                        </span>
+                    <div className="flex items-start md:items-center w-full sm:w-fit rounded-lg text-sc-brown-800 bg-sc-brown-500 border border-sc-orange-normal gap-2 p-4 r2l text-sm md:text-base">
+                        <div className="flex items-start h-full py-1">
+                            <AlertIcon className="w-4 " />
+                        </div>
 
-                        <p>سیستم محاسبه سایت چوب از مقادیر زیر برای محاسبه یونیت های شما استفاده خواهد کرد. شما می توانید آن ها را به نسبت نیاز خود تغییر دهید.</p>
+                        <p className="text-justify">سیستم محاسبه سایت چوب از مقادیر زیر برای محاسبه یونیت های شما استفاده خواهد کرد. شما می توانید آن ها را به نسبت نیاز خود تغییر دهید.</p>
                     </div>
-                    <div className="grid gird-cols-1  md:grid-cols-4 h-full r2l gap-4 px-0">
+
+                    <div className="grid gird-cols-1  md:grid-cols-3 h-full r2l gap-4 px-0">
                         {projectProps.map((p) => (
                             <UnitSetting
                                 data={p}

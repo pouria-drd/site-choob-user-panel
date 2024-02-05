@@ -5,7 +5,6 @@ import SettingInput from './SettingInput';
 import SaveIcon from '../../../components/icons/SaveIcon';
 import UnitProjectService from '../../../services/UnitProjectService';
 
-
 function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate: () => void }) {
     const unitProjectService = new UnitProjectService();
 
@@ -51,13 +50,15 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
     };
 
     return (
-        <div className="flex  items-center justify-start  rounded-lg border gap-2 p-2 bg-white r2l">
-            <div className="flex gap-0 items-center justify-end w-fit text-xs sm:text-sm md:text-base">
-                <h4 className="r2l whitespace-nowrap text-base md:text-base">{prop.title}</h4>
-                <span>{prop.valueType !== 'bool' ? `(${prop.valueType})` : ''}</span>
+        <div className="flex  items-center justify-start  rounded-lg border gap-2 p-2 bg-white hover:bg-sc-gray r2l w-full">
+            <div className="flex gap-0 items-center justify-start text-xs sm:text-sm md:text-base w-full">
+                <h4 className="r2l whitespace-pre-line text-xs md:text-base">
+                    {prop.title}
+                    <span>{prop.valueType !== 'bool' ? `(${prop.valueType})` : ''}</span>
+                </h4>
             </div>
 
-            <div className="w-full flex justify-end">
+            <div className="flex w-fit justify-end ml-4">
                 <SettingInput
                     value={prop.value}
                     isDisabled={isEditing}
@@ -68,7 +69,7 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
 
             <button
                 onClick={handleSaveChanges}
-                className="text-sc-purple-400 hover:text-white hover:bg-sc-purple-400 rounded"
+                className="text-sc-green-normal hover:text-white hover:bg-sc-green-normal rounded"
                 disabled={isEditing}>
                 <SaveIcon />
             </button>

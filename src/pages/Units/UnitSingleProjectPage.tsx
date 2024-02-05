@@ -141,7 +141,7 @@ function UnitSingleProjectPage() {
             if (result.status) {
                 showToast(result.message, ToastStatusEnum.Success);
             } else {
-                showToast(result.message, ToastStatusEnum.Error);
+                showToast(result.message, ToastStatusEnum.Error, 'خطا');
             }
         } catch (e) {}
         setIsCalculating(false);

@@ -64,7 +64,7 @@ class UnitProjectService extends AxiosBase {
     //Calculate unit Stuff
 
     public async CalculatedSimpleGroundUnit<T>(dto: SimpleGroundUnitDTO) {
-        const url = this.baseURL + 'SimpleGroundUnit';
+        const url = this.baseURL + 'SimpleGroundUnit?isOpen=false';
         return this.request<T>({ method: 'post', url, data: dto });
     }
     public async CalculatedSimpleGroundUnitWithPillar<T>(dto: SimpleGroundUnitWithPillarDTO) {
@@ -72,13 +72,23 @@ class UnitProjectService extends AxiosBase {
         return this.request<T>({ method: 'post', url, data: dto });
     }
 
+    public async CalculatedSimpleOpenUnit<T>(dto: SimpleGroundUnitDTO) {
+        const url = this.baseURL + 'SimpleGroundUnit?isOpen=true';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
     public async CalculatedFixedGroundUnit<T>(dto: FixedGroundUnitDTO) {
-        const url = this.baseURL + 'FixedGroundUnit';
+        const url = this.baseURL + 'FixedGroundUnit?isOpen=false';
         return this.request<T>({ method: 'post', url, data: dto });
     }
 
     public async CalculatedFixedGroundUnitWithPillar<T>(dto: FixedGroundUnitWithPillarDTO) {
         const url = this.baseURL + 'FixedGroundUnitWithPillar';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
+    public async CalculatedFixedOpenUnit<T>(dto: FixedGroundUnitDTO) {
+        const url = this.baseURL + 'FixedGroundUnit?isOpen=true';
         return this.request<T>({ method: 'post', url, data: dto });
     }
 }

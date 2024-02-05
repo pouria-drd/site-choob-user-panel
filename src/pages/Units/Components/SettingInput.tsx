@@ -21,14 +21,14 @@ function SettingInput({ valueType, value, isDisabled, onValueChange }: { valueTy
             {inputType == InputTypes.Number ? (
                 <input
                     type="number"
-                    className="base-input w-20"
+                    className="base-input w-16"
                     value={value}
                     min={1}
                     onChange={(e) => handleInputChange(e.target.value)}
                     readOnly={isDisabled}
                 />
             ) : (
-                <div className="flex flex-row gap-2 text-xs md:text-sm justify-self-start w-full">
+                <div className="flex flex-row gap-2 text-xs md:text-sm  pl-6  bg-sc-purple-normal items-center justify-between p-2 rounded w-16">
                     <input
                         type="checkbox"
                         checked={value}
@@ -36,6 +36,7 @@ function SettingInput({ valueType, value, isDisabled, onValueChange }: { valueTy
                         readOnly={isDisabled}
                         disabled={isDisabled}
                     />
+                    <label>{value === 1 ? 'بله' : 'خیر'}</label>
                 </div>
             )}
         </>
