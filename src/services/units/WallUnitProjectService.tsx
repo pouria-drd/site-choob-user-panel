@@ -28,6 +28,11 @@ class WallUnitProjectService extends UnitProjectBase {
         const url = this.baseURL + 'CalculatedWallCoverUnit';
         return this.request<T>({ method: 'post', url, data: dto });
     }
+
+    public async CalculatedAbchekanUnit<T>(dto: WallAbchekanDTO) {
+        const url = this.baseURL + 'CalculatedAbchekanUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
 }
 
 export default WallUnitProjectService;

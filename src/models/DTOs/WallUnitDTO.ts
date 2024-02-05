@@ -31,3 +31,16 @@ interface WallCoverUnitDTO {
     doorExtraHeight: number;
     doors: SimpleColorDTO[];
 }
+
+interface WallAbchekanDTO {
+    width: number;
+    height: number;
+    depth: number;
+    bottomDoorHeight: number;
+    doorExtraHeight: number;
+    doorsHorizonatalGap: number;
+    hasHiddenHandle: boolean;
+    isTopDoorHorizontal: boolean;
+    bottomDoorColor: SimpleColorDTO;
+    doors: SimpleColorDTO[];
+}
