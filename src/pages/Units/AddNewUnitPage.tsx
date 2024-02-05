@@ -14,6 +14,9 @@ import FixedGroundUnitWithPillar from './Components/Units/GroundUnits/FixedGroun
 import SimpleGroundUnitWithPillar from './Components/Units/GroundUnits/SimpleGroundUnitWithPillar';
 import SimpleOpenUnit from './Components/Units/GroundUnits/SimpleOpenUnit';
 import FixedOpenUnit from './Components/Units/GroundUnits/FixedOpenUnit';
+import SimpleWallUnit from './Components/Units/WallUnits/SimpleWallUnit';
+import FixedWallUnit from './Components/Units/WallUnits/FixedWallUnit';
+import SimpleWallUnitWithPillar from './Components/Units/WallUnits/SimpleWallUnitWithPillar';
 
 interface AddNewUnitPageParams {
     projectID: string;
@@ -74,6 +77,16 @@ function AddNewUnitPage() {
                 break;
             case 6:
                 setSelectedUnit(<FixedOpenUnit projectId={projectID} />);
+                break;
+
+            case 7:
+                setSelectedUnit(<SimpleWallUnit projectId={projectID} />);
+                break;
+            case 8:
+                setSelectedUnit(<FixedWallUnit projectId={projectID} />);
+                break;
+            case 9:
+                setSelectedUnit(<SimpleWallUnitWithPillar projectId={projectID} />);
                 break;
             default:
                 setSelectedUnit(<div className="flex">dastan</div>);

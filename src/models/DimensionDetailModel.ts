@@ -12,6 +12,10 @@ interface DimensionCutModel {
     yGroove: boolean;
     xGazor: boolean;
     yGazor: boolean;
+    fTop: boolean;
+    fRight: boolean;
+    fBottom: boolean;
+    fLeft: boolean;
 }
 
 interface DimensionDetailModel {
@@ -48,6 +52,10 @@ interface DimensionNewCutModel {
     yGroove: boolean;
     xGazor: boolean;
     yGazor: boolean;
+    fTop: boolean;
+    fRight: boolean;
+    fBottom: boolean;
+    fLeft: boolean;
 }
 
 interface WoodSheetDimension {

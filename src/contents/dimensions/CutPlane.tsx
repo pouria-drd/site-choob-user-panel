@@ -10,31 +10,34 @@ const CutPlane = ({ dimension }: { dimension: DimensionCutModel }) => {
     const [bottom, setBottom] = useState('');
 
     const handleSigns = () => {
-        setTop(checkProps(dimension.pvctop, false, false));
-        setRight(checkProps(dimension.pvcright, false, false));
-        setLeft(checkProps(dimension.pvcleft, dimension.yGroove, dimension.yGazor));
-        setBottom(checkProps(dimension.pvcbottom, dimension.xGroove, dimension.xGazor));
+        setTop(checkProps(dimension.pvctop, false, false, dimension.fTop));
+        setRight(checkProps(dimension.pvcright, false, false, dimension.fRight));
+        setLeft(checkProps(dimension.pvcleft, dimension.yGroove, dimension.yGazor, dimension.fLeft));
+        setBottom(checkProps(dimension.pvcbottom, dimension.xGroove, dimension.xGazor, dimension.fBottom));
     };
 
-    const checkProps = (pvc: boolean, groove: boolean, gazor: boolean) => {
+    const checkProps = (pvc: boolean, groove: boolean, gazor: boolean, farsi: boolean) => {
         let returnString = '';
 
-        if (pvc) {
-            if (groove) {
-                returnString = 'نوار شیار';
-            } else if (gazor) {
-                returnString = 'نوار گازور';
-            } else {
-                returnString = 'نوار';
-            }
+        if (farsi) {
+            returnString = 'فارسی';
         } else {
-            if (groove) {
-                returnString = 'شیار';
-            } else if (gazor) {
-                returnString = 'گازور';
+            if (pvc) {
+                if (groove) {
+                    returnString = 'نوار شیار';
+                } else if (gazor) {
+                    returnString = 'نوار گازور';
+                } else {
+                    returnString = 'نوار';
+                }
+            } else {
+                if (groove) {
+                    returnString = 'شیار';
+                } else if (gazor) {
+                    returnString = 'گازور';
+                }
             }
         }
-
         return returnString;
     };
 
