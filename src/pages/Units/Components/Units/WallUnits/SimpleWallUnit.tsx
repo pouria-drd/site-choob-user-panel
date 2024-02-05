@@ -161,7 +161,7 @@ function SimpleWallUnit({ projectId }: { projectId: string }) {
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی ساده</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری ساده</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">

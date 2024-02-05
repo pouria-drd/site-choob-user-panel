@@ -22,14 +22,14 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
+function FixedWallUnitWithPillar({ projectId }: { projectId: string }) {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     const unitProjectService = new WallUnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<SimpleWallUnitWithPillarDTO>({ depth: 0, width: 0, height: 0, pillarDepth: 0, pillarWidth: 0, hasHiddenHandle: false, doorExtraHeight: 0, shelfCount: 0, doors: [] });
+    const [dto, setDTO] = useState<FixedWallUnitWithPillarDTO>({ depth: 0, width: 0, height: 0, fixedWidth: 0, pillarWidth: 0, pillarDepth: 0, hasHiddenHandle: false, doorExtraHeight: 0, fixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 0, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 
@@ -47,11 +47,12 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
-    const handleInputChange = (fieldName: keyof SimpleWallUnitWithPillarDTO, value: number | SimpleColorDTO) => {
+    const handleInputChange = (fieldName: keyof FixedWallUnitWithPillarDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
     };
+
     const handleSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
@@ -60,6 +61,12 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
         }
         setDefaultDoorOption(option);
         setDoors(newDoors);
+    };
+
+    const handleFixedColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, FixedWidthColor: { colorName: v } };
+        });
     };
 
     const handleHasHiddenDoor = (v: boolean) => {
@@ -92,7 +99,6 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
             setIsCalculating(false);
             return;
         }
-
         try {
             let dtoDoors: SimpleColorDTO[] = [];
 
@@ -103,16 +109,14 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedSimpleWallUnitWithPillar<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedFixdedWallUnitWithPillar<any>(dtoToSend);
 
             console.log('result', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
-        } catch (e) {
-            const ex = e as any;
-
-            showToast(ex.response.data.message, ToastStatusEnum.Error, 'خطا');
+        } catch (e: any) {
+            showToast(e.response.data.message, ToastStatusEnum.Error, 'خطا');
         }
         setIsCalculating(false);
     };
@@ -136,7 +140,7 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
         });
 
         const addUnit: AddUnitDTO = {
-            name: 'زمینی ساده',
+            name: 'زمینی با ثابت',
             projectId: projectId,
             count: totalCount,
             details: `${dto.width}x${dto.height}x${dto.depth}`,
@@ -161,7 +165,7 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری ساده کنار ستون</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری کنار ستون با ثابت</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
@@ -190,6 +194,23 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
                                     className="base-input w-full"
                                     placeholder="عمق (سانتی متر)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">طول ثابت (سانتی متر)</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="طول ثابت (سانتی متر)"
+                                    onChange={(e) => handleInputChange('fixedWidth', Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="flex flex-col gap-4 w-full ">
+                                <DoorColorSelect
+                                    title="ثابت"
+                                    onValueChanged={handleFixedColor}
+                                    index={55}
                                 />
                             </div>
 
@@ -350,4 +371,4 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
     );
 }
 
-export default SimpleWallUnitWithPillar;
+export default FixedWallUnitWithPillar;

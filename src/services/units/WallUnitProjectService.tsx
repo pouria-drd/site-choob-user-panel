@@ -18,6 +18,16 @@ class WallUnitProjectService extends UnitProjectBase {
         const url = this.baseURL + 'FixedWallUnit';
         return this.request<T>({ method: 'post', url, data: dto });
     }
+
+    public async CalculatedFixdedWallUnitWithPillar<T>(dto: FixedWallUnitWithPillarDTO) {
+        const url = this.baseURL + 'FixedWallUnitWithPillar';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
+    public async CalculatedWallCoverUnit<T>(dto: WallCoverUnitDTO) {
+        const url = this.baseURL + 'CalculatedWallCoverUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
 }
 
 export default WallUnitProjectService;

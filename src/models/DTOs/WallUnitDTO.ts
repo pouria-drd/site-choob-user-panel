@@ -17,3 +17,17 @@ interface SimpleWallUnitWithPillarDTO extends SimpleWallUnitDTO {
     pillarWidth: number;
     pillarDepth: number;
 }
+
+interface FixedWallUnitWithPillarDTO extends FixedWallUnitDTO {
+    pillarWidth: number;
+    pillarDepth: number;
+}
+
+interface WallCoverUnitDTO {
+    width: number;
+    height: number;
+    depth: number;
+    hasHiddenHandle: boolean;
+    doorExtraHeight: number;
+    doors: SimpleColorDTO[];
+}

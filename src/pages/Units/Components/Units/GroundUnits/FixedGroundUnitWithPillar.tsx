@@ -29,7 +29,7 @@ function FixedGroundUnitWithPillar({ projectId }: { projectId: string }) {
     const unitProjectService = new UnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<FixedGroundUnitWithPillarDTO>({ depth: 0, width: 0, height: 0, fixedWidth: 0, pillarWidth: 0, pillarDepth: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, FixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 0, legColor: { colorName: 'رنگ 1' }, doors: [] });
+    const [dto, setDTO] = useState<FixedGroundUnitWithPillarDTO>({ depth: 0, width: 0, height: 0, fixedWidth: 0, pillarWidth: 0, pillarDepth: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, fixedWidthColor: { colorName: 'رنگ 1' }, shelfCount: 0, legColor: { colorName: 'رنگ 1' }, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 

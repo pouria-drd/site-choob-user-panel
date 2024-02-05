@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
-import BoxXYZ from '../BoxXYZ';
 import DoorColorSelect from '../DoorColorSelect';
 import Button from '../../../../../components/uiComp/buttons/Button';
 import Spinner from '../../../../../components/uiComp/spinner/Spinner';
@@ -22,14 +21,15 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
+function WallCoverUnit({ projectId }: { projectId: string }) {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
     const unitProjectService = new WallUnitProjectService();
+
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<SimpleWallUnitWithPillarDTO>({ depth: 0, width: 0, height: 0, pillarDepth: 0, pillarWidth: 0, hasHiddenHandle: false, doorExtraHeight: 0, shelfCount: 0, doors: [] });
+    const [dto, setDTO] = useState<WallCoverUnitDTO>({ depth: 0, width: 0, height: 0, hasHiddenHandle: false, doorExtraHeight: 0, doors: [] });
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 
@@ -43,29 +43,30 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
             value: '2',
         },
     ];
+
     const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
 
-    const handleInputChange = (fieldName: keyof SimpleWallUnitWithPillarDTO, value: number | SimpleColorDTO) => {
+    const handleInputChange = (fieldName: keyof WallCoverUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
-    };
-    const handleSelectedOption = (option: DropdownOption) => {
-        const dCount = Number(option.value);
-        let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ ${i}` });
-        }
-        setDefaultDoorOption(option);
-        setDoors(newDoors);
     };
 
     const handleHasHiddenDoor = (v: boolean) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
         });
+    };
+    const handleSelectedOption = (option: DropdownOption) => {
+        const dCount = Number(option.value);
+        let newDoors: DoorProp[] = [];
+        for (let i = 1; i <= dCount; i++) {
+            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        }
+        setDefaultDoorOption(option);
+        setDoors(newDoors);
     };
 
     const handleDoorColorChange = (v: any, index: number) => {
@@ -87,7 +88,7 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
     const calculate = async () => {
         setIsCalculating(true);
         setDimensionCutList([]);
-        if (dto.depth <= 0 || dto.height <= 0 || dto.width <= 0 || dto.pillarDepth <= 0 || dto.pillarWidth <= 0) {
+        if (dto.depth <= 0 || dto.height <= 0 || dto.width <= 0) {
             showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
             setIsCalculating(false);
             return;
@@ -103,9 +104,8 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedSimpleWallUnitWithPillar<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedWallCoverUnit<any>(dtoToSend);
 
-            console.log('result', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
@@ -161,12 +161,12 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری ساده کنار ستون</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری کاور پکیج </h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
@@ -190,33 +190,6 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
                                     className="base-input w-full"
                                     placeholder="عمق (سانتی متر)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول ستون (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول ستون (سانتی متر)"
-                                    onChange={(e) => handleInputChange('pillarWidth', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق ستون (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق ستون (سانتی متر)"
-                                    onChange={(e) => handleInputChange('pillarDepth', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">تعداد طبقه</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="تعداد طبقه"
-                                    onChange={(e) => handleInputChange('shelfCount', Number(e.target.value))}
                                 />
                             </div>
 
@@ -264,11 +237,10 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
                                 ))}
                             </div>
                         </div>
-                        <div className="w-full flex items-center justify-center">
-                            <BoxXYZ
-                                width={dto.width}
-                                height={dto.height}
-                                depth={dto.depth}
+                        <div className="w-full flex items-center justify-center py-4 md:py-0">
+                            <img
+                                className="w-36 md:w-60"
+                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
                             />
                         </div>
                     </div>
@@ -350,4 +322,4 @@ function SimpleWallUnitWithPillar({ projectId }: { projectId: string }) {
     );
 }
 
-export default SimpleWallUnitWithPillar;
+export default WallCoverUnit;
