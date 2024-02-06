@@ -21,6 +21,7 @@ function AddNewUnitPage() {
 
     const unitProjectService = new UnitProjectService();
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingUnit, setIsLoadingUnit] = useState(false);
 
     const params = useParams<{ token?: string; optionalParam?: string }>();
     const { projectID } = Object.assign({}, params) as AddNewUnitPageParams;
@@ -45,8 +46,13 @@ function AddNewUnitPage() {
     }, []);
 
     const unitCategorySelected = (unitCat: any) => {
-        if (unitCat) setSelectedUnit(unitCat);
-        else setSelectedUnit(null);
+        if (unitCat) {
+            setIsLoadingUnit(true);
+            setSelectedUnit(unitCat);
+            setTimeout(() => {
+                setIsLoadingUnit(false);
+            }, 600);
+        } else setSelectedUnit(null);
     };
 
     return (
@@ -68,7 +74,13 @@ function AddNewUnitPage() {
                         projectID={projectID}
                     />
                     {!selectedUnit && <div className="flex items-center justify-center bg-white rounded-lg p-4 text-center">لطفا یونیت را انتخاب کنید</div>}
-                    {selectedUnit && selectedUnit}
+                    {isLoadingUnit && (
+                        <div className="flex h-10 items-center justify-center">
+                            {' '}
+                            <Spinner flex={true} />
+                        </div>
+                    )}
+                    {!isLoadingUnit && selectedUnit && selectedUnit}
 
                     {userProps && (
                         <Modal

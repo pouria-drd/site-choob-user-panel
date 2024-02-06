@@ -14,13 +14,74 @@ interface UnitProps {
     component: ReactNode;
 }
 const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; catTitle: string; onSelection: (unit: ReactNode, title: string) => void }) => {
+    const titleBase = 'دیواری';
     const gUnits: UnitProps[] = [
-        { name: 'ساده', index: 1, component: <SimpleWallUnit projectId={projectID} />, img: 'SimpleGroundUnit.png' },
-        { name: 'ثابت دار', index: 2, component: <FixedWallUnit projectId={projectID} />, img: 'FixedGroundUnit.png' },
-        { name: 'ساده کنار ستون', index: 3, component: <SimpleWallUnitWithPillar projectId={projectID} />, img: 'SimpleGroundUnitWithPillar.png' },
-        { name: 'ثابت دار کنار ستون', index: 4, component: <FixedWallUnitWithPillar projectId={projectID} />, img: 'FixedGroundUnitWithPillar.png' },
-        { name: 'کاور پکیج', index: 5, component: <WallCoverUnit projectId={projectID} />, img: 'SimpleGroundUnit.png' },
-        { name: 'آبچکان', index: 6, component: <WallAbchekanUnit projectId={projectID} />, img: 'SimpleGroundUnit.png' },
+        {
+            name: 'ساده',
+            index: 1,
+            component: (
+                <SimpleWallUnit
+                    projectId={projectID}
+                    title={`${titleBase} ساده`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
+        {
+            name: 'ثابت دار',
+            index: 2,
+            component: (
+                <FixedWallUnit
+                    projectId={projectID}
+                    title={`${titleBase} ثابت دار`}
+                />
+            ),
+            img: 'FixedGroundUnit.png',
+        },
+        {
+            name: 'ساده کنار ستون',
+            index: 3,
+            component: (
+                <SimpleWallUnitWithPillar
+                    projectId={projectID}
+                    title={`${titleBase} ساده کنار ستون`}
+                />
+            ),
+            img: 'SimpleGroundUnitWithPillar.png',
+        },
+        {
+            name: 'ثابت دار کنار ستون',
+            index: 4,
+            component: (
+                <FixedWallUnitWithPillar
+                    projectId={projectID}
+                    title={`${titleBase} ثابت دار کنار ستون`}
+                />
+            ),
+            img: 'FixedGroundUnitWithPillar.png',
+        },
+        {
+            name: 'کاور پکیج',
+            index: 5,
+            component: (
+                <WallCoverUnit
+                    projectId={projectID}
+                    title={`${titleBase} کاور پکیج`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
+        {
+            name: 'آبچکان',
+            index: 6,
+            component: (
+                <WallAbchekanUnit
+                    projectId={projectID}
+                    title={`${titleBase} آبچکان`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
     ];
 
     const onUnitSelect = (unit: ReactNode, title: string) => {

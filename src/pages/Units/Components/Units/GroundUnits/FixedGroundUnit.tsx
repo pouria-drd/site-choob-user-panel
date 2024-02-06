@@ -153,7 +153,7 @@ function FixedGroundUnit({ projectId, title }: { projectId: string; title: strin
         ];
 
         if (dto.hasHiddenHandle) {
-            Props.push({ name: 'doorExtraHeight', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
+            Props.push({ name: 'hiddenHandleTopGap', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
         }
         if (dto.shelfCount > 0) {
             Props.push({ name: 'shelf', title: 'تعداد طبقه', value: dto.shelfCount.toString() + 'عدد' });

@@ -151,7 +151,7 @@ function SimpleGroundUnitWithPillar({ projectId, title }: { projectId: string; t
         ];
 
         if (dto.hasHiddenHandle) {
-            Props.push({ name: 'doorExtraHeight', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
+            Props.push({ name: 'hiddenHandleTopGap', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
         }
 
         if (dto.shelfCount > 0) {

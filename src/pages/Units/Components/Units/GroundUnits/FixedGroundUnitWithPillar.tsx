@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
@@ -144,7 +143,7 @@ function FixedGroundUnitWithPillar({ projectId, title }: { projectId: string; ti
         ];
 
         if (dto.hasHiddenHandle) {
-            Props.push({ name: 'doorExtraHeight', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
+            Props.push({ name: 'hiddenHandleTopGap', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
         }
         if (dto.shelfCount > 0) {
             Props.push({ name: 'shelf', title: 'تعداد طبقه', value: dto.shelfCount.toString() + 'عدد' });
@@ -172,7 +171,7 @@ function FixedGroundUnitWithPillar({ projectId, title }: { projectId: string; ti
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت زمینی کنار ستون با ثابت</h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">{title}</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">

@@ -41,6 +41,7 @@ interface WallAbchekanDTO {
     doorsHorizonatalGap: number;
     hasHiddenHandle: boolean;
     isTopDoorHorizontal: boolean;
+    topHorizontalDoorColor: SimpleColorDTO;
     bottomDoorColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
 }

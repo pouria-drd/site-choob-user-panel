@@ -1,15 +1,16 @@
-import { ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ReactNode, useEffect, useState } from 'react';
+
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
 import DoorColorSelect from '../DoorColorSelect';
 import Button from '../../../../../components/uiComp/buttons/Button';
-import Spinner from '../../../../../components/uiComp/spinner/Spinner';
+
 import Dropdown from '../../../../../components/uiComp/dropdown/Dropdown';
 import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
-import DimensionCutList from '../../../../Dimensions/Components/DimensionCutList';
+
 import WallUnitProjectService from '../../../../../services/units/WallUnitProjectService';
+import UnitCalculatedCutList from '../../UnitCalculatedCutList';
 
 interface DropdownOption {
     label: string;
@@ -21,8 +22,7 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function WallAbchekanUnit({ projectId }: { projectId: string }) {
-    const navigate = useNavigate();
+function WallAbchekanUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
 
     const unitProjectService = new WallUnitProjectService();
@@ -37,29 +37,20 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
         hasHiddenHandle: false,
         doorExtraHeight: 0,
         bottomDoorColor: { colorName: 'رنگ 1' },
+        topHorizontalDoorColor: { colorName: 'رنگ 1' },
         bottomDoorHeight: 0,
         doorsHorizonatalGap: 0,
         isTopDoorHorizontal: false,
         doors: [],
     };
     const [dto, setDTO] = useState<WallAbchekanDTO>(defaultDTO);
-    const [totalCount, setTotalCount] = useState(1);
-    const [description, setDescription] = useState('');
+    const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
 
-    const doorOptions: DropdownOption[] = [
-        {
-            label: 'یک',
-            value: '1',
-        },
-        {
-            label: 'دو',
-            value: '2',
-        },
+    const defaultDoorColors = [
+        { index: 1, name: `درب 1`, value: 'رنگ 1' },
+        { index: 2, name: `درب 2`, value: 'رنگ 1' },
     ];
-
-    const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
-
-    const [doors, setDoors] = useState<DoorProp[]>([{ index: 1, name: `درب 1`, value: 'رنگ 1' }]);
+    const [doors, setDoors] = useState<DoorProp[]>(defaultDoorColors);
 
     const handleInputChange = (fieldName: keyof WallAbchekanDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
@@ -72,14 +63,25 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
             return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
         });
     };
-    const handleSelectedOption = (option: DropdownOption) => {
-        const dCount = Number(option.value);
-        let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
-        }
-        setDefaultDoorOption(option);
-        setDoors(newDoors);
+
+    const handleTopDoorIsHorizontal = (v: boolean) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, isTopDoorHorizontal: v, topHorizontalDoorColor: { colorName: 'رنگ 1' } };
+        });
+
+        setDoors(defaultDoorColors);
+    };
+
+    const handleHorizontalDoorColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, topHorizontalDoorColor: { colorName: v } };
+        });
+    };
+
+    const handleBottomDoorColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, bottomDoorColor: { colorName: v } };
+        });
     };
 
     const handleDoorColorChange = (v: any, index: number) => {
@@ -130,15 +132,31 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
         setIsCalculating(false);
     };
 
-    const handleOnSave = async () => {
+    useEffect(() => {
+        createDTO();
+    }, [dimensionCutList]);
+
+    const createDTO = async () => {
         if (!dimensionCutList) return;
 
         let Props: UnitProjectDimensionsPropsModel[] = [
             { name: 'width', title: 'طول', value: dto.width.toString() + 'cm' },
             { name: 'height', title: 'ارتفاع', value: dto.height.toString() + 'cm' },
             { name: 'depth', title: 'عمق', value: dto.depth.toString() + 'cm' },
-            { name: 'doorCount', title: 'تعداد درب', value: dto.doors.length.toString() + ' عدد' },
+            { name: 'bottomDoorHeight', title: 'ارتفاع درب پایین', value: dto.bottomDoorHeight + 'cm' },
+            { name: 'doorsHorizonatalGap', title: 'فاصله درب های بالا و پایین', value: dto.doorsHorizonatalGap + 'cm' },
         ];
+
+        if (dto.hasHiddenHandle) {
+            Props.push({ name: 'doorExtraHeight', title: 'اضافه پایین درب', value: dto.doorExtraHeight.toString() + 'cm' });
+        }
+
+        if (dto.isTopDoorHorizontal) {
+            Props.push({ name: 'isTopDoorHorizontal', title: 'درب بالای داشبردی', value: dto.topHorizontalDoorColor.toString() });
+        } else {
+            Props.push({ name: 'door1', title: 'درب راست', value: dto.doors[0].colorName });
+            Props.push({ name: 'door2', title: 'درب چپ', value: dto.doors[1].colorName });
+        }
 
         doors.map((d, index) => {
             Props.push({
@@ -149,37 +167,25 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
         });
 
         const addUnit: AddUnitDTO = {
-            name: 'زمینی ساده',
+            name: title,
             projectId: projectId,
-            count: totalCount,
+            count: 0,
             details: `${dto.width}x${dto.height}x${dto.depth}`,
-            dimensions: dimensionCutList,
+            dimensions: [],
             properties: Props,
-            description: description.length > 0 ? description : undefined,
         };
 
-        try {
-            var saveResult = await unitProjectService.AddUnitToProject<any>(addUnit);
-
-            if (saveResult) {
-                if (saveResult.status) {
-                    showToast(saveResult.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیز بود');
-                    navigate('/unit-project/' + projectId);
-                } else {
-                    showToast(saveResult.message, ToastStatusEnum.Error, 'خطا');
-                }
-            }
-        } catch (e) {}
+        setAddUnitDTO(addUnit);
     };
 
     return (
         <div className="flex flex-col gap-2 r2l font-peyda  p-2  ">
-            <h2 className="text-lg md:text-xl text-right font-semibold">یونیت دیواری آبچکان </h2>
+            <h2 className="text-lg md:text-xl text-right font-semibold">{title}</h2>
 
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
@@ -207,8 +213,24 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
                             </div>
 
                             <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (cm)</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="ارتفاع درب پایین(cm)"
+                                    onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-4 w-full ">
+                                <DoorColorSelect
+                                    title="درب پایین"
+                                    onValueChanged={handleBottomDoorColor}
+                                    index={55}
+                                />
+                            </div>
+
+                            <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">درب مخفی</label>
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
 
                                     <input
                                         className="base-input w-full"
@@ -229,26 +251,54 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
                                     </div>
                                 )}
                             </div>
+                            <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">فاصله درب های بالا و پایین(cm)</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="فاصله درب های بالا و پایین(cm)"
+                                    onChange={(e) => handleInputChange('doorsHorizonatalGap', Number(e.target.value))}
+                                />
+                            </div>
+                            <div className="flex flex-row items-center gap-1">
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
 
-                            <div className="w-full  r2l">
-                                <Dropdown
-                                    title={'تعداد درب'}
-                                    options={doorOptions}
-                                    defaultOption={defaultDoorOption}
-                                    onSelectOption={(opt) => handleSelectedOption(opt)}
+                                <input
+                                    className="base-input w-full"
+                                    type="checkbox"
+                                    checked={dto.isTopDoorHorizontal}
+                                    onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-4 w-full ">
-                                {doors.map((d, index) => (
+                            {dto.isTopDoorHorizontal && (
+                                <div className="flex flex-col gap-4 w-full ">
                                     <DoorColorSelect
-                                        key={index}
-                                        title={d.name}
-                                        onValueChanged={handleDoorColorChange}
-                                        index={d.index}
+                                        title="درب داشبردی"
+                                        onValueChanged={handleHorizontalDoorColor}
+                                        index={88}
                                     />
-                                ))}
-                            </div>
+                                </div>
+                            )}
+
+                            {!dto.isTopDoorHorizontal && (
+                                <>
+                                    <div className="flex flex-col gap-4 w-full ">
+                                        <DoorColorSelect
+                                            title="درب راست"
+                                            onValueChanged={handleDoorColorChange}
+                                            index={1}
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-col gap-4 w-full ">
+                                        <DoorColorSelect
+                                            title="درب چپ"
+                                            onValueChanged={handleDoorColorChange}
+                                            index={2}
+                                        />
+                                    </div>
+                                </>
+                            )}
                         </div>
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
@@ -272,64 +322,12 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col l2r w-full  bg-white  rounded-lg">
-                    {!dimensionCutList ? (
-                        <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
-                            <p className="">در انتظار محاسبه</p>
-                            <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
-                        </div>
-                    ) : (
-                        dimensionCutList.length == 0 && (
-                            <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
-                                <p className="">در انتظار محاسبه</p>
-                                <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
-                            </div>
-                        )
-                    )}
-                    {isCalculating && (
-                        <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-2">
-                            <Spinner flex={true} />
-                        </div>
-                    )}
-                    {dimensionCutList && dimensionCutList?.length > 0 && !isCalculating && (
-                        <div className="flex flex-col gap-2 w-full  px-2 py-4">
-                            <div className="flex flex-col  gap-2  px-2 items-end justify-between border-b pb-2">
-                                <div className="flex flex-col  r2l w-full">
-                                    <label className="text-xs sm:text-sm md:text-base">تعداد</label>
-                                    <input
-                                        type="number"
-                                        className="base-input w-full md:w-1/4"
-                                        placeholder="تعداد"
-                                        min={1}
-                                        value={totalCount}
-                                        onChange={(e) => setTotalCount(Number(e.target.value))}
-                                    />
-                                    <label className="text-xs sm:text-sm md:text-base mt-2">توضیحات</label>
-                                    <input
-                                        type="text"
-                                        className="base-input w-full"
-                                        placeholder="توضیحات"
-                                        maxLength={32}
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex w-full justify-start">
-                                    <button
-                                        onClick={handleOnSave}
-                                        className="base-button outlined-success w-fit whitespace-nowrap">
-                                        افزودن به پروژه
-                                    </button>
-                                </div>
-                            </div>
-                            <DimensionCutList
-                                dimensionCutData={dimensionCutList}
-                                isDeletable={false}
-                            />
-                        </div>
-                    )}
-                </div>
+                <UnitCalculatedCutList
+                    projectId={projectId}
+                    dimensionCutList={dimensionCutList}
+                    isCalculating={isCalculating}
+                    addUnitDTO={addUnitDTO}
+                />
             </div>
         </div>
     );
