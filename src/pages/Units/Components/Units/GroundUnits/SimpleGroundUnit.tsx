@@ -27,7 +27,18 @@ function SimpleGroundUnit({ projectId, title }: { projectId: string; title: stri
     const unitProjectService = new UnitProjectService();
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<SimpleGroundUnitDTO>({ depth: 0, width: 0, height: 0, shelfCount: 0, hasHiddenHandle: false, hiddenHandleTopGap: 0, legColor: { colorName: 'رنگ 1' }, doors: [] });
+
+    const defaulDTO = {
+        depth: 0,
+        width: 0,
+        height: 0,
+        shelfCount: 0,
+        hasHiddenHandle: false,
+        hiddenHandleTopGap: 0,
+        legColor: { colorName: 'رنگ 1' },
+        doors: [],
+    };
+    const [dto, setDTO] = useState<SimpleGroundUnitDTO>(defaulDTO);
 
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
 
@@ -138,6 +149,10 @@ function SimpleGroundUnit({ projectId, title }: { projectId: string; title: stri
         if (dto.hasHiddenHandle) {
             Props.push({ name: 'doorExtraHeight', title: 'فاصله بالای درب مخفی', value: dto.hiddenHandleTopGap.toString() + 'cm' });
         }
+        if (dto.shelfCount > 0) {
+            Props.push({ name: 'shelf', title: 'تعداد طبقه', value: dto.shelfCount.toString() + 'عدد' });
+        }
+
         doors.map((d, index) => {
             Props.push({
                 name: `door-${index + 1}`,
@@ -165,7 +180,7 @@ function SimpleGroundUnit({ projectId, title }: { projectId: string; title: stri
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (cm)</label>
                                 <input

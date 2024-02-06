@@ -3,6 +3,8 @@ import SimpleGroundUnit from '../../../pages/Units/Components/Units/GroundUnits/
 import FixedGroundUnit from '../../../pages/Units/Components/Units/GroundUnits/FixedGroundUnit';
 import SimpleGroundUnitWithPillar from '../../../pages/Units/Components/Units/GroundUnits/SimpleGroundUnitWithPillar';
 import FixedGroundUnitWithPillar from '../../../pages/Units/Components/Units/GroundUnits/FixedGroundUnitWithPillar';
+import SimpleOpenUnit from '../../../pages/Units/Components/Units/GroundUnits/SimpleOpenUnit';
+import FixedOpenUnit from '../../../pages/Units/Components/Units/GroundUnits/FixedOpenUnit';
 
 interface UnitProps {
     name: string;
@@ -35,10 +37,50 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
             ),
             img: 'FixedGroundUnit.png',
         },
-        { name: 'ساده کنار ستون', index: 3, component: <SimpleGroundUnitWithPillar projectId={projectID} />, img: 'SimpleGroundUnitWithPillar.png' },
-        { name: 'ثابت دار کنار ستون', index: 4, component: <FixedGroundUnitWithPillar projectId={projectID} />, img: 'FixedGroundUnitWithPillar.png' },
-        { name: 'اپن', index: 5, component: <FixedGroundUnitWithPillar projectId={projectID} />, img: 'SimpleGroundUnit.png' },
-        { name: 'اپن ثابت دار', index: 6, component: <FixedGroundUnitWithPillar projectId={projectID} />, img: 'SimpleGroundUnit.png' },
+        {
+            name: 'ساده کنار ستون',
+            index: 3,
+            component: (
+                <SimpleGroundUnitWithPillar
+                    projectId={projectID}
+                    title={`${titleBase} ساده کنار ستون`}
+                />
+            ),
+            img: 'SimpleGroundUnitWithPillar.png',
+        },
+        {
+            name: 'ثابت دار کنار ستون',
+            index: 4,
+            component: (
+                <FixedGroundUnitWithPillar
+                    projectId={projectID}
+                    title={`${titleBase} ثابت دار کنار ستون`}
+                />
+            ),
+            img: 'FixedGroundUnitWithPillar.png',
+        },
+        {
+            name: 'اپن',
+            index: 5,
+            component: (
+                <SimpleOpenUnit
+                    projectId={projectID}
+                    title={`${titleBase} اپن`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
+        {
+            name: 'اپن ثابت دار',
+            index: 6,
+            component: (
+                <FixedOpenUnit
+                    projectId={projectID}
+                    title={`${titleBase} اپن ثابت دار`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
     ];
 
     const onUnitSelect = (unit: ReactNode) => {
