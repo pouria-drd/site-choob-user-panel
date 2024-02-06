@@ -29,7 +29,20 @@ function WallAbchekanUnit({ projectId }: { projectId: string }) {
 
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const [dto, setDTO] = useState<WallAbchekanDTO>({ depth: 35, width: 90, height: 95, hasHiddenHandle: false, doorExtraHeight: 0, bottomDoorColor: { colorName: 'رنگ 1' }, bottomDoorHeight: 50, doorsHorizonatalGap: 10, isTopDoorHorizontal: true, doors: [] });
+
+    const defaultDTO = {
+        depth: 0,
+        width: 0,
+        height: 0,
+        hasHiddenHandle: false,
+        doorExtraHeight: 0,
+        bottomDoorColor: { colorName: 'رنگ 1' },
+        bottomDoorHeight: 0,
+        doorsHorizonatalGap: 0,
+        isTopDoorHorizontal: false,
+        doors: [],
+    };
+    const [dto, setDTO] = useState<WallAbchekanDTO>(defaultDTO);
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 

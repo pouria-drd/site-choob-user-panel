@@ -5,21 +5,10 @@ import Spinner from '../../components/uiComp/spinner/Spinner';
 
 import { useParams } from 'react-router-dom';
 import UnitSelectionHeader from './Headers/UnitSelectionHeader';
-import SimpleGroundUnit from './Components/Units/GroundUnits/SimpleGroundUnit';
 import UnitUserPropsContent from '../../contents/UnitProject/UnitUserPropsContent';
 import Modal from '../../components/uiComp/modals/Modal';
-import WrenchIcon from '../../components/icons/WrenchIcon';
-import FixedGroundUnit from './Components/Units/GroundUnits/FixedGroundUnit';
-import FixedGroundUnitWithPillar from './Components/Units/GroundUnits/FixedGroundUnitWithPillar';
-import SimpleGroundUnitWithPillar from './Components/Units/GroundUnits/SimpleGroundUnitWithPillar';
-import SimpleOpenUnit from './Components/Units/GroundUnits/SimpleOpenUnit';
-import FixedOpenUnit from './Components/Units/GroundUnits/FixedOpenUnit';
-import SimpleWallUnit from './Components/Units/WallUnits/SimpleWallUnit';
-import FixedWallUnit from './Components/Units/WallUnits/FixedWallUnit';
-import SimpleWallUnitWithPillar from './Components/Units/WallUnits/SimpleWallUnitWithPillar';
-import FixedWallUnitWithPillar from './Components/Units/WallUnits/FixedWallUnitWithPillar';
-import WallCoverUnit from './Components/Units/WallUnits/WallCoverUnit';
-import WallAbchekanUnit from './Components/Units/WallUnits/WallAbchekanUnit';
+
+import QuestionIcon from '../../components/icons/QuestionIcon';
 
 interface AddNewUnitPageParams {
     projectID: string;
@@ -32,8 +21,6 @@ function AddNewUnitPage() {
 
     const unitProjectService = new UnitProjectService();
     const [isLoading, setIsLoading] = useState(true);
-
-    const [units, setUnits] = useState<UnitPropsDTO[]>([]);
 
     const params = useParams<{ token?: string; optionalParam?: string }>();
     const { projectID } = Object.assign({}, params) as AddNewUnitPageParams;
@@ -48,10 +35,6 @@ function AddNewUnitPage() {
         try {
             var projectPropsResult = await unitProjectService.GetUserProperties<UnitProjectPropertiesModel>();
             if (projectPropsResult) setUserProps(projectPropsResult.properties);
-
-            var result = await unitProjectService.GetUnits<UnitPropsDTO[]>();
-
-            if (result) setUnits(result);
         } catch (e) {}
 
         setIsLoading(false);
@@ -61,48 +44,9 @@ function AddNewUnitPage() {
         fetchData();
     }, []);
 
-    const onUnitSelectionChanged = (unit: UnitPropsDTO) => {
-        switch (unit.index) {
-            case 1:
-                setSelectedUnit(<SimpleGroundUnit projectId={projectID} />);
-                break;
-            case 2:
-                setSelectedUnit(<SimpleGroundUnitWithPillar projectId={projectID} />);
-                break;
-            case 3:
-                setSelectedUnit(<FixedGroundUnit projectId={projectID} />);
-                break;
-            case 4:
-                setSelectedUnit(<FixedGroundUnitWithPillar projectId={projectID} />);
-                break;
-            case 5:
-                setSelectedUnit(<SimpleOpenUnit projectId={projectID} />);
-                break;
-            case 6:
-                setSelectedUnit(<FixedOpenUnit projectId={projectID} />);
-                break;
-
-            case 7:
-                setSelectedUnit(<SimpleWallUnit projectId={projectID} />);
-                break;
-            case 8:
-                setSelectedUnit(<FixedWallUnit projectId={projectID} />);
-                break;
-            case 9:
-                setSelectedUnit(<SimpleWallUnitWithPillar projectId={projectID} />);
-                break;
-            case 10:
-                setSelectedUnit(<FixedWallUnitWithPillar projectId={projectID} />);
-                break;
-            case 11:
-                setSelectedUnit(<WallCoverUnit projectId={projectID} />);
-                break;
-            case 12:
-                setSelectedUnit(<WallAbchekanUnit projectId={projectID} />);
-                break;
-            default:
-                setSelectedUnit(<div className="flex">dastan</div>);
-        }
+    const unitCategorySelected = (unitCat: any) => {
+        if (unitCat) setSelectedUnit(unitCat);
+        else setSelectedUnit(null);
     };
 
     return (
@@ -115,13 +59,13 @@ function AddNewUnitPage() {
                         <button
                             className="py-2 px-3 base-button info"
                             onClick={openModal}>
-                            مشاهده تنظیمات
-                            <WrenchIcon className="w-4 h-4" />
+                            تنظیمات یونیت
+                            <QuestionIcon className="w-5 h-5" />
                         </button>
                     </div>
                     <UnitSelectionHeader
-                        onSelectionChanged={onUnitSelectionChanged}
-                        units={units}
+                        onSelectionChanged={unitCategorySelected}
+                        projectID={projectID}
                     />
                     {!selectedUnit && <div className="flex items-center justify-center bg-white rounded-lg p-4 text-center">لطفا یونیت را انتخاب کنید</div>}
                     {selectedUnit && selectedUnit}
