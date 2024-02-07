@@ -33,6 +33,16 @@ class WallUnitProjectService extends UnitProjectBase {
         const url = this.baseURL + 'CalculatedAbchekanUnit';
         return this.request<T>({ method: 'post', url, data: dto });
     }
+
+    public async CalculatedHoodUnit<T>(dto: WallHoodUnitDTO) {
+        const url = this.baseURL + 'CalculatedHoodUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
+
+    public async CalculatedHiddenHandleUnit<T>(dto: WallHiddenHandleUnitDTO) {
+        const url = this.baseURL + 'CalculatedWallHiddenHandleUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
 }
 
 export default WallUnitProjectService;

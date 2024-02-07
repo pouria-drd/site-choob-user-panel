@@ -38,10 +38,34 @@ interface WallAbchekanDTO {
     depth: number;
     bottomDoorHeight: number;
     doorExtraHeight: number;
-    doorsHorizonatalGap: number;
+    doorsHorizontalGap: number;
     hasHiddenHandle: boolean;
     isTopDoorHorizontal: boolean;
     topHorizontalDoorColor: SimpleColorDTO;
     bottomDoorColor: SimpleColorDTO;
     doors: SimpleColorDTO[];
+}
+
+interface WallHoodUnitDTO {
+    width: number;
+    height: number;
+    depth: number;
+
+    wallColor: SimpleColorDTO;
+}
+
+interface WallHiddenHandleUnitDTO {
+    width: number;
+    height: number;
+    depth: number;
+
+    doorsHorizontalGap: number;
+    isTopDoorHorizontal: boolean;
+    isBottomDoorHorizontal: boolean;
+
+    doorExtraHeight: number;
+    bottomDoorHeight: number;
+
+    bottomDoors: SimpleColorDTO[];
+    topDoors: SimpleColorDTO[];
 }

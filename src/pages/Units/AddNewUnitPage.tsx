@@ -51,7 +51,7 @@ function AddNewUnitPage() {
             setSelectedUnit(unitCat);
             setTimeout(() => {
                 setIsLoadingUnit(false);
-            }, 600);
+            }, 200);
         } else setSelectedUnit(null);
     };
 

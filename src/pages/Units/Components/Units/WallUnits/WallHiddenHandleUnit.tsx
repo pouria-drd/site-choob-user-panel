@@ -16,7 +16,7 @@ interface DoorProp {
     name: string;
     value: string;
 }
-function WallAbchekanUnit({ projectId, title }: { projectId: string; title: string }) {
+function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
 
     const unitProjectService = new WallUnitProjectService();
@@ -25,19 +25,18 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
     const [isCalculating, setIsCalculating] = useState(false);
 
     const defaultDTO = {
-        depth: 0,
-        width: 0,
-        height: 0,
-        hasHiddenHandle: false,
-        doorExtraHeight: 0,
-        bottomDoorColor: { colorName: 'رنگ 1' },
-        topHorizontalDoorColor: { colorName: 'رنگ 1' },
-        bottomDoorHeight: 0,
-        doorsHorizontalGap: 0,
-        isTopDoorHorizontal: false,
-        doors: [],
+        depth: 35,
+        width: 100,
+        height: 90,
+        doorExtraHeight: 2,
+        bottomDoors: [{ colorName: 'رنگ 1' }],
+        topDoors: [{ colorName: 'رنگ 1' }],
+        bottomDoorHeight: 45,
+        doorsHorizontalGap: 4,
+        isTopDoorHorizontal: true,
+        isBottomDoorHorizontal: true,
     };
-    const [dto, setDTO] = useState<WallAbchekanDTO>(defaultDTO);
+    const [dto, setDTO] = useState<WallHiddenHandleUnitDTO>(defaultDTO);
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
 
     const defaultDoorColors = [
@@ -46,35 +45,37 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
     ];
     const [doors, setDoors] = useState<DoorProp[]>(defaultDoorColors);
 
-    const handleInputChange = (fieldName: keyof WallAbchekanDTO, value: number | SimpleColorDTO) => {
+    const handleInputChange = (fieldName: keyof WallHiddenHandleUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
     };
 
-    const handleHasHiddenDoor = (v: boolean) => {
-        setDTO((prevDTO) => {
-            return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
-        });
-    };
-
     const handleTopDoorIsHorizontal = (v: boolean) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, isTopDoorHorizontal: v, topHorizontalDoorColor: { colorName: 'رنگ 1' } };
+            return { ...prevDTO, isTopDoorHorizontal: v, topDoors: [{ colorName: 'رنگ 1' }] };
         });
 
         setDoors(defaultDoorColors);
     };
 
-    const handleHorizontalDoorColor = (v: any) => {
+    const handleBottomDoorIsHorizontal = (v: boolean) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, topHorizontalDoorColor: { colorName: v } };
+            return { ...prevDTO, isBottomDoorHorizontal: v, bottomDoors: [{ colorName: 'رنگ 1' }] };
+        });
+
+        setDoors(defaultDoorColors);
+    };
+
+    const handleTopDoorsColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, topDoors: [{ colorName: v }] };
         });
     };
 
-    const handleBottomDoorColor = (v: any) => {
+    const handleBottomDoorsColor = (v: any) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, bottomDoorColor: { colorName: v } };
+            return { ...prevDTO, bottomDoors: [{ colorName: v }] };
         });
     };
 
@@ -104,17 +105,11 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
         }
 
         try {
-            let dtoDoors: SimpleColorDTO[] = [];
-
-            doors.map((d) => {
-                dtoDoors.push({ colorName: d.value });
-            });
             let dtoToSend = dto;
 
-            dto.doors = dtoDoors;
+            var result = await unitProjectService.CalculatedHiddenHandleUnit<any>(dtoToSend);
 
-            var result = await unitProjectService.CalculatedAbchekanUnit<any>(dtoToSend);
-
+            console.log('calc', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
@@ -139,17 +134,19 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
             { name: 'depth', title: 'عمق', value: dto.depth.toString() + 'cm' },
             { name: 'bottomDoorHeight', title: 'ارتفاع درب پایین', value: dto.bottomDoorHeight + 'cm' },
             { name: 'doorsHorizonatalGap', title: 'فاصله درب های بالا و پایین', value: dto.doorsHorizontalGap + 'cm' },
+            { name: 'doorExtraHeight', title: 'اضافه پایین درب', value: dto.doorExtraHeight.toString() + 'cm' },
         ];
 
-        if (dto.hasHiddenHandle) {
-            Props.push({ name: 'doorExtraHeight', title: 'اضافه پایین درب', value: dto.doorExtraHeight.toString() + 'cm' });
+        if (dto.isTopDoorHorizontal) {
+            Props.push({ name: 'isTopDoorHorizontal', title: 'درب بالای داشبردی', value: dto.topDoors[0].colorName });
+        } else {
+            Props.push({ name: 'topDoors', title: 'درب بالا', value: dto.topDoors[0].colorName });
         }
 
-        if (dto.isTopDoorHorizontal) {
-            Props.push({ name: 'isTopDoorHorizontal', title: 'درب بالای داشبردی', value: dto.topHorizontalDoorColor.toString() });
+        if (dto.isBottomDoorHorizontal) {
+            Props.push({ name: 'isBottomDoorHorizontal', title: 'درب پایین داشبردی', value: dto.bottomDoors[0].colorName });
         } else {
-            Props.push({ name: 'door1', title: 'درب راست', value: dto.doors[0].colorName });
-            Props.push({ name: 'door2', title: 'درب چپ', value: dto.doors[1].colorName });
+            Props.push({ name: 'bottomDoors', title: 'درب پایین', value: dto.bottomDoors[0].colorName });
         }
 
         doors.map((d, index) => {
@@ -217,42 +214,28 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect
                                     title="درب پایین"
-                                    onValueChanged={handleBottomDoorColor}
+                                    onValueChanged={handleBottomDoorsColor}
                                     index={55}
                                 />
                             </div>
 
                             <div className="flex flex-col w-full">
-                                <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
-
-                                    <input
-                                        className="base-input w-full"
-                                        type="checkbox"
-                                        checked={dto.hasHiddenHandle}
-                                        onChange={(e) => handleHasHiddenDoor(e.target.checked)}
-                                    />
-                                </div>
-
-                                {dto.hasHiddenHandle && (
-                                    <div className="flex flex-col w-full">
-                                        <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(cm)</label>
-                                        <input
-                                            className="base-input w-full"
-                                            placeholder="اضافه به درب بالا(cm)"
-                                            onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">فاصله درب های بالا و پایین(cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(cm)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="فاصله درب های بالا و پایین(cm)"
-                                    onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
+                                    placeholder="اضافه به درب بالا(cm)"
+                                    onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
                                 />
                             </div>
+                        </div>
+                        <div className="flex flex-col w-full">
+                            <label className="text-xs sm:text-sm md:text-base">فاصله درب های بالا و پایین(cm)</label>
+                            <input
+                                className="base-input w-full"
+                                placeholder="فاصله درب های بالا و پایین(cm)"
+                                onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
+                            />
+
                             <div className="flex flex-row items-center gap-1">
                                 <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
 
@@ -268,7 +251,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                 <div className="flex flex-col gap-4 w-full ">
                                     <DoorColorSelect
                                         title="درب داشبردی"
-                                        onValueChanged={handleHorizontalDoorColor}
+                                        onValueChanged={handleTopDoorsColor}
                                         index={88}
                                     />
                                 </div>
@@ -327,4 +310,4 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
     );
 }
 
-export default WallAbchekanUnit;
+export default WallHiddenHandleUnit;

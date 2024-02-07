@@ -128,10 +128,7 @@ function UnitProjectsPage() {
                     <NewProjectHeader />
                     <div className="flex flex-col flex-grow overflow-y-auto">
                         {/* ResponsiveTable should handle its own height */}
-                        <ResponsiveTable
-                            data={tableData}
-                            addIndex={true}
-                        />
+                        <ResponsiveTable data={tableData} />
                     </div>
                 </div>
             )}
