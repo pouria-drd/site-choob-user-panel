@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
@@ -10,7 +10,13 @@ import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 
 import WallUnitProjectService from '../../../../../services/units/WallUnitProjectService';
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
+import Dropdown from '../../../../../components/uiComp/dropdown/Dropdown';
 
+interface DropdownOption {
+    label: string;
+    value: string;
+    icon?: ReactNode;
+}
 interface DoorProp {
     index: number;
     name: string;
@@ -25,25 +31,40 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
     const [isCalculating, setIsCalculating] = useState(false);
 
     const defaultDTO = {
-        depth: 35,
-        width: 100,
-        height: 90,
-        doorExtraHeight: 2,
+        depth: 0,
+        width: 0,
+        height: 0,
+        doorExtraHeight: 0,
         bottomDoors: [{ colorName: 'رنگ 1' }],
         topDoors: [{ colorName: 'رنگ 1' }],
-        bottomDoorHeight: 45,
-        doorsHorizontalGap: 4,
-        isTopDoorHorizontal: true,
-        isBottomDoorHorizontal: true,
+        bottomDoorHeight: 0,
+        doorsHorizontalGap: 0,
+        isTopDoorHorizontal: false,
+        isBottomDoorHorizontal: false,
     };
     const [dto, setDTO] = useState<WallHiddenHandleUnitDTO>(defaultDTO);
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
+
+    const doorOptions: DropdownOption[] = [
+        {
+            label: 'یک',
+            value: '1',
+        },
+        {
+            label: 'دو',
+            value: '2',
+        },
+    ];
 
     const defaultDoorColors = [
         { index: 1, name: `درب 1`, value: 'رنگ 1' },
         { index: 2, name: `درب 2`, value: 'رنگ 1' },
     ];
-    const [doors, setDoors] = useState<DoorProp[]>(defaultDoorColors);
+    const [bottomDoors, setBottomDoors] = useState<DoorProp[]>(defaultDoorColors);
+    const [topDoors, setTopDoors] = useState<DoorProp[]>(defaultDoorColors);
+
+    const [defaultBottomDoorOption, setDefaultBottomDoorOption] = useState<DropdownOption>(doorOptions[0]);
+    const [defaultTopDoorOption, setDefaultTopDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const handleInputChange = (fieldName: keyof WallHiddenHandleUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
@@ -56,7 +77,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
             return { ...prevDTO, isTopDoorHorizontal: v, topDoors: [{ colorName: 'رنگ 1' }] };
         });
 
-        setDoors(defaultDoorColors);
+        setTopDoors(defaultDoorColors);
     };
 
     const handleBottomDoorIsHorizontal = (v: boolean) => {
@@ -64,35 +85,52 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
             return { ...prevDTO, isBottomDoorHorizontal: v, bottomDoors: [{ colorName: 'رنگ 1' }] };
         });
 
-        setDoors(defaultDoorColors);
+        setBottomDoors(defaultDoorColors);
     };
 
     const handleTopDoorsColor = (v: any) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, topDoors: [{ colorName: v }] };
         });
+
+        const colorName: string = v;
+
+        setTopDoors([
+            { index: 1, name: colorName, value: colorName },
+            { index: 2, name: colorName, value: colorName },
+        ]);
     };
 
     const handleBottomDoorsColor = (v: any) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, bottomDoors: [{ colorName: v }] };
         });
+        const colorName: string = v;
+
+        setBottomDoors([
+            { index: 1, name: colorName, value: colorName },
+            { index: 2, name: colorName, value: colorName },
+        ]);
     };
 
-    const handleDoorColorChange = (v: any, index: number) => {
-        //loop in doors and set the dto value based on them..
+    const handleBottomSelectedOption = (option: DropdownOption) => {
+        const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
+        for (let i = 1; i <= dCount; i++) {
+            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        }
+        setDefaultBottomDoorOption(option);
+        setBottomDoors(newDoors);
+    };
 
-        doors.map((d) => {
-            let door = d;
-            if (d.index === index) {
-                d.value = v;
-            }
-
-            newDoors.push(door);
-        });
-
-        setDoors(newDoors);
+    const handleTopSelectedOption = (option: DropdownOption) => {
+        const dCount = Number(option.value);
+        let newDoors: DoorProp[] = [];
+        for (let i = 1; i <= dCount; i++) {
+            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        }
+        setDefaultTopDoorOption(option);
+        setTopDoors(newDoors);
     };
 
     const calculate = async () => {
@@ -107,6 +145,22 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
         try {
             let dtoToSend = dto;
 
+            let dtoBottomDoors: SimpleColorDTO[] = [];
+
+            bottomDoors.map((d) => {
+                dtoBottomDoors.push({ colorName: d.value });
+            });
+            dtoToSend.bottomDoors = dtoBottomDoors;
+
+            let dtoTopDoors: SimpleColorDTO[] = [];
+
+            topDoors.map((d) => {
+                dtoTopDoors.push({ colorName: d.value });
+            });
+
+            dtoToSend.topDoors = dtoTopDoors;
+
+            console.log(dtoToSend);
             var result = await unitProjectService.CalculatedHiddenHandleUnit<any>(dtoToSend);
 
             console.log('calc', result);
@@ -141,21 +195,15 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
             Props.push({ name: 'isTopDoorHorizontal', title: 'درب بالای داشبردی', value: dto.topDoors[0].colorName });
         } else {
             Props.push({ name: 'topDoors', title: 'درب بالا', value: dto.topDoors[0].colorName });
+            Props.push({ name: 'topDoorsCount', title: 'تعداد درب بالا', value: dto.topDoors.length.toString() + 'عدد' });
         }
 
         if (dto.isBottomDoorHorizontal) {
             Props.push({ name: 'isBottomDoorHorizontal', title: 'درب پایین داشبردی', value: dto.bottomDoors[0].colorName });
         } else {
             Props.push({ name: 'bottomDoors', title: 'درب پایین', value: dto.bottomDoors[0].colorName });
+            Props.push({ name: 'bottomDoorsCount', title: 'تعداد درب پایین', value: dto.bottomDoors.length.toString() + 'عدد' });
         }
-
-        doors.map((d, index) => {
-            Props.push({
-                name: `door-${index + 1}`,
-                title: d.name,
-                value: d.value,
-            });
-        });
 
         const addUnit: AddUnitDTO = {
             name: title,
@@ -211,13 +259,6 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                     onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
                                 />
                             </div>
-                            <div className="flex flex-col gap-4 w-full ">
-                                <DoorColorSelect
-                                    title="درب پایین"
-                                    onValueChanged={handleBottomDoorsColor}
-                                    index={55}
-                                />
-                            </div>
 
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(cm)</label>
@@ -227,15 +268,44 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                     onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
                                 />
                             </div>
-                        </div>
-                        <div className="flex flex-col w-full">
+
                             <label className="text-xs sm:text-sm md:text-base">فاصله درب های بالا و پایین(cm)</label>
                             <input
                                 className="base-input w-full"
                                 placeholder="فاصله درب های بالا و پایین(cm)"
                                 onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
                             />
+                            <div className="flex flex-row items-center gap-1">
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی پایین</label>
 
+                                <input
+                                    className="base-input w-full"
+                                    type="checkbox"
+                                    checked={dto.isBottomDoorHorizontal}
+                                    onChange={(e) => handleBottomDoorIsHorizontal(e.target.checked)}
+                                />
+                            </div>
+
+                            {!dto.isBottomDoorHorizontal && (
+                                <>
+                                    <div className="w-full  r2l">
+                                        <Dropdown
+                                            title={'تعداد درب پایین'}
+                                            options={doorOptions}
+                                            defaultOption={defaultBottomDoorOption}
+                                            onSelectOption={(opt) => handleBottomSelectedOption(opt)}
+                                        />
+                                    </div>
+                                </>
+                            )}
+
+                            <div className="flex flex-col gap-4 w-full ">
+                                <DoorColorSelect
+                                    title="درب پایین"
+                                    onValueChanged={handleBottomDoorsColor}
+                                    index={44}
+                                />
+                            </div>
                             <div className="flex flex-row items-center gap-1">
                                 <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
 
@@ -246,36 +316,26 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                     onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
                             </div>
-
-                            {dto.isTopDoorHorizontal && (
-                                <div className="flex flex-col gap-4 w-full ">
-                                    <DoorColorSelect
-                                        title="درب داشبردی"
-                                        onValueChanged={handleTopDoorsColor}
-                                        index={88}
-                                    />
-                                </div>
-                            )}
-
                             {!dto.isTopDoorHorizontal && (
                                 <>
-                                    <div className="flex flex-col gap-4 w-full ">
-                                        <DoorColorSelect
-                                            title="درب راست"
-                                            onValueChanged={handleDoorColorChange}
-                                            index={1}
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-col gap-4 w-full ">
-                                        <DoorColorSelect
-                                            title="درب چپ"
-                                            onValueChanged={handleDoorColorChange}
-                                            index={2}
+                                    <div className="w-full  r2l">
+                                        <Dropdown
+                                            title={'تعداد درب بالا'}
+                                            options={doorOptions}
+                                            defaultOption={defaultTopDoorOption}
+                                            onSelectOption={(opt) => handleTopSelectedOption(opt)}
                                         />
                                     </div>
                                 </>
                             )}
+
+                            <div className="flex flex-col gap-4 w-full ">
+                                <DoorColorSelect
+                                    title="درب بالا"
+                                    onValueChanged={handleTopDoorsColor}
+                                    index={88}
+                                />
+                            </div>
                         </div>
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img

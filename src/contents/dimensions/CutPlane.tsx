@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import woodSheetGrain from '../../assets/images/woodsheetgrain.png';
+
 const CutPlane = ({ dimension }: { dimension: DimensionCutModel }) => {
     // Use state to store the dimension and trigger re-renders
     const [currentDimension, setCurrentDimension] = useState<DimensionCutModel>(() => dimension);
@@ -73,7 +75,12 @@ const CutPlane = ({ dimension }: { dimension: DimensionCutModel }) => {
 
     return (
         <div className="flex justify-center p-2">
-            <div className={`relative bg-white border border-gray-400  z-20 ${planeDimension}`}>
+            <div className={`relative  bg-white  border border-gray-400  z-20 ${planeDimension}`}>
+                <div
+                    className="absolute w-full h-full z-0 bg-contain opacity-10  bg-repeatx"
+                    style={{ backgroundImage: `url(${woodSheetGrain})` }}
+                />
+
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2  text-center z-20">
                     <span className="text-xs">{currentDimension.x == 0 ? '' : currentDimension.x}</span>
                 </div>
