@@ -29,6 +29,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
         width: 0,
         height: 0,
         hasHiddenHandle: false,
+        isEvenDoors: true,
         doorExtraHeight: 0,
         bottomDoorColor: { colorName: 'رنگ 1' },
         topHorizontalDoorColor: { colorName: 'رنگ 1' },
@@ -55,6 +56,12 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
     const handleHasHiddenDoor = (v: boolean) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
+        });
+    };
+
+    const handleIsEvenDoors = (v: boolean) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, isEvenDoors: v, doorExtraHeight: 0 };
         });
     };
 
@@ -205,15 +212,26 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
                                 />
                             </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (cm)</label>
+                            <div className="flex flex-row items-center gap-1">
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع درب پایین(cm)"
-                                    onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
+                                    type="checkbox"
+                                    checked={dto.isEvenDoors}
+                                    onChange={(e) => handleIsEvenDoors(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">محاسبه مساوی درب ها</label>
                             </div>
+                            {!dto.isEvenDoors && (
+                                <div className="flex flex-col w-full">
+                                    <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (سانتی متر)</label>
+                                    <input
+                                        className="base-input w-full"
+                                        placeholder="ارتفاع درب پایین(سانتی متر)"
+                                        onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
+                                    />
+                                </div>
+                            )}
+
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect
                                     title="درب پایین"
@@ -236,20 +254,20 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
 
                                 {dto.hasHiddenHandle && (
                                     <div className="flex flex-col w-full">
-                                        <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(cm)</label>
+                                        <label className="text-xs sm:text-sm md:text-base">اضافه به درب پایین(سانتی متر)</label>
                                         <input
                                             className="base-input w-full"
-                                            placeholder="اضافه به درب بالا(cm)"
+                                            placeholder="اضافه به درب پایین(سانتی متر)"
                                             onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
                                         />
                                     </div>
                                 )}
                             </div>
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">فاصله درب های بالا و پایین(cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">فاصله بین درب بالا و پایین(سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="فاصله درب های بالا و پایین(cm)"
+                                    placeholder="فاصله درب های بالا و پایین(سانتی متر)"
                                     onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
                                 />
                             </div>

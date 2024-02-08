@@ -36,6 +36,7 @@ interface WallAbchekanDTO {
     width: number;
     height: number;
     depth: number;
+    isEvenDoors: boolean;
     bottomDoorHeight: number;
     doorExtraHeight: number;
     doorsHorizontalGap: number;
@@ -58,7 +59,7 @@ interface WallHiddenHandleUnitDTO {
     width: number;
     height: number;
     depth: number;
-
+    isEvenDoors: boolean;
     doorsHorizontalGap: number;
     isTopDoorHorizontal: boolean;
     isBottomDoorHorizontal: boolean;
