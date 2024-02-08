@@ -18,6 +18,7 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
     const unitCats: unitCatProps[] = [
         { name: 'زمینی', index: 1 },
         { name: 'دیواری', index: 2 },
+        { name: 'یخچال', index: 3 },
     ];
 
     const onSelection = (unitCat: unitCatProps) => {

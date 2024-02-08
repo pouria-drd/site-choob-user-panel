@@ -55,7 +55,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
 
     const handleHasHiddenDoor = (v: boolean) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
+            return { ...prevDTO, hasHiddenHandle: v, doorExtraHeight: 0 };
         });
     };
 

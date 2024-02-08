@@ -11,11 +11,6 @@ import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 import WallUnitProjectService from '../../../../../services/units/WallUnitProjectService';
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
 
-interface DoorProp {
-    index: number;
-    name: string;
-    value: string;
-}
 function WallHoodUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
 

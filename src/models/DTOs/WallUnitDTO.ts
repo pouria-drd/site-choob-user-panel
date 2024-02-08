@@ -70,3 +70,25 @@ interface WallHiddenHandleUnitDTO {
     bottomDoors: SimpleColorDTO[];
     topDoors: SimpleColorDTO[];
 }
+
+interface WallTwoPartUnitDTO {
+    width: number;
+
+    bottomHeight: number;
+    topHeight: number;
+
+    bottomDepth: number;
+    topDepth: number;
+
+    isTopDoorHorizontal: boolean;
+    isBottomDoorHorizontal: boolean;
+
+    bottomHasHiddenHandle: boolean;
+    topHasHiddenHandle: boolean;
+
+    bottmDoorExteraHeight: number;
+    topDoorExteraHeight: number;
+
+    bottomDoors: SimpleColorDTO[];
+    topDoors: SimpleColorDTO[];
+}

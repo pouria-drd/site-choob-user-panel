@@ -8,6 +8,7 @@ import WallAbchekanUnit from '../../../pages/Units/Components/Units/WallUnits/Wa
 import FixedWallUnit from '../../../pages/Units/Components/Units/WallUnits/FixedWallUnit';
 import WallHoodUnit from '../../../pages/Units/Components/Units/WallUnits/WallHoodUnit';
 import WallHiddenHandleUnit from '../../../pages/Units/Components/Units/WallUnits/WallHiddenHandleUnit';
+import WallTwoPartUnit from '../../../pages/Units/Components/Units/WallUnits/WallTwoPartUnit';
 
 interface UnitProps {
     name: string;
@@ -86,7 +87,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
         },
         {
             name: 'هود ساده',
-            index: 6,
+            index: 7,
             component: (
                 <WallHoodUnit
                     projectId={projectID}
@@ -97,11 +98,23 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
         },
         {
             name: 'با دستگیره مخفی',
-            index: 6,
+            index: 8,
             component: (
                 <WallHiddenHandleUnit
                     projectId={projectID}
                     title={`${titleBase} با دستگیره مخفی`}
+                />
+            ),
+            img: 'SimpleGroundUnit.png',
+        },
+
+        {
+            name: 'پله ای',
+            index: 9,
+            component: (
+                <WallTwoPartUnit
+                    projectId={projectID}
+                    title={`${titleBase} پله ای`}
                 />
             ),
             img: 'SimpleGroundUnit.png',
