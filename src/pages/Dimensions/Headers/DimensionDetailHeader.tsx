@@ -91,7 +91,7 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                     }
                 />
             )}
-            <div className="grid grid-cols-6 bg-white rounded-lg w-full px-4 py-6 sm:p-6 gap-y-8">
+            <div className="grid grid-cols-6 bg-white rounded-lg w-full px-4 py-6 sm:p-6 gap-y-4">
                 <div className="col-span-6 sm:col-span-2 border-b sm:border-none pb-4 sm:p-0">
                     <div className="flex justify-between items-center">
                         {!headerData.sentForCut ? (
@@ -138,7 +138,7 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                     </div>
                 </div>
                 <div className="col-span-6 sm:col-span-4 r2l">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-10">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-6">
                         <p className="text-sm sm:text-base inline-block">
                             عنوان:
                             <span className="text-gray-400">{headerData?.title}</span>
@@ -146,35 +146,25 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                         {/* LIKE ABOVE>>> */}
                         {/* TODO: component these:>>> */}
 
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>رنگ PVC:</p>
-                            <p className="text-gray-400">{pvcColor}</p>
-                        </div>
+                        <p className="text-sm sm:text-base inline-block">
+                            رنگ PVC:
+                            <span className="text-gray-400">{pvcColor}</span>
+                        </p>
 
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>ابعاد ورق:</p>
-                            <p className="text-gray-400">{headerData.woodSheetDimensions}</p>
-                        </div>
+                        <p className="text-sm sm:text-base inline-block">
+                            ابعاد ورق:
+                            <span className="text-gray-400">{headerData.woodSheetDimensions}</span>
+                        </p>
 
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>نوع برش:</p>
-                            <p className="text-gray-400">{headerData.isNotRotatable ? 'از راه چوب' : 'آزاد'}</p>
-                        </div>
+                        <p className="text-sm sm:text-base inline-block">
+                            نوع برش:
+                            <span className="text-gray-400">{headerData.isNotRotatable ? 'از راه چوب' : 'آزاد'}</span>
+                        </p>
 
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>قطر تیغه برش:</p>
-                            <p className="text-gray-400">4.5mm</p>
-                        </div>
-
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>تریم از هر طرف:</p>
-                            <p className="text-gray-400">5mm</p>
-                        </div>
-
-                        <div className="flex  items-center gap-1 text-sm sm:text-base">
-                            <p>توضیحات:</p>
-                            <p className="text-gray-400">{description}</p>
-                        </div>
+                        <p className="text-sm sm:text-base inline-block">
+                            توضیحات:
+                            <span className="text-gray-400">{description}</span>
+                        </p>
                     </div>
                 </div>
 

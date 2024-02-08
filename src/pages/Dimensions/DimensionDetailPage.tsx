@@ -159,10 +159,21 @@ function DimensionDetailPage() {
                                     />
 
                                     {!dimensionHeaderData.sentForCut && (
-                                        <DimensionNewCut
-                                            dimensionId={dimensionID}
-                                            onUpdate={handleLoadCutListData}
-                                        />
+                                        <div className="flex flex-col md:flex-row-reverse gap-2">
+                                            <DimensionNewCut
+                                                woodSheetDimensions={dimensionHeaderData.woodSheetDimensions}
+                                                dimensionId={dimensionID}
+                                                onUpdate={handleLoadCutListData}
+                                            />
+                                            {dimensionCutList && (
+                                                <DimensionCutList
+                                                    dimensionCutData={dimensionCutList}
+                                                    isDeletable={!dimensionHeaderData.sentForCut}
+                                                    onDelete={handleLoadCutListData}
+                                                    dimensionId={dimensionHeaderData.id}
+                                                />
+                                            )}
+                                        </div>
                                     )}
 
                                     {isCutListLoading && (
@@ -172,7 +183,7 @@ function DimensionDetailPage() {
                                         />
                                     )}
 
-                                    {!isCutListLoading && dimensionCutList && (
+                                    {!isCutListLoading && dimensionCutList && dimensionHeaderData.sentForCut && (
                                         <DimensionCutList
                                             dimensionCutData={dimensionCutList}
                                             isDeletable={!dimensionHeaderData.sentForCut}
