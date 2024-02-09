@@ -124,14 +124,17 @@ const CutSign = ({ dimension }: CutSignProp) => {
     };
 
     useEffect(() => {
+        console.log('handle t');
         handleTopSign();
     }, [top]);
 
     useEffect(() => {
+        console.log('handle b');
         handleBottomSign();
     }, [bottom]);
 
     useEffect(() => {
+        console.log('handle r');
         handleRightSign();
     }, [right]);
 
@@ -203,7 +206,6 @@ const CutSign = ({ dimension }: CutSignProp) => {
 
         setDTO(modDTO);
     };
-
     const handleLeftSign = () => {
         const topSign = left.name;
         let modDTO: DimensionCutModel = dto;
@@ -235,6 +237,21 @@ const CutSign = ({ dimension }: CutSignProp) => {
         setDTO(modDTO);
     };
 
+    const setDefaultTop = () => {
+        console.log('1213');
+        console.log(dimension);
+        if (dimension.pvctop) {
+            setTop(findSignProp('pvc'));
+        } else if (dimension.fTop) {
+            setTop(findSignProp('farsi'));
+        } else {
+            setTop(findSignProp('none'));
+        }
+    };
+
+    const findSignProp = (name: string) => {
+        return defaultSigns.filter((x) => x.name === name)[0];
+    };
     useEffect(() => {
         setDTO(dimension);
         calculatePlaneDimension();

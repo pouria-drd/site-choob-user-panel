@@ -50,7 +50,10 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
 
     const onEdit = (editedData: DimensionCutModel[]) => {
         setIsEdited(true);
-        setDimensionsData(editedData);
+        setDimensionsData([]);
+        setTimeout(() => {
+            setDimensionsData(editedData);
+        }, 20);
     };
 
     useEffect(() => {
@@ -59,6 +62,8 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
             setDimensionsData(dimensionCutList);
         }
     }, [dimensionCutList]);
+
+    useEffect(() => {}, [dimensionsData]);
 
     return (
         <div className="flex flex-col l2r w-full  bg-white  rounded-lg">
@@ -83,25 +88,29 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
             {dimensionsData && dimensionsData?.length > 0 && !isCalculating && (
                 <div className="flex flex-col gap-2 w-full  px-2 py-4">
                     <div className="flex flex-col  gap-2  px-2 items-end justify-between border-b pb-2">
-                        <div className="flex flex-col  r2l w-full">
-                            <label className="text-xs sm:text-sm md:text-base">تعداد</label>
-                            <input
-                                type="number"
-                                className="base-input w-full md:w-1/4"
-                                placeholder="تعداد"
-                                min={1}
-                                value={totalCount}
-                                onChange={(e) => setTotalCount(Number(e.target.value))}
-                            />
-                            <label className="text-xs sm:text-sm md:text-base mt-2">توضیحات</label>
-                            <input
-                                type="text"
-                                className="base-input w-full"
-                                placeholder="توضیحات"
-                                maxLength={32}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
+                        <div className="flex flex-col md:flex-row gap-2 items-center text-xs sm:text-sm md:text-base  r2l w-full">
+                            <div className="flex flex-col w-full md:w-1/4">
+                                <label>تعداد:</label>
+                                <input
+                                    type="number"
+                                    className="base-input w-full"
+                                    placeholder="تعداد"
+                                    min={1}
+                                    value={totalCount}
+                                    onChange={(e) => setTotalCount(Number(e.target.value))}
+                                />
+                            </div>
+                            <div className="flex flex-col  w-full">
+                                <label>توضیحات:</label>
+                                <input
+                                    type="text"
+                                    className="base-input w-full"
+                                    placeholder="توضیحات"
+                                    maxLength={32}
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </div>
                         </div>
 
                         <div className="flex w-full justify-start">
