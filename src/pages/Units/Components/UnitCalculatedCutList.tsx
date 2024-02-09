@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '../../../components/uiComp/spinner/Spinner';
-import DimensionCutList from '../../Dimensions/Components/DimensionCutList';
+
 import UnitProjectService from '../../../services/UnitProjectService';
 import { useNavigate } from 'react-router-dom';
 import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
+import UnitCutPart from './UnitCutPart';
+import StatusChip from '../../../components/uiComp/chips/StatusChip';
+import { StatusEnum } from '../../../enums/StatusEnum';
 
 interface UnitCalcProps {
     projectId: string;
@@ -15,21 +18,22 @@ interface UnitCalcProps {
 function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, addUnitDTO }: UnitCalcProps) {
     const navigate = useNavigate();
     const { showToast } = useToast();
-
+    const [dimensionsData, setDimensionsData] = useState<DimensionCutModel[]>([]);
     const unitProjectService = new UnitProjectService();
 
+    const [isEdited, setIsEdited] = useState(false);
     const [totalCount, setTotalCount] = useState(1);
     const [description, setDescription] = useState('');
 
     const handleOnSave = async () => {
-        if (!dimensionCutList) return;
+        if (!dimensionsData) return;
         if (!addUnitDTO) return;
 
         let dto = addUnitDTO;
 
         dto.count = totalCount;
         dto.description = description.length > 0 ? description : undefined;
-        dto.dimensions = dimensionCutList;
+        dto.dimensions = dimensionsData;
         try {
             var saveResult = await unitProjectService.AddUnitToProject<any>(dto);
 
@@ -43,15 +47,28 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
             }
         } catch (e) {}
     };
+
+    const onEdit = (editedData: DimensionCutModel[]) => {
+        setIsEdited(true);
+        setDimensionsData(editedData);
+    };
+
+    useEffect(() => {
+        if (dimensionCutList) {
+            setIsEdited(false);
+            setDimensionsData(dimensionCutList);
+        }
+    }, [dimensionCutList]);
+
     return (
         <div className="flex flex-col l2r w-full  bg-white  rounded-lg">
-            {!dimensionCutList ? (
+            {!dimensionsData ? (
                 <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
                     <p className="">در انتظار محاسبه</p>
                     <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
                 </div>
             ) : (
-                dimensionCutList.length == 0 && (
+                dimensionsData.length == 0 && (
                     <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
                         <p className="">در انتظار محاسبه</p>
                         <div className="bg-sc-purple-normal duration-75 animate-pulse w-full h-full rounded-lg" />
@@ -63,7 +80,7 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
                     <Spinner flex={true} />
                 </div>
             )}
-            {dimensionCutList && dimensionCutList?.length > 0 && !isCalculating && (
+            {dimensionsData && dimensionsData?.length > 0 && !isCalculating && (
                 <div className="flex flex-col gap-2 w-full  px-2 py-4">
                     <div className="flex flex-col  gap-2  px-2 items-end justify-between border-b pb-2">
                         <div className="flex flex-col  r2l w-full">
@@ -95,9 +112,20 @@ function UnitCalculatedCutList({ dimensionCutList, isCalculating, projectId, add
                             </button>
                         </div>
                     </div>
-                    <DimensionCutList
-                        dimensionCutData={dimensionCutList}
-                        isDeletable={false}
+
+                    {isEdited && (
+                        <div className="flex items-center r2l">
+                            <StatusChip
+                                text="ویرایش شده"
+                                type={StatusEnum.Warning}
+                            />
+                        </div>
+                    )}
+
+                    <UnitCutPart
+                        dimensionCutData={dimensionsData}
+                        isEditable={true}
+                        onEdit={onEdit}
                     />
                 </div>
             )}
