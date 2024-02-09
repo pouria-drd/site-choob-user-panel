@@ -91,6 +91,11 @@ class UnitProjectService extends AxiosBase {
         const url = this.baseURL + 'FixedGroundUnit?isOpen=true';
         return this.request<T>({ method: 'post', url, data: dto });
     }
+
+    public async CalculatedYakhchalUnit<T>(dto: YakhchalUnitDTO) {
+        const url = this.baseURL + 'CalculateGroundYakhchalUnit';
+        return this.request<T>({ method: 'post', url, data: dto });
+    }
 }
 
 export default UnitProjectService;

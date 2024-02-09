@@ -3,6 +3,7 @@ import Modal from '../../../components/uiComp/modals/Modal';
 import GroundUnits from '../../../contents/UnitProject/UnitSelections/GroundUnits';
 import WallUnits from '../../../contents/UnitProject/UnitSelections/WallUnits';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
+import YakhchalUnits from '../../../contents/UnitProject/UnitSelections/YakhchalUnits';
 interface unitCatProps {
     name: string;
     index: number;
@@ -36,6 +37,15 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
             case 2:
                 setSelectedUnitCat(
                     <WallUnits
+                        projectID={projectID}
+                        catTitle={unitCat.name}
+                        onSelection={onUnitSelect}
+                    />
+                );
+                break;
+            case 3:
+                setSelectedUnitCat(
+                    <YakhchalUnits
                         projectID={projectID}
                         catTitle={unitCat.name}
                         onSelection={onUnitSelect}

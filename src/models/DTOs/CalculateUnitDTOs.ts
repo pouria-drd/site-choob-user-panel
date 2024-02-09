@@ -50,6 +50,24 @@ interface FixedGroundUnitWithPillarDTO {
     doors: SimpleColorDTO[];
 }
 
+interface YakhchalUnitDTO {
+    width: number;
+    height: number;
+    depth: number;
+
+    topHeight: number;
+    topDepth: number;
+
+    hasHiddenHandle: boolean;
+    doorExtraHeight: number;
+
+    isTopDoorHorizontal: boolean;
+
+    useColorForBottom: boolean;
+    bottomColor: SimpleColorDTO;
+    doors: SimpleColorDTO[];
+}
+
 interface SimpleColorDTO {
     colorName: string;
     doorType?: string;
