@@ -26,11 +26,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         onChange={valueChanged}
                         checked={selectedOption == 1 ? true : false}
                     />
-                    <label
-                        className={selectedOption == 1 ? 'text-sc-blue-normal' : 'text-gray-600'}
-                        htmlFor="color1">
-                        رنگ 1
-                    </label>
+                    <label className={selectedOption == 1 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 1</label>
                 </div>
                 <div className="flex gap-1 w-full items-center">
                     <input
@@ -40,11 +36,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         onChange={valueChanged}
                         checked={selectedOption == 2 ? true : false}
                     />
-                    <label
-                        className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}
-                        htmlFor="color2">
-                        رنگ 2
-                    </label>
+                    <label className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 2</label>
                 </div>
             </fieldset>
         </div>

@@ -75,6 +75,12 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
         });
     };
 
+    const handleUseColorForBottom = (v: boolean) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, useColorForBottom: !v, bottomColor: { colorName: 'رنگ 1' } };
+        });
+    };
+
     const handleTopDoorIsHorizontal = (v: boolean) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, isTopDoorHorizontal: v, doors: [{ colorName: 'رنگ 1' }] };
@@ -82,6 +88,11 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
 
         setDefaultTopDoorOption(doorOptions[0]);
         setTopDoors(defaultDoorColors);
+    };
+    const handleBottomColor = (v: any) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, bottomColor: { colorName: v } };
+        });
     };
 
     const handleTopDoorsColor = (v: any) => {
@@ -91,7 +102,7 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
 
         const colorName: string = v;
 
-        setTopDoors([{ index: 1, name: colorName, value: colorName }]);
+        setTopDoors([{ index: 1, name: 'درب 1', value: colorName }]);
     };
 
     const handleDoorColorChange = (v: any, index: number) => {
@@ -233,6 +244,26 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                                     onChange={(e) => handleInputChange('topHeight', Number(e.target.value))}
                                 />
                             </div>
+                            <div className="flex flex-row items-center gap-1">
+                                <label className="text-xs sm:text-sm md:text-base">رنگ بدنه برای باکس یخچال</label>
+
+                                <input
+                                    className="base-input w-full"
+                                    type="checkbox"
+                                    checked={!dto.useColorForBottom}
+                                    onChange={(e) => handleUseColorForBottom(e.target.checked)}
+                                />
+                            </div>
+
+                            {dto.useColorForBottom && (
+                                <div className="flex flex-col gap-4 w-full ">
+                                    <DoorColorSelect
+                                        title="رنگ باکس"
+                                        onValueChanged={handleBottomColor}
+                                        index={99}
+                                    />
+                                </div>
+                            )}
 
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">عمق بالا (سانتی متر)</label>
@@ -268,7 +299,7 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                             </div>
 
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب بالا داشبری</label>
+                                <label className="text-xs sm:text-sm md:text-base">درب بالا داشبردی</label>
 
                                 <input
                                     className="base-input w-full"
