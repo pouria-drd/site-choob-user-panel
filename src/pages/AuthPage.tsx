@@ -77,7 +77,8 @@ function AuthPage() {
                     navigateTo('/');
                 }
             }
-        } catch (error) {
+        } catch (error: any) {
+            console.log('error', error);
             handleLogout();
             setLoading(false);
             // Handle the error, e.g., display an error message
