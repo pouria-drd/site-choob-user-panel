@@ -237,7 +237,7 @@ const CutSign = ({ dimension }: CutSignProp) => {
         setDTO(modDTO);
     };
 
-    const setDefaultTop = () => {
+    /*const setDefaultTop = () => {
         console.log('1213');
         console.log(dimension);
         if (dimension.pvctop) {
@@ -251,7 +251,7 @@ const CutSign = ({ dimension }: CutSignProp) => {
 
     const findSignProp = (name: string) => {
         return defaultSigns.filter((x) => x.name === name)[0];
-    };
+    };*/
     useEffect(() => {
         setDTO(dimension);
         calculatePlaneDimension();
