@@ -51,11 +51,9 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
 
     return (
         <div className="flex  items-center justify-start  rounded-lg border gap-2 p-2 bg-white hover:bg-sc-gray r2l w-full">
-            <div className="flex gap-0 items-center justify-start text-xs sm:text-sm md:text-base w-full">
-                <h4 className="r2l whitespace-pre-line text-xs md:text-base">
-                    {prop.title}
-                    <span>{prop.valueType !== 'bool' ? `(${prop.valueType})` : ''}</span>
-                </h4>
+            <div className="flex gap-1 items-center justify-start text-xs sm:text-sm md:text-base w-full">
+                <h4 className="r2l whitespace-pre-line text-xs md:text-base">{prop.title}</h4>
+                <span>{prop.valueType !== 'bool' ? `(${prop.valueType})` : ''}</span>
             </div>
 
             <div className="flex w-fit justify-end ml-4">

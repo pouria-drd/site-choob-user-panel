@@ -21,14 +21,14 @@ function SettingInput({ valueType, value, isDisabled, onValueChange }: { valueTy
             {inputType == InputTypes.Number ? (
                 <input
                     type="number"
-                    className="base-input w-16"
+                    className="base-input w-14 md:w-20"
                     value={value}
                     min={1}
                     onChange={(e) => handleInputChange(e.target.value)}
                     readOnly={isDisabled}
                 />
             ) : (
-                <div className="flex flex-row gap-2 text-xs md:text-sm  pl-6  bg-sc-purple-normal items-center justify-between p-2 rounded w-16">
+                <div className="flex flex-row gap-2 text-xs md:text-sm  pl-6  bg-sc-purple-normal items-center justify-between p-2 rounded w-14 md:w-20">
                     <input
                         type="checkbox"
                         checked={value}

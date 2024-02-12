@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
 function DoorColorSelect({ title, index, onValueChanged }: { title: string; index: number; onValueChanged: (value: string, index: number) => void }) {
-    useEffect(() => {}, [title, index]);
-
     const [selectedOption, setSelectedOptions] = useState(1);
     const valueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.id === 'color1') {
@@ -13,6 +11,9 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
             setSelectedOptions(2);
         }
     };
+    useEffect(() => {
+        setSelectedOptions(1);
+    }, [title, index]);
 
     return (
         <div className="flex items-center justify-between text-xs md:text-sm gap-2 bg-sc-purple-normal px-2 py-3 rounded-md">
@@ -24,9 +25,9 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         name={`colorOption${index}`}
                         id="color1"
                         onChange={valueChanged}
-                        checked={selectedOption == 1 ? true : false}
+                        checked={selectedOption === 1 ? true : false}
                     />
-                    <label className={selectedOption == 1 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 1</label>
+                    <label className={selectedOption === 1 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 1</label>
                 </div>
                 <div className="flex gap-1 w-full items-center">
                     <input
@@ -34,7 +35,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         name={`colorOption${index}`}
                         id="color2"
                         onChange={valueChanged}
-                        checked={selectedOption == 2 ? true : false}
+                        checked={selectedOption === 2 ? true : false}
                     />
                     <label className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 2</label>
                 </div>

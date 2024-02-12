@@ -4,6 +4,7 @@ import GroundUnits from '../../../contents/UnitProject/UnitSelections/GroundUnit
 import WallUnits from '../../../contents/UnitProject/UnitSelections/WallUnits';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import YakhchalUnits from '../../../contents/UnitProject/UnitSelections/YakhchalUnits';
+import DrawerUnits from '../../../contents/UnitProject/UnitSelections/DrawerUnits';
 interface unitCatProps {
     name: string;
     index: number;
@@ -20,6 +21,7 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
         { name: 'زمینی', index: 1 },
         { name: 'دیواری', index: 2 },
         { name: 'یخچال', index: 3 },
+        { name: 'کشو', index: 4 },
     ];
 
     const onSelection = (unitCat: unitCatProps) => {
@@ -46,6 +48,15 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
             case 3:
                 setSelectedUnitCat(
                     <YakhchalUnits
+                        projectID={projectID}
+                        catTitle={unitCat.name}
+                        onSelection={onUnitSelect}
+                    />
+                );
+                break;
+            case 4:
+                setSelectedUnitCat(
+                    <DrawerUnits
                         projectID={projectID}
                         catTitle={unitCat.name}
                         onSelection={onUnitSelect}
