@@ -9,6 +9,7 @@ import HomeShortcut from '../components/uiComp/shortcuts/HomeShortcut';
 import EventShortcut from '../components/uiComp/shortcuts/EventShortcut';
 import CreditCardIcon from '../components/icons/CreditCardIcon';
 import ListIcon from '../components/icons/ListIcon';
+import Cube2Icon from '../components/icons/Cube2Icon';
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,6 +45,12 @@ function Home() {
                     text="تعریف ابعاد جدید"
                     icon={<CalculatorIcon />}
                     event={openModal}
+                />
+                <Shortcut
+                    text="پروژه یونیت"
+                    to="unit-projects"
+                    icon={<Cube2Icon />}
+                    isInApp={true}
                 />
             </HomeShortcut>
 
