@@ -48,6 +48,7 @@ function Home() {
                 />
                 <Shortcut
                     text="پروژه یونیت"
+                    hasBetaBadge={true}
                     to="unit-projects"
                     icon={<Cube2Icon />}
                     isInApp={true}

@@ -11,6 +11,7 @@ import Spinner from '../../components/uiComp/spinner/Spinner';
 import StatusChip from '../../components/uiComp/chips/StatusChip';
 import UnitProjectService from '../../services/UnitProjectService';
 import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
+import AlertIcon from '../../components/icons/AlertIcon';
 
 function UnitProjectsPage() {
     const { showConfirmModal } = useConfirmModal();
@@ -125,6 +126,16 @@ function UnitProjectsPage() {
                 <Spinner flex={true} />
             ) : (
                 <div className="flex flex-col gap-4 w-full font-peyda pb-16">
+                    <div className="flex r2l">
+                        <div className="flex items-start md:items-center w-full sm:w-fit rounded-lg text-sc-brown-800 bg-sc-brown-500 border border-sc-orange-normal gap-2 p-4 r2l text-sm md:text-base">
+                            <div className="flex items-start h-full py-1">
+                                <AlertIcon className="w-4 " />
+                            </div>
+
+                            <p className="text-justify">سیستم محاسبه یونیت سایت چوب در دست توسعه و درفاز آزمایشی قرار دارد.</p>
+                        </div>
+                    </div>
+
                     <NewProjectHeader />
                     <div className="flex flex-col flex-grow overflow-y-auto">
                         {/* ResponsiveTable should handle its own height */}
