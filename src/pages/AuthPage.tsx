@@ -94,7 +94,7 @@ function AuthPage() {
 
     useEffect(() => {
         handleTokenValidation();
-    }, [token, authService, navigate]);
+    }, []);
 
     return <div className="flex items-center justify-center h-full">{loading ? <SpinnerCard text={'درحال اعتبار سنجی'} /> : <AuthErrorCard />}</div>;
 }
