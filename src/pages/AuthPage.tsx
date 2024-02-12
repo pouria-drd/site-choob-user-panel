@@ -42,12 +42,10 @@ function AuthPage() {
     };
 
     async function handleTokenValidation() {
-        let isSuccessful = false;
         try {
             handleLogout();
             if (token) {
                 const result = await authService.ValidateToken<TokenValidationResult>(token);
-                isSuccessful = true;
                 // Store the token and optionalParam in sessionStorage
                 sessionStorage.setItem('token', JSON.stringify(result));
                 const bearerResult = await authService.RequestBearer<BearerResult>();
@@ -67,29 +65,31 @@ function AuthPage() {
                 showToast('خوش آمدید', ToastStatusEnum.Success);
 
                 // Redirect to the home page
-
                 if (navOptParam) {
                     if (navOptParam === 'checkout') {
-                        navigate('/checkout');
+                        navigateTo('/checkout');
                     } else if (navOptParam === 'dimensions') {
-                        navigate('/dimensions');
+                        navigateTo('/dimensions');
                     } else {
-                        navigate('/');
+                        navigateTo('/');
                     }
                 } else {
-                    navigate('/');
+                    navigateTo('/');
                 }
             }
         } catch (error) {
-            //odd catch happens but login is successfull, TODO: check it later..
-            if (isSuccessful) return;
-
             handleLogout();
             setLoading(false);
             // Handle the error, e.g., display an error message
             console.error('Token validation error:', error);
         }
     }
+
+    const navigateTo = (path: string) => {
+        setTimeout(() => {
+            navigate(path);
+        }, 100);
+    };
 
     useEffect(() => {
         handleTokenValidation();
