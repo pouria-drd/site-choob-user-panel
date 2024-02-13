@@ -70,8 +70,12 @@ function WallCoverUnit({ projectId, title }: { projectId: string; title: string 
     const handleSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (doors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: doors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultDoorOption(option);
         setDoors(newDoors);
@@ -199,14 +203,13 @@ function WallCoverUnit({ projectId, title }: { projectId: string; title: string 
 
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">درب مخفی</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.hasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
                                 </div>
 
                                 {dto.hasHiddenHandle && (

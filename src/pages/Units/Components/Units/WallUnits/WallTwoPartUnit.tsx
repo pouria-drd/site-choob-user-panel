@@ -137,8 +137,12 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
     const handleTopSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (bottomDoors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: bottomDoors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultTopDoorOption(option);
         setTopDoors(newDoors);
@@ -236,12 +240,12 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-4  px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3  px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="طول (سانتی متر)"
+                                    placeholder="طول (cm)"
                                     onChange={(e) => handleInputChange('width', Number(e.target.value))}
                                 />
                             </div>
@@ -249,20 +253,19 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                 <label className="text-xs sm:text-sm md:text-base">ارتفاع پایین (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع پایین (سانتی متر)"
+                                    placeholder="ارتفاع پایین (cm)"
                                     onChange={(e) => handleInputChange('bottomHeight', Number(e.target.value))}
                                 />
                             </div>
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی پایین</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.bottomHasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked, false)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی پایین</label>
                                 </div>
 
                                 {dto.bottomHasHiddenHandle && (
@@ -270,7 +273,7 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                         <label className="text-xs sm:text-sm md:text-base">اضافه به درب پایین(سانتی متر)</label>
                                         <input
                                             className="base-input w-full"
-                                            placeholder="اضافه به درب پایین(سانتی متر)"
+                                            placeholder="اضافه به درب پایین(cm)"
                                             onChange={(e) => handleInputChange('bottmDoorExteraHeight', Number(e.target.value))}
                                         />
                                     </div>
@@ -281,21 +284,20 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                 <label className="text-xs sm:text-sm md:text-base">ارتفاع بالا (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع بالا (سانتی متر)"
+                                    placeholder="ارتفاع بالا (cm)"
                                     onChange={(e) => handleInputChange('topHeight', Number(e.target.value))}
                                 />
                             </div>
 
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی بالا</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.topHasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked, true)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی بالا</label>
                                 </div>
 
                                 {dto.topHasHiddenHandle && (
@@ -303,7 +305,7 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                         <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(سانتی متر)</label>
                                         <input
                                             className="base-input w-full"
-                                            placeholder="اضافه به درب پایین(سانتی متر)"
+                                            placeholder="اضافه به درب پایین(cm)"
                                             onChange={(e) => handleInputChange('topDoorExteraHeight', Number(e.target.value))}
                                         />
                                     </div>
@@ -314,7 +316,7 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                 <label className="text-xs sm:text-sm md:text-base">عمق پایین (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق پایین (سانتی متر)"
+                                    placeholder="عمق پایین (cm)"
                                     onChange={(e) => handleInputChange('bottomDepth', Number(e.target.value))}
                                 />
                             </div>
@@ -323,20 +325,19 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                 <label className="text-xs sm:text-sm md:text-base">عمق بالا (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق بالا (سانتی متر)"
+                                    placeholder="عمق بالا (cm)"
                                     onChange={(e) => handleInputChange('topDepth', Number(e.target.value))}
                                 />
                             </div>
 
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی پایین</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isBottomDoorHorizontal}
                                     onChange={(e) => handleBottomDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی پایین</label>
                             </div>
 
                             {!dto.isBottomDoorHorizontal && (
@@ -360,14 +361,13 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                                 />
                             </div>
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isTopDoorHorizontal}
                                     onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
                             </div>
                             {!dto.isTopDoorHorizontal && (
                                 <>
@@ -393,7 +393,7 @@ function WallTwoPartUnit({ projectId, title }: { projectId: string; title: strin
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
+                                src="https://cdn.sitechoob.ir/public/units/WallTwoPartUnit.png"
                             />
                         </div>
                     </div>

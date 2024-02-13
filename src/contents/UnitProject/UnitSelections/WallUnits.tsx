@@ -117,7 +117,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} پله ای`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'WallTwoPartUnit.png',
         },
     ];
 

@@ -95,7 +95,7 @@ function WallHoodUnit({ projectId, title }: { projectId: string; title: string }
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
                         <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="طول (cm)"
@@ -103,7 +103,7 @@ function WallHoodUnit({ projectId, title }: { projectId: string; title: string }
                                 />
                             </div>
                             <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="ارتفاع (cm)"
@@ -112,7 +112,7 @@ function WallHoodUnit({ projectId, title }: { projectId: string; title: string }
                             </div>
 
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="عمق (cm)"

@@ -66,8 +66,12 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
     const handleSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (doors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: doors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultDoorOption(option);
         setDoors(newDoors);
@@ -179,9 +183,9 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="طول (cm)"
@@ -189,7 +193,7 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
                                 />
                             </div>
                             <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="ارتفاع (cm)"
@@ -198,7 +202,7 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
                             </div>
 
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="عمق (cm)"
@@ -207,7 +211,7 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
                             </div>
 
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول ستون (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">طول ستون (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="طول ستون (cm)"
@@ -216,7 +220,7 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
                             </div>
 
                             <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق ستون (cm)</label>
+                                <label className="text-xs sm:text-sm md:text-base">عمق ستون (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
                                     placeholder="عمق ستون (cm)"
@@ -235,14 +239,13 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
 
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">درب مخفی</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.hasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
                                 </div>
 
                                 {dto.hasHiddenHandle && (

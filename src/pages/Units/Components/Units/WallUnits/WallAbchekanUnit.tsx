@@ -186,12 +186,12 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="طول (سانتی متر)"
+                                    placeholder="طول (cm)"
                                     onChange={(e) => handleInputChange('width', Number(e.target.value))}
                                 />
                             </div>
@@ -199,7 +199,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                 <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع (سانتی متر)"
+                                    placeholder="ارتفاع (cm)"
                                     onChange={(e) => handleInputChange('height', Number(e.target.value))}
                                 />
                             </div>
@@ -208,7 +208,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                 <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق (سانتی متر)"
+                                    placeholder="عمق (cm)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
                                 />
                             </div>
@@ -226,7 +226,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                     <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (سانتی متر)</label>
                                     <input
                                         className="base-input w-full"
-                                        placeholder="ارتفاع درب پایین(سانتی متر)"
+                                        placeholder="ارتفاع درب پایین (cm)"
                                         onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
                                     />
                                 </div>
@@ -242,14 +242,13 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
 
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.hasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
                                 </div>
 
                                 {dto.hasHiddenHandle && (
@@ -257,7 +256,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                         <label className="text-xs sm:text-sm md:text-base">اضافه به درب پایین(سانتی متر)</label>
                                         <input
                                             className="base-input w-full"
-                                            placeholder="اضافه به درب پایین(سانتی متر)"
+                                            placeholder="اضافه به درب پایین (cm)"
                                             onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
                                         />
                                     </div>
@@ -267,7 +266,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                 <label className="text-xs sm:text-sm md:text-base">فاصله بین درب بالا و پایین(سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="فاصله درب های بالا و پایین(سانتی متر)"
+                                    placeholder="فاصله درب های بالا و پایین (cm)"
                                     onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
                                 />
                             </div>

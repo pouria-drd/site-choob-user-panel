@@ -119,8 +119,12 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
     const handleBottomSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (bottomDoors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: bottomDoors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultBottomDoorOption(option);
         setBottomDoors(newDoors);
@@ -129,8 +133,12 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
     const handleTopSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (topDoors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: topDoors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultTopDoorOption(option);
         setTopDoors(newDoors);
@@ -232,7 +240,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="طول (سانتی متر)"
+                                    placeholder="طول (cm)"
                                     onChange={(e) => handleInputChange('width', Number(e.target.value))}
                                 />
                             </div>
@@ -240,7 +248,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع (سانتی متر)"
+                                    placeholder="ارتفاع (cm)"
                                     onChange={(e) => handleInputChange('height', Number(e.target.value))}
                                 />
                             </div>
@@ -249,7 +257,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق (سانتی متر)"
+                                    placeholder="عمق (cm)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
                                 />
                             </div>
@@ -268,7 +276,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                     <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (سانتی متر)</label>
                                     <input
                                         className="base-input w-full"
-                                        placeholder="ارتفاع درب پایین(سانتی متر)"
+                                        placeholder="ارتفاع درب پایین(cm)"
                                         onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
                                     />
                                 </div>
@@ -278,7 +286,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">اضافه به درب پایین(سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="اضافه به درب بالا(سانتی متر)"
+                                    placeholder="اضافه به درب بالا(cm)"
                                     onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
                                 />
                             </div>
@@ -287,19 +295,18 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">فاصله بین درب بالا و پایین(سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="فاصله درب های بالا و پایین(سانتی متر)"
+                                    placeholder="فاصله درب های بالا و پایین (cm)"
                                     onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
                                 />
                             </div>
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی پایین</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isBottomDoorHorizontal}
                                     onChange={(e) => handleBottomDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی پایین</label>
                             </div>
 
                             {!dto.isBottomDoorHorizontal && (
@@ -323,14 +330,13 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 />
                             </div>
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isTopDoorHorizontal}
                                     onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
                             </div>
                             {!dto.isTopDoorHorizontal && (
                                 <>
