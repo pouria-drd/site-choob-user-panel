@@ -11,7 +11,7 @@ const YakhchalUnits = ({ projectID, catTitle, onSelection }: { projectID: string
     const titleBase = 'زمینی';
     const gUnits: UnitProps[] = [
         {
-            name: 'یخچال',
+            name: 'ساده',
             index: 1,
             component: (
                 <GroundYakhchalUnit
@@ -19,7 +19,7 @@ const YakhchalUnits = ({ projectID, catTitle, onSelection }: { projectID: string
                     title={`${titleBase} یخچال`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'YakhchalUnit.png',
         },
     ];
 

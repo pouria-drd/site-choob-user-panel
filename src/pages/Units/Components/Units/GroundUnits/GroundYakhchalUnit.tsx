@@ -124,8 +124,12 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
     const handleTopSelectedOption = (option: DropdownOption) => {
         const dCount = Number(option.value);
         let newDoors: DoorProp[] = [];
-        for (let i = 1; i <= dCount; i++) {
-            newDoors.push({ index: i, name: `درب ${i}`, value: `رنگ 1` });
+        for (let i = 0; i < dCount; i++) {
+            if (topDoors[i]) {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: topDoors[i].value });
+            } else {
+                newDoors.push({ index: i + 1, name: `درب ${i + 1}`, value: `رنگ 1` });
+            }
         }
         setDefaultTopDoorOption(option);
         setTopDoors(newDoors);
@@ -209,12 +213,12 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
             <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
-                        <div className="flex flex-col gap-4  px-2  py-2  w-full md:w-1/2">
+                        <div className="flex flex-col gap-3  px-2  py-2  w-full md:w-1/2">
                             <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="طول (سانتی متر)"
+                                    placeholder="طول (cm)"
                                     onChange={(e) => handleInputChange('width', Number(e.target.value))}
                                 />
                             </div>
@@ -222,7 +226,7 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                                 <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="ارتفاع (سانتی متر)"
+                                    placeholder="ارتفاع (cm)"
                                     onChange={(e) => handleInputChange('height', Number(e.target.value))}
                                 />
                             </div>
@@ -231,34 +235,24 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                                 <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق (سانتی متر)"
+                                    placeholder="عمق (cm)"
                                     onChange={(e) => handleInputChange('depth', Number(e.target.value))}
                                 />
                             </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع بالا (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع بالا (سانتی متر)"
-                                    onChange={(e) => handleInputChange('topHeight', Number(e.target.value))}
-                                />
-                            </div>
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">رنگ بدنه برای باکس یخچال</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={!dto.useColorForBottom}
                                     onChange={(e) => handleUseColorForBottom(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">رنگ بدنه برای باکس یخچال</label>
                             </div>
 
                             {dto.useColorForBottom && (
                                 <div className="flex flex-col gap-4 w-full ">
                                     <DoorColorSelect
-                                        title="رنگ باکس"
+                                        title="باکس یخچال"
                                         onValueChanged={handleBottomColor}
                                         index={99}
                                     />
@@ -266,24 +260,32 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                             )}
 
                             <div className="flex flex-col w-full">
+                                <label className="text-xs sm:text-sm md:text-base">ارتفاع بالا (سانتی متر)</label>
+                                <input
+                                    className="base-input w-full"
+                                    placeholder="ارتفاع بالا (cm)"
+                                    onChange={(e) => handleInputChange('topHeight', Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="flex flex-col w-full">
                                 <label className="text-xs sm:text-sm md:text-base">عمق بالا (سانتی متر)</label>
                                 <input
                                     className="base-input w-full"
-                                    placeholder="عمق بالا (سانتی متر)"
+                                    placeholder="عمق بالا (cm)"
                                     onChange={(e) => handleInputChange('topDepth', Number(e.target.value))}
                                 />
                             </div>
 
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row items-center gap-1">
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
-
                                     <input
                                         className="base-input w-full"
                                         type="checkbox"
                                         checked={dto.hasHiddenHandle}
                                         onChange={(e) => handleHasHiddenDoor(e.target.checked)}
                                     />
+                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
                                 </div>
 
                                 {dto.hasHiddenHandle && (
@@ -299,14 +301,13 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                             </div>
 
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب بالا داشبردی</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isTopDoorHorizontal}
                                     onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب بالا داشبردی</label>
                             </div>
 
                             {!dto.isTopDoorHorizontal && (
@@ -345,7 +346,7 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
+                                src="https://cdn.sitechoob.ir/public/units/YakhchalUnit.png"
                             />
                         </div>
                     </div>
