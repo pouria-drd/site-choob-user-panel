@@ -28,7 +28,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} ساده`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'SimpleWallUnit.png',
         },
         {
             name: 'ثابت دار',
@@ -39,7 +39,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} ثابت دار`}
                 />
             ),
-            img: 'FixedGroundUnit.png',
+            img: 'FixedWallUnit.png',
         },
         {
             name: 'ساده کنار ستون',
@@ -50,7 +50,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} ساده کنار ستون`}
                 />
             ),
-            img: 'SimpleGroundUnitWithPillar.png',
+            img: 'SimpleWallUnitWithPillar.png',
         },
         {
             name: 'ثابت دار کنار ستون',
@@ -61,7 +61,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} ثابت دار کنار ستون`}
                 />
             ),
-            img: 'FixedGroundUnitWithPillar.png',
+            img: 'FixedWallUnitWithPillar.png',
         },
         {
             name: 'کاور پکیج',
