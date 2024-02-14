@@ -10,6 +10,7 @@ import Button from '../../../../../components/uiComp/buttons/Button';
 import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 import WallUnitProjectService from '../../../../../services/units/WallUnitProjectService';
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
+import NumberInput from '../../../../../components/uiComp/Inputs/NumberInput';
 
 function WallHoodUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
@@ -94,31 +95,24 @@ function WallHoodUnit({ projectId, title }: { projectId: string; title: string }
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
                         <div className="flex flex-col gap-2 px-2  py-2  w-full md:w-1/2">
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول (cm)"
-                                    onChange={(e) => handleInputChange('width', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع (cm)"
-                                    onChange={(e) => handleInputChange('height', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق (cm)"
-                                    onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="طول"
+                                type="cm"
+                                value={dto.width}
+                                onValueChange={(v) => handleInputChange('width', v)}
+                            />
+                            <NumberInput
+                                label="ارتفاع"
+                                type="cm"
+                                value={dto.height}
+                                onValueChange={(v) => handleInputChange('height', v)}
+                            />
+                            <NumberInput
+                                label="عمق"
+                                type="cm"
+                                value={dto.depth}
+                                onValueChange={(v) => handleInputChange('depth', v)}
+                            />
 
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect

@@ -281,7 +281,7 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
 
                                 {dto.hasHiddenHandle && (
                                     <NumberInput
-                                        label="اضافه به درب بالا"
+                                        label="اضافه پایین درب بالا"
                                         type="cm"
                                         value={dto.doorExtraHeight}
                                         onValueChange={(v) => handleInputChange('doorExtraHeight', v)}

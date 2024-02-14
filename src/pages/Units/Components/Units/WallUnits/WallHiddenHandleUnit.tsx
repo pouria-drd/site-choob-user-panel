@@ -11,6 +11,7 @@ import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 import WallUnitProjectService from '../../../../../services/units/WallUnitProjectService';
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
 import Dropdown from '../../../../../components/uiComp/dropdown/Dropdown';
+import NumberInput from '../../../../../components/uiComp/Inputs/NumberInput';
 
 interface DropdownOption {
     label: string;
@@ -171,10 +172,8 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
 
             dtoToSend.topDoors = dtoTopDoors;
 
-            console.log(dtoToSend);
             var result = await unitProjectService.CalculatedHiddenHandleUnit<any>(dtoToSend);
 
-            console.log('calc', result);
             if (result) {
                 setDimensionCutList(result.data);
             }
@@ -236,31 +235,24 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
                         <div className="flex flex-col gap-4  px-2  py-2  w-full md:w-1/2">
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول (cm)"
-                                    onChange={(e) => handleInputChange('width', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع (cm)"
-                                    onChange={(e) => handleInputChange('height', Number(e.target.value))}
-                                />
-                            </div>
-
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق (cm)"
-                                    onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="طول"
+                                type="cm"
+                                value={dto.width}
+                                onValueChange={(v) => handleInputChange('width', v)}
+                            />
+                            <NumberInput
+                                label="ارتفاع"
+                                type="cm"
+                                value={dto.height}
+                                onValueChange={(v) => handleInputChange('height', v)}
+                            />
+                            <NumberInput
+                                label="عمق"
+                                type="cm"
+                                value={dto.depth}
+                                onValueChange={(v) => handleInputChange('depth', v)}
+                            />
 
                             <div className="flex flex-row items-center gap-1">
                                 <input
@@ -272,33 +264,28 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                                 <label className="text-xs sm:text-sm md:text-base">محاسبه مساوی درب ها</label>
                             </div>
                             {!dto.isEvenDoors && (
-                                <div className="flex flex-col w-full">
-                                    <label className="text-xs sm:text-sm md:text-base">ارتفاع درب پایین (سانتی متر)</label>
-                                    <input
-                                        className="base-input w-full"
-                                        placeholder="ارتفاع درب پایین(cm)"
-                                        onChange={(e) => handleInputChange('bottomDoorHeight', Number(e.target.value))}
-                                    />
-                                </div>
+                                <NumberInput
+                                    label="ارتفاع درب پایین"
+                                    type="cm"
+                                    value={dto.bottomDoorHeight}
+                                    onValueChange={(v) => handleInputChange('bottomDoorHeight', v)}
+                                />
                             )}
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">اضافه به درب پایین(سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="اضافه به درب بالا(cm)"
-                                    onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="اضافه به درب بالا"
+                                type="cm"
+                                value={dto.bottomDoorHeight}
+                                onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">فاصله بین درب بالا و پایین(سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="فاصله درب های بالا و پایین (cm)"
-                                    onChange={(e) => handleInputChange('doorsHorizontalGap', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="فاصله بین درب بالا و پایین"
+                                type="cm"
+                                value={dto.doorsHorizontalGap}
+                                onValueChange={(v) => handleInputChange('doorsHorizontalGap', v)}
+                            />
+
                             <div className="flex flex-row items-center gap-1">
                                 <input
                                     className="base-input w-full"
