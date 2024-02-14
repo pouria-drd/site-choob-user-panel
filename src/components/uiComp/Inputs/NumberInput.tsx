@@ -20,12 +20,12 @@ const NumberInput = (props: NumberInporProps) => {
     useEffect(() => {
         switch (props.type) {
             case 'cm':
-                setLabelFocusType('سانتی متر');
-                setLabelType('cm');
+                setLabelFocusType('(سانتی متر)');
+                setLabelType('(cm)');
                 break;
             case 'mm':
-                setLabelFocusType('میلی متر');
-                setLabelType('mm');
+                setLabelFocusType('(میلی متر)');
+                setLabelType('(mm)');
                 break;
             case 'count':
                 setLabelFocusType('');
@@ -45,7 +45,7 @@ const NumberInput = (props: NumberInporProps) => {
                 <input
                     type="number"
                     id={uniqueId}
-                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0  peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-sc-purple-normal'}`}
+                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-sc-purple-normal'}`}
                     placeholder=" "
                     onFocus={() => setIsOnFocus(true)}
                     onBlur={() => setIsOnFocus(false)}

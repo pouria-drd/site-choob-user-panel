@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import DoorColorSelect from '../DoorColorSelect';
+import NumberInput from '../../../../../components/uiComp/Inputs/NumberInput';
 
 interface DrawerDoorProp {
     index: number;
@@ -36,14 +37,12 @@ function DrawerDoor({ index, door, onValueChanged }: DrawerDoorProp) {
     return (
         <div className="flex gap-1 flex-col">
             {index === 0 && (
-                <div className="flex flex-col w-full">
-                    <label className="text-xs sm:text-sm md:text-base">ارتفاع کشو {index + 1}</label>
-                    <input
-                        className="base-input w-full"
-                        placeholder={`ارتفاع کشو ${index + 1}`}
-                        onChange={(e) => handleHeightChange(Number(e.target.value))}
-                    />
-                </div>
+                <NumberInput
+                    label={`ارتفاع کشو ${index + 1} -`}
+                    type="cm"
+                    value={doorDTO.height}
+                    onValueChange={(v) => handleHeightChange(v)}
+                />
             )}
             {index !== 0 && (
                 <>
@@ -56,14 +55,12 @@ function DrawerDoor({ index, door, onValueChanged }: DrawerDoorProp) {
                         <label>محاسبه خودکار ارتفاع</label>
                     </div>
                     {!isAutoCalc && (
-                        <div className="flex flex-col w-full">
-                            <label className="text-xs sm:text-sm md:text-base">ارتفاع کشو {index + 1}</label>
-                            <input
-                                className="base-input w-full"
-                                placeholder={`ارتفاع کشو ${index + 1}`}
-                                onChange={(e) => handleHeightChange(Number(e.target.value))}
-                            />
-                        </div>
+                        <NumberInput
+                            label={`ارتفاع کشو ${index + 1} -`}
+                            type="cm"
+                            value={doorDTO.height}
+                            onValueChange={(v) => handleHeightChange(v)}
+                        />
                     )}
                 </>
             )}
