@@ -11,6 +11,7 @@ import UnitProjectService from '../../../../../services/UnitProjectService';
 import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
+import NumberInput from '../../../../../components/uiComp/Inputs/NumberInput';
 
 interface DropdownOption {
     label: string;
@@ -192,39 +193,34 @@ function FixedOpenUnit({ projectId, title }: { projectId: string; title: string 
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
                         <div className="flex flex-col gap-3 px-2  py-2  w-full md:w-1/2">
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول (cm)"
-                                    onChange={(e) => handleInputChange('width', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع (cm)"
-                                    onChange={(e) => handleInputChange('height', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="طول"
+                                type="cm"
+                                value={dto.width}
+                                onValueChange={(v) => handleInputChange('width', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق (cm)"
-                                    onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول ثابت (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول ثابت (cm)"
-                                    onChange={(e) => handleInputChange('fixedWidth', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="ارتفاع"
+                                type="cm"
+                                value={dto.height}
+                                onValueChange={(v) => handleInputChange('height', v)}
+                            />
+
+                            <NumberInput
+                                label="عمق"
+                                type="cm"
+                                value={dto.depth}
+                                onValueChange={(v) => handleInputChange('depth', v)}
+                            />
+
+                            <NumberInput
+                                label="طول ثابت"
+                                type="cm"
+                                value={dto.fixedWidth}
+                                onValueChange={(v) => handleInputChange('fixedWidth', v)}
+                            />
+
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect
                                     title="ثابت"
@@ -233,16 +229,14 @@ function FixedOpenUnit({ projectId, title }: { projectId: string; title: string 
                                 />
                             </div>
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">تعداد طبقه</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="تعداد طبقه"
-                                    onChange={(e) => handleInputChange('shelfCount', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="تعداد طبقه"
+                                type="count"
+                                value={dto.shelfCount}
+                                onValueChange={(v) => handleInputChange('shelfCount', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
+                            <div className="flex flex-col gap-2 w-full">
                                 <div className="flex flex-row items-center gap-1">
                                     <input
                                         className="base-input w-full"
@@ -254,14 +248,12 @@ function FixedOpenUnit({ projectId, title }: { projectId: string; title: string 
                                 </div>
 
                                 {dto.hasHiddenHandle && (
-                                    <div className="flex flex-col w-full">
-                                        <label className="text-xs sm:text-sm md:text-base">بالای دستگیره مخفی (cm)</label>
-                                        <input
-                                            className="base-input w-full"
-                                            placeholder="فاصله بالای دستگیره مخفی (cm)"
-                                            onChange={(e) => handleInputChange('hiddenHandleTopGap', Number(e.target.value))}
-                                        />
-                                    </div>
+                                    <NumberInput
+                                        label="بالای دستگیره مخفی"
+                                        type="cm"
+                                        value={dto.hiddenHandleTopGap}
+                                        onValueChange={(v) => handleInputChange('hiddenHandleTopGap', v)}
+                                    />
                                 )}
                             </div>
 

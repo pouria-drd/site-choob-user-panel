@@ -11,6 +11,7 @@ import CalculatorIcon from '../../../../../components/icons/CalculatorIcon';
 import UnitCalculatedCutList from '../../UnitCalculatedCutList';
 import Dropdown from '../../../../../components/uiComp/dropdown/Dropdown';
 import UnitProjectService from '../../../../../services/UnitProjectService';
+import NumberInput from '../../../../../components/uiComp/Inputs/NumberInput';
 
 interface DropdownOption {
     label: string;
@@ -214,31 +215,25 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                 <div className="flex flex-col  p-2 md:p-6  bg-white  rounded-lg h-fit w-full">
                     <div className="flex flex-col sm:flex-row justify-around items-center gap-2 p-2">
                         <div className="flex flex-col gap-3  px-2  py-2  w-full md:w-1/2">
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">طول (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="طول (cm)"
-                                    onChange={(e) => handleInputChange('width', Number(e.target.value))}
-                                />
-                            </div>
-                            <div className="flex flex-col  w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع (cm)"
-                                    onChange={(e) => handleInputChange('height', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="طول"
+                                type="cm"
+                                value={dto.width}
+                                onValueChange={(v) => handleInputChange('width', v)}
+                            />
+                            <NumberInput
+                                label="ارتفاع"
+                                type="cm"
+                                value={dto.height}
+                                onValueChange={(v) => handleInputChange('height', v)}
+                            />
+                            <NumberInput
+                                label="عمق"
+                                type="cm"
+                                value={dto.depth}
+                                onValueChange={(v) => handleInputChange('depth', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق (cm)"
-                                    onChange={(e) => handleInputChange('depth', Number(e.target.value))}
-                                />
-                            </div>
                             <div className="flex flex-row items-center gap-1">
                                 <input
                                     className="base-input w-full"
@@ -259,25 +254,21 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                                 </div>
                             )}
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">ارتفاع بالا (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="ارتفاع بالا (cm)"
-                                    onChange={(e) => handleInputChange('topHeight', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="ارتفاع بالا"
+                                type="cm"
+                                value={dto.topHeight}
+                                onValueChange={(v) => handleInputChange('topHeight', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
-                                <label className="text-xs sm:text-sm md:text-base">عمق بالا (سانتی متر)</label>
-                                <input
-                                    className="base-input w-full"
-                                    placeholder="عمق بالا (cm)"
-                                    onChange={(e) => handleInputChange('topDepth', Number(e.target.value))}
-                                />
-                            </div>
+                            <NumberInput
+                                label="عمق بالا"
+                                type="cm"
+                                value={dto.topDepth}
+                                onValueChange={(v) => handleInputChange('topDepth', v)}
+                            />
 
-                            <div className="flex flex-col w-full">
+                            <div className="flex flex-col gap-2 w-full">
                                 <div className="flex flex-row items-center gap-1">
                                     <input
                                         className="base-input w-full"
@@ -289,14 +280,12 @@ function GroundYakhchalUnit({ projectId, title }: { projectId: string; title: st
                                 </div>
 
                                 {dto.hasHiddenHandle && (
-                                    <div className="flex flex-col w-full">
-                                        <label className="text-xs sm:text-sm md:text-base">اضافه به درب بالا(سانتی متر)</label>
-                                        <input
-                                            className="base-input w-full"
-                                            placeholder="اضافه به درب پایین(سانتی متر)"
-                                            onChange={(e) => handleInputChange('doorExtraHeight', Number(e.target.value))}
-                                        />
-                                    </div>
+                                    <NumberInput
+                                        label="اضافه به درب بالا"
+                                        type="cm"
+                                        value={dto.doorExtraHeight}
+                                        onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
+                                    />
                                 )}
                             </div>
 

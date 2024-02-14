@@ -106,6 +106,14 @@ input[type='radio'] {
     @apply h-4 w-4 rounded border-gray-400 accent-sc-blue-normal text-sc-blue-normal focus:ring-offset-sc-blue-normal cursor-pointer;
 }
 
+@layer base {
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
 /* ---------------------------------------------------------------------- */
 /* base-button area */
 
