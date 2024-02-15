@@ -224,14 +224,13 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
                                 />
                             </div>
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">کشوهای مساوی</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isEvenDoors}
                                     onChange={(e) => handleIsEvenDoors(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">کشوهای مساوی</label>
                             </div>
                             {!dto.isEvenDoors && (
                                 <div className="flex flex-col gap-4 w-full ">
