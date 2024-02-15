@@ -265,7 +265,7 @@ function SimpleOpenUnit({ projectId, title }: { projectId: string; title: string
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/SimpleGroundUnit.png"
+                                src="https://cdn.sitechoob.ir/public/units/GroundOpenUnit.png"
                             />
                         </div>
                     </div>

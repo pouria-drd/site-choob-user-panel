@@ -32,14 +32,13 @@ function App() {
         setIsOpen(!isOpen);
     };
 
-    const sidebarOpenedClass = 'h-auto w-full lg:w-72';
-    const sidebarClosedClass = 'hidden h-auto w-72 lg:block';
+    const sidebarOpenedClass = 'w-full h-1/2 lg:w-72';
+    const sidebarClosedClass = 'hidden h-full w-72 lg:block';
 
     const responsiveSidebarToggledClass = isOpen ? sidebarOpenedClass : sidebarClosedClass;
 
     return (
         <main className="flex flex-col justify-between overflow-hidden h-screen ">
-            {/* Conditionally render the Navbar based on user authentication */}
             {isUserAuthenticated && (
                 <Navbar
                     onForcedIconToggle={navbarForcedIconToggle}
@@ -47,10 +46,9 @@ function App() {
                 />
             )}
 
-            <div className="flex flex-col-reverse lg:flex-row transition-all w-full h-full">
-                <div className="bg-sc-gray overflow-auto w-full h-full p-8">{routes}</div>
+            <div className="flex flex-col-reverse lg:flex-row transition-all w-full h-full bg-sc-gray ">
+                <div className="overflow-auto scroll-smooth w-full h-full p-8">{routes}</div>
 
-                {/* Conditionally render the Sidebar based on user authentication */}
                 {isUserAuthenticated && (
                     <div className={responsiveSidebarToggledClass}>
                         <Sidebar onClick={handleSidbarItemClick} />

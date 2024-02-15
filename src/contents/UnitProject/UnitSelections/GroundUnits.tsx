@@ -68,7 +68,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} اپن`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'GroundOpenUnit.png',
         },
         {
             name: 'اپن ثابت دار',
@@ -79,7 +79,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} اپن ثابت دار`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'FixedGroundOpenUnit.png',
         },
     ];
 

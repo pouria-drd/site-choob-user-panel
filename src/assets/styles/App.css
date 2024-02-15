@@ -1,3 +1,7 @@
-.active {
+/*.active {
   @apply bg-sc-purple-normal;
+}*/
+
+.active {
+    @apply text-sc-blue-normal bg-white;
 }

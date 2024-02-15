@@ -72,7 +72,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} کاور پکیج`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'WallCoverUnit.png',
         },
         {
             name: 'آبچکان',
