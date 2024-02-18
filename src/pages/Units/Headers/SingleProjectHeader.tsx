@@ -45,7 +45,9 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                     <div className="flex justify-between items-center">
                         {project.isCalculated ? (
                             <button
-                                onClick={() => {}}
+                                onClick={() => {
+                                    navigate('/dimensions');
+                                }}
                                 className="base-button success-reverse gap-1 md:hidden ">
                                 لیست برش
                                 <MapIcon size={18} />
@@ -79,23 +81,34 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                     </div>
                 </div>
                 <div className="col-span-6 md:col-span-4 r2l">
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4">
                         <p className="text-sm sm:text-sm md:text-base inline-block">
                             عنوان پروژه:
                             <span className="text-gray-400">{project.title}</span>
                         </p>
 
-                        <p className="text-sm sm:text-base md:text-base inline-block">
+                        <p className="text-sm sm:text-base md:text-base inline-block col-span-2">
                             توضیحات:
                             <span className="text-gray-400">{!project.description ? '---' : project.description}</span>
                         </p>
+
+                        {project.properties.map((p, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-1">
+                                <p className="text-sm sm:text-base md:text-base inline-block">{p.title}:</p>
+                                <span className="text-gray-400">{p.valueString}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
                 <div className="col-span-6 hidden md:block">
                     {project.isCalculated ? (
                         <button
-                            onClick={() => {}}
+                            onClick={() => {
+                                navigate('/dimensions');
+                            }}
                             className="base-button success-reverse gap-1">
                             لیست برش
                             <MapIcon size={18} />

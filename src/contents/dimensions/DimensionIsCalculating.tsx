@@ -3,7 +3,7 @@ import Calculator from '../../assets/images/calculator.png';
 const DimensionIsCalculating = () => {
     return (
         <div className="flex justify-center w-full">
-            <div className="flex flex-col gap-2 bg-white rounded-lg p-8 justify-center items-center font-peyda">
+            <div className="flex flex-col gap-2 bg-white rounded-lg p-8 justify-center shadow-sm items-center font-peyda">
                 <div className="relative">
                     <div className="flex justify-center items-center h-16 w-16 sm:h-24 sm:w-24 rounded-full text-sc-blue-normal ">
                         <img
@@ -16,7 +16,7 @@ const DimensionIsCalculating = () => {
                     </div>
                 </div>
 
-                <p className="text-sc-blue-normal r2l text-sm sm:text-base">لیست ابعاد در حال محاسبه می باشد</p>
+                <p className="text-sc-blue-normal r2l text-sm sm:text-base">سیستم در حال محاسبه می باشد</p>
             </div>
         </div>
     );

@@ -349,7 +349,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
+                                src="https://cdn.sitechoob.ir/public/units/WallHiddenHandle.png"
                             />
                         </div>
                     </div>

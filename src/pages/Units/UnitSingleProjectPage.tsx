@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useConfirmModal } from '../../components/uiComp/modals/ConfirmModalProvider';
 import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
 
@@ -11,6 +11,7 @@ import SingleProjectHeader from './Headers/SingleProjectHeader';
 import UnitProjectService from '../../services/UnitProjectService';
 import UnitPropsContent from '../../contents/UnitProject/UnitPropsContent';
 import ResponsiveTable from '../../components/uiComp/tables/ResponsiveTable';
+import DimensionIsCalculating from '../../contents/dimensions/DimensionIsCalculating';
 
 interface UnitSingleProjectPageParams {
     projectID: string;
@@ -21,6 +22,7 @@ function UnitSingleProjectPage() {
 
     const { showConfirmModal } = useConfirmModal();
     const { showToast } = useToast();
+    const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
@@ -141,11 +143,16 @@ function UnitSingleProjectPage() {
 
             if (result.status) {
                 showToast(result.message, ToastStatusEnum.Success);
+                setTimeout(() => {
+                    navigate('/dimensions');
+                }, 5000);
             } else {
                 showToast(result.message, ToastStatusEnum.Error, 'خطا');
+                setIsCalculating(false);
             }
-        } catch (e) {}
-        setIsCalculating(false);
+        } catch (e) {
+            setIsCalculating(false);
+        }
     };
 
     useEffect(() => {
@@ -191,7 +198,7 @@ function UnitSingleProjectPage() {
                     )}
                 </>
             ) : (
-                <p>Isacalulating</p>
+                <DimensionIsCalculating />
             )}
         </>
     );

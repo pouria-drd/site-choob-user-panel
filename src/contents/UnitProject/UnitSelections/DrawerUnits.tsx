@@ -20,7 +20,7 @@ const DrawerUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} ساده`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'SimpleDrawer.png',
         },
         {
             name: 'با دستگیره مخفی',
@@ -31,7 +31,7 @@ const DrawerUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} با دستگیره مخفی`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'HiddenHandleDrawer.png',
         },
     ];
 

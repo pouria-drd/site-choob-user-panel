@@ -83,7 +83,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} آبچکان`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'WallAbchekan.png',
         },
         {
             name: 'هود ساده',
@@ -94,7 +94,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} هود ساده`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'WallHood.png',
         },
         {
             name: 'با دستگیره مخفی',
@@ -105,7 +105,7 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                     title={`${titleBase} با دستگیره مخفی`}
                 />
             ),
-            img: 'SimpleGroundUnit.png',
+            img: 'WallHiddenHandle.png',
         },
 
         {

@@ -51,6 +51,7 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
         },
     ];
 
+    const drawerImages = ['HiddenHandleDrawer2.png', 'HiddenHandleDrawer3.png'];
     const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const [drawerDoors, setDrawerDoors] = useState<DrawerDoorDTO[]>([
@@ -247,7 +248,7 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/D-S-unita.png"
+                                src={`https://cdn.sitechoob.ir/public/units/${drawerImages[drawerDoors.length - 2]}`}
                             />
                         </div>
                     </div>
