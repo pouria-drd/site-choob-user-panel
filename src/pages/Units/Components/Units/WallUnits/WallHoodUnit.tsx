@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { ButtonTypes } from '../../../../../enums/ButtonTypes';
 import { ToastStatusEnum, useToast } from '../../../../../components/uiComp/Toast/ToastProvider';
 
-import BoxXYZ from '../BoxXYZ';
 import DoorColorSelect from '../DoorColorSelect';
 import Button from '../../../../../components/uiComp/buttons/Button';
 
