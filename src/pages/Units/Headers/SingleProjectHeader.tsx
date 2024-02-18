@@ -1,25 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StatusEnum } from '../../../enums/StatusEnum';
 import { ButtonTypes } from '../../../enums/ButtonTypes';
 
 import MapIcon from '../../../components/icons/MapIcon';
 import EditIcon from '../../../components/icons/EditIcon';
-import Modal from '../../../components/uiComp/modals/Modal';
+
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import Button from '../../../components/uiComp/buttons/Button';
 import StatusChip from '../../../components/uiComp/chips/StatusChip';
 import CalculatorIcon from '../../../components/icons/CalculatorIcon';
-import CalculateProjectModalContent from '../../../contents/UnitProject/CalculateProjectModalContent';
 
-function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: (dto: CalculateUnitProjectDTO) => void }) {
+function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitProjectModel; onCalculateClicked: () => void }) {
     const navigate = useNavigate();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-
-    useEffect(() => { }, [project]);
+    useEffect(() => {}, [project]);
 
     const goToNewUnitPage = () => {
         navigate('/unit-project/add-unit/' + project.id);
@@ -50,14 +45,14 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                     <div className="flex justify-between items-center">
                         {project.isCalculated ? (
                             <button
-                                onClick={() => { }}
+                                onClick={() => {}}
                                 className="base-button success-reverse gap-1 md:hidden ">
                                 لیست برش
                                 <MapIcon size={18} />
                             </button>
                         ) : (
                             <button
-                                onClick={openModal}
+                                onClick={onCalculateClicked}
                                 className="base-button success-reverse gap-1 md:hidden ">
                                 محاسبه
                                 <CalculatorIcon size={18} />
@@ -65,7 +60,7 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                         )}
                         <div className="flex gap-4 items-center ">
                             <button
-                                onClick={() => { }}
+                                onClick={() => {}}
                                 className="hover:text-blue-700 text-sc-blue-normal">
                                 <EditIcon />
                             </button>
@@ -100,14 +95,14 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                 <div className="col-span-6 hidden md:block">
                     {project.isCalculated ? (
                         <button
-                            onClick={() => { }}
+                            onClick={() => {}}
                             className="base-button success-reverse gap-1">
                             لیست برش
                             <MapIcon size={18} />
                         </button>
                     ) : (
                         <button
-                            onClick={openModal}
+                            onClick={onCalculateClicked}
                             className="base-button outlined-success gap-1 ">
                             محاسبه
                             <CalculatorIcon size={18} />
@@ -115,16 +110,6 @@ function SingleProjectHeader({ project, onCalculateClicked }: { project: UnitPro
                     )}
                 </div>
             </div>
-
-            <Modal
-                title="محاسبه پروژه"
-                isOpen={isModalOpen}
-                onClose={closeModal}>
-                <CalculateProjectModalContent
-                    project={project}
-                    onCalculateClicked={(dto) => onCalculateClicked(dto)}
-                />
-            </Modal>
         </>
     );
 }

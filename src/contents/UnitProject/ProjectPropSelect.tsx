@@ -32,7 +32,7 @@ const ProjectPropSelect = ({ prop, dimensionsList, onSelectionChanged }: { prop:
     return (
         <div className="w-full">
             <Dropdown
-                title={prop.title}
+                title={'ابعاد ورق ' + prop.title}
                 options={options}
                 defaultOption={defaultOption}
                 onSelectOption={(opt) => handleSelectedOption(opt)}

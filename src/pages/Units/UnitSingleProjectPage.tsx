@@ -133,10 +133,11 @@ function UnitSingleProjectPage() {
         return parseProp;
     };
 
-    const CalculateProject = async (dto: CalculateUnitProjectDTO) => {
+    const CalculateProject = async () => {
+        if (!projectDTO) return;
         setIsCalculating(true);
         try {
-            var result = await unitProjectService.CalculateProject<any>(dto);
+            var result = await unitProjectService.CalculateProject<any>(projectDTO.project.id);
 
             if (result.status) {
                 showToast(result.message, ToastStatusEnum.Success);

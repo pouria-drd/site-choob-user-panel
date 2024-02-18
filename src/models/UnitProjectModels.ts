@@ -1,6 +1,7 @@
 interface NewUnitProjectDTO {
     title: string;
     description?: string;
+    properties: UnitProjectPropsModel[];
 }
 
 interface UnitProjectModel {

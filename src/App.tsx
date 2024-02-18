@@ -32,7 +32,7 @@ function App() {
         setIsOpen(!isOpen);
     };
 
-    const sidebarOpenedClass = 'w-full h-1/2 lg:w-72';
+    const sidebarOpenedClass = 'w-full h-1/2 md:h-full lg:w-72';
     const sidebarClosedClass = 'hidden h-full w-72 lg:block';
 
     const responsiveSidebarToggledClass = isOpen ? sidebarOpenedClass : sidebarClosedClass;

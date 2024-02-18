@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useConfirmModal } from '../../../components/uiComp/modals/ConfirmModalProvider';
 import { ToastStatusEnum, useToast } from '../../../components/uiComp/Toast/ToastProvider';
 
@@ -26,7 +26,6 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
 
     const [selectedCutPartForEdit, setSelectedCutPartForEdit] = useState<DimensionCutModel>();
 
-    const [data, setData] = useState<DimensionCutModel[]>([]);
     const handleDeleteButton = (item: DimensionCutModel) => {
         // Handle button click for a specific item
         if (!isEditable) return;
@@ -65,12 +64,11 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
         let editedData = dimensionCutData;
         editedData[editedItemIndex] = editedCutPart;
 
-        console.log('edited', editedData);
         onEdit(editedData);
         closeEditModal();
     };
 
-    useEffect(() => {
+    /* useEffect(() => {
         let dataList: DimensionCutModel[] = [];
 
         if (dimensionCutData.length === 0) {
@@ -89,15 +87,21 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
         });
 
         setData(dataList);
-    }, [dimensionCutData]);
+    }, [dimensionCutData]);*/
+
+    const splitDetails = (details: string) => {
+        if (details.includes('#')) {
+            return details?.split('#')[1] + '-' + details?.split('#')[2];
+        }
+    };
 
     return (
         <>
-            {data && data.length > 0 && (
+            {dimensionCutData && dimensionCutData.length > 0 && (
                 <>
                     <div className="bg-white rounded-lg px-2 py-2 sm:p-2 w-full">
                         <div className="flex flex-col justify-end items-end gap-2 font-yekanX ss02">
-                            {data.map((data, index) => (
+                            {dimensionCutData.map((data, index) => (
                                 <div
                                     key={index}
                                     className="flex flex-col md:flex-row-reverse transition-all gap-2 items-end md:items-center justify-between p-4 md:px-4 md:py-3 rounded border border-gray-300 hover:bg-gray-200 odd:bg-gray-50 even:bg-gray-100 text-xs sm:text-base w-full">
@@ -123,7 +127,7 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
                                         <h4 className="font-semibold">{index + 1}#</h4>
                                     )}
                                     <div className="flex items-center w-full">
-                                        <div className="flex gap-1 items-center r2l w-full text-xs sm:text-sm">[{data.details ? <p className="font-semibold sm:whitespace-nowrap">{data.details}</p> : <p>---</p>}]</div>
+                                        <div className="flex gap-1 items-center r2l w-full text-xs sm:text-sm">[{data.details ? <p className="font-semibold sm:whitespace-nowrap">{splitDetails(data.details)}</p> : <p>---</p>}]</div>
                                     </div>
                                     <div className="flex flex-row divide-x first:divide-none items-center justify-between sm:justify-start w-full text-xs sm:text-sm">
                                         <div className="flex gap-1 items-center r2l w-full px-2">
