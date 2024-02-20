@@ -262,14 +262,13 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                             />
 
                             <div className="flex flex-row items-center gap-1">
-                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
-
                                 <input
                                     className="base-input w-full"
                                     type="checkbox"
                                     checked={dto.isTopDoorHorizontal}
                                     onChange={(e) => handleTopDoorIsHorizontal(e.target.checked)}
                                 />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی بالا</label>
                             </div>
 
                             {dto.isTopDoorHorizontal && (

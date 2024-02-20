@@ -103,12 +103,10 @@ const CutSign = ({ dimension }: CutSignProp) => {
 
         //Y is bigger
         if (x - y + offsetMargin < 0) {
-            console.log('y is bigger');
             setPlaceDimension('w-20 h-24 md:w-24 md:h-28');
         }
         //X is bigger
         else if (y - x + offsetMargin < 0) {
-            console.log('x is bigger');
             setPlaceDimension('w-24 h-20 md:w-28 md:h-24');
         } else {
             setPlaceDimension('w-20 h-20 md:w-24 md:h-24');
@@ -124,17 +122,14 @@ const CutSign = ({ dimension }: CutSignProp) => {
     };
 
     useEffect(() => {
-        console.log('handle t');
         handleTopSign();
     }, [top]);
 
     useEffect(() => {
-        console.log('handle b');
         handleBottomSign();
     }, [bottom]);
 
     useEffect(() => {
-        console.log('handle r');
         handleRightSign();
     }, [right]);
 
@@ -269,7 +264,7 @@ const CutSign = ({ dimension }: CutSignProp) => {
             <div className="flex  items-center justify-center p-2 w-full md:w-fit  border rounded r2l">
                 <div className="flex items-center justify-center ">
                     <button
-                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal px-2 py-1 w-20 md:w-24"
+                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal hover:outline-1 hover:outline px-2 py-1 w-20 md:w-24"
                         onClick={() => openModal('right', 'راست', right.index, false)}>
                         {right.title}
                     </button>
@@ -277,7 +272,7 @@ const CutSign = ({ dimension }: CutSignProp) => {
 
                 <div className="flex flex-col items-center justify-center ">
                     <button
-                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal px-2 py-1 w-20 md:w-24"
+                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal hover:outline-1 hover:outline px-2 py-1 w-20 md:w-24"
                         onClick={() => openModal('top', 'بالا', top.index, false)}>
                         {top.title}
                     </button>
@@ -298,14 +293,14 @@ const CutSign = ({ dimension }: CutSignProp) => {
                         </div>
                     </div>
                     <button
-                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal px-2 py-1  w-20 md:w-24"
+                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal hover:outline-1 hover:outline px-2 py-1  w-20 md:w-24"
                         onClick={() => openModal('bottom', 'پایین', bottom.index, true)}>
                         {bottom.title}
                     </button>
                 </div>
                 <div className="flex items-center justify-center">
                     <button
-                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal px-2 py-1  w-20 md:w-24"
+                        className="text-xs sm:text-base rounded-md bg-sc-purple-normal hover:outline-1 hover:outline px-2 py-1  w-20 md:w-24"
                         onClick={() => openModal('left', 'چپ', left.index, true)}>
                         {left.title}
                     </button>

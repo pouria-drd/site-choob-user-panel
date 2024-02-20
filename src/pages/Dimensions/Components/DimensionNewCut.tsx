@@ -8,6 +8,7 @@ import UploadIcon from '../../../components/icons/UploadIcon';
 import Modal from '../../../components/uiComp/modals/Modal';
 import OptiCutImportContent from '../../../contents/dimensions/OptiCutImportContent';
 import CutSign from './CutSign';
+import NumberInput from '../../../components/uiComp/Inputs/NumberInput';
 
 interface DimensionNewCutProps {
     dimensionId: string;
@@ -26,6 +27,10 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
         setIsModalOpen(false);
         onUpdate();
     };
+
+    const [isSubtractPVC, setSubtractPVC] = useState(false);
+
+    const [widthInputId, setWidthInputId] = useState('');
 
     const dimensionService = new DimensionService();
     const [isProcessing, setIsProcessing] = useState(false);
@@ -69,8 +74,8 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
 
         const addData = {
             dimensionId: dimensionId,
-            x: formData.x,
-            y: formData.y,
+            x: checkForPVCSubtract(formData.x, 'width'),
+            y: checkForPVCSubtract(formData.y, 'height'),
             count: formData.count,
             pvcTop: formData.pvctop,
             pvcLeft: formData.pvcleft,
@@ -112,7 +117,7 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
                 details: '',
             });
             onUpdate();
-            document.getElementById('xInput')?.focus();
+            document.getElementById(widthInputId)?.focus();
         } catch (error) {
             let e = error as any;
             showToast(e.response.data.message, ToastStatusEnum.Error, 'خطا');
@@ -136,23 +141,28 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
         });
     };
 
+    const checkForPVCSubtract = (value: number, planeSide: 'width' | 'height') => {
+        if (!isSubtractPVC) return value;
+
+        let totalSubCount = 0;
+        if (planeSide === 'width') {
+            //check for dto pvc sides
+            if (formData.pvcright) totalSubCount = totalSubCount + 1;
+            if (formData.pvcleft) totalSubCount = totalSubCount + 1;
+        } else {
+            //check for dto pvc sides
+            if (formData.pvctop) totalSubCount = totalSubCount + 1;
+            if (formData.pvcbottom) totalSubCount = totalSubCount + 1;
+        }
+
+        //subtract pvc thickness
+        return value - totalSubCount * 0.2;
+    };
+
     const handleKeyUp = (event: any) => {
         if (event.key === 'Enter') {
             addToTheList();
         }
-
-        //WTF?
-        /*   if (!formData.x) {
-            setHasX('');
-        } else {
-            setHasX(`(${formData.x})`);
-        }
-
-        if (!formData.y) {
-            setHasY('');
-        } else {
-            setHasY(`(${formData.y})`);
-        }*/
     };
 
     useEffect(() => {
@@ -182,32 +192,44 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
                 </div>
                 <div className="flex flex-col md:flex-row-reverse gap-2 items-center justify-between">
                     <div className="flex flex-col flex-wrap justify-between md:flex-row gap-4 w-full md:w-1/2 r2l">
-                        <input
-                            id="xInput"
-                            className="base-input w-full"
-                            placeholder="طول(سانتی متر)"
-                            type="number"
-                            min={0}
-                            max={maxX}
-                            value={formData.x == 0 ? '' : formData.x}
-                            onChange={(e) => handleInputChange('x', e.target.value)}
+                        <div className="flex flex-row items-center gap-1">
+                            <input
+                                className="base-input w-full"
+                                type="checkbox"
+                                checked={isSubtractPVC}
+                                onChange={(e) => {
+                                    setSubtractPVC(e.target.checked);
+                                }}
+                            />
+                            <label className="text-xs sm:text-sm md:text-base">PVC کسر شود (2mm)</label>
+                        </div>
+                        <NumberInput
+                            fullWidth={true}
+                            label="طول"
+                            type="cm"
+                            value={formData.x}
+                            getId={(id) => {
+                                setWidthInputId(id);
+                            }}
+                            onValueChange={(v) => handleInputChange('x', v)}
                         />
-                        <input
-                            className="base-input  w-full"
-                            placeholder="عرض(سانتی متر)"
-                            type="number"
-                            min={0}
-                            max={maxY}
-                            value={formData.y == 0 ? '' : formData.y}
-                            onChange={(e) => handleInputChange('y', e.target.value)}
+
+                        <NumberInput
+                            fullWidth={true}
+                            label="عرض"
+                            type="cm"
+                            value={formData.y}
+                            onValueChange={(v) => handleInputChange('y', v)}
                         />
-                        <input
-                            className="base-input  w-full"
-                            placeholder="تعداد"
-                            type="number"
-                            value={formData.count == 0 ? '' : formData.count}
-                            onChange={(e) => handleInputChange('count', e.target.value)}
+
+                        <NumberInput
+                            fullWidth={true}
+                            label="تعداد"
+                            type="count"
+                            value={formData.count}
+                            onValueChange={(v) => handleInputChange('count', v)}
                         />
+
                         <input
                             className="base-input  w-full"
                             placeholder="توضیحات(اختیاری)"

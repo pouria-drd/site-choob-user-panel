@@ -4,8 +4,11 @@ interface NumberInporProps {
     label: string;
     value: number;
     type: 'cm' | 'mm' | 'count';
+    fullWidth?: boolean;
+    className?: string;
     hasError?: boolean;
     errorMessage?: string;
+    getId?: (id: string) => void;
     onValueChange: (value: number) => void;
 }
 
@@ -39,13 +42,19 @@ const NumberInput = (props: NumberInporProps) => {
             setErrorMessage(props.errorMessage);
         }
     }, [props.errorMessage]);
+
+    useEffect(() => {
+        if (props.getId) props.getId(uniqueId);
+    }, [props.getId]);
+
     return (
-        <div className="flex flex-col gap-1">
+        <div className={`flex flex-col gap-1 ${props.fullWidth && 'w-full'}`}>
             <div className="relative">
                 <input
                     type="number"
                     id={uniqueId}
-                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-sc-purple-normal'}`}
+                    value={props.value === 0 ? '' : props.value}
+                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-sc-purple-normal'} ${props.className}`}
                     placeholder=" "
                     onFocus={() => setIsOnFocus(true)}
                     onBlur={() => setIsOnFocus(false)}

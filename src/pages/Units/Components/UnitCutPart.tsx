@@ -126,25 +126,21 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
                                     ) : (
                                         <h4 className="font-semibold">{index + 1}#</h4>
                                     )}
-                                    <div className="flex items-center w-full">
-                                        <div className="flex gap-1 items-center r2l w-full text-xs sm:text-sm">[{data.details ? <p className="font-semibold sm:whitespace-nowrap">{splitDetails(data.details)}</p> : <p>---</p>}]</div>
-                                    </div>
-                                    <div className="flex flex-row divide-x first:divide-none items-center justify-between sm:justify-start w-full text-xs sm:text-sm">
-                                        <div className="flex gap-1 items-center r2l w-full px-2">
-                                            <span>طول:</span>
-                                            <span className="font-semibold"> {data.x}</span>
+
+                                    <div className="flex gap-2 flex-row items-center justify-center sm:justify-start w-full text-xs sm:text-sm">
+                                        <div className="flex gap-1 items-center r2l w-full px-2 ">
+                                            ( <span className="font-semibold underline">{data.count}</span> عدد)
                                         </div>
-                                        <div className="flex gap-1 items-center r2l w-full px-2">
-                                            <span>عرض:</span>
-                                            <span className="font-semibold">{data.y}</span>
+                                        <div className="flex items-center gap-1">
+                                            <span>{data.x}</span>
+                                            <span>x</span>
+                                            <span>{data.x}</span>
                                         </div>
-                                        <div className="flex gap-1 items-center r2l w-full px-2">
-                                            <span>تعداد:</span>
-                                            <span className="font-semibold">{data.count}</span> عدد
-                                        </div>
+
+                                        <div className="flex gap-0 items-center r2l w-full text-xs sm:text-sm">[{data.details ? <p className="font-semibold whitespace-nowrap">{splitDetails(data.details)}</p> : <p>---</p>}]</div>
                                     </div>
 
-                                    <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="flex items-center justify-center w-full  mt-2">
                                         <CutPlane dimension={data} />
                                     </div>
 
