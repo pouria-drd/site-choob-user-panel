@@ -1,6 +1,0 @@
-.ss02 {
-    font-family: 'IRANYekanX';
-    font-feature-settings: "ss02";
-    -moz-font-feature-settings: "ss02";
-    -webkit-font-feature-settings: "ss02";
-}
