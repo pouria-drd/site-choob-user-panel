@@ -68,6 +68,20 @@ interface YakhchalUnitDTO {
     doors: SimpleColorDTO[];
 }
 
+interface GroundSinkDTO {
+    width: number;
+    height: number;
+    depth: number;
+
+    isPvc: boolean;
+    backType: string;
+    hasHiddenHandle: boolean;
+    hiddenHandleTopGap: number;
+
+    legColor: SimpleColorDTO;
+    doors: SimpleColorDTO[];
+}
+
 interface SimpleColorDTO {
     colorName: string;
     doorType?: string;

@@ -5,6 +5,7 @@ import SimpleGroundUnitWithPillar from '../../../pages/Units/Components/Units/Gr
 import FixedGroundUnitWithPillar from '../../../pages/Units/Components/Units/GroundUnits/FixedGroundUnitWithPillar';
 import SimpleOpenUnit from '../../../pages/Units/Components/Units/GroundUnits/SimpleOpenUnit';
 import FixedOpenUnit from '../../../pages/Units/Components/Units/GroundUnits/FixedOpenUnit';
+import GroundSinkUnit from '../../../pages/Units/Components/Units/GroundUnits/GroundSinkUnit';
 
 interface UnitProps {
     name: string;
@@ -80,6 +81,17 @@ const GroundUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
                 />
             ),
             img: 'FixedGroundOpenUnit.png',
+        },
+        {
+            name: 'سینک',
+            index: 7,
+            component: (
+                <GroundSinkUnit
+                    projectId={projectID}
+                    title={`${titleBase} سینک`}
+                />
+            ),
+            img: 'GroundSinkUnit.png',
         },
     ];
 
