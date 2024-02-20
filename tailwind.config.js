@@ -13,10 +13,7 @@ export default {
             },
             fontFamily: {
                 peyda: 'Peyda',
-                tanha: 'tanha',
                 yekanX: 'IRANYekanX',
-                iransans: 'iransans',
-                bjn: 'Bahij Nazanin',
             },
 
             colors: {

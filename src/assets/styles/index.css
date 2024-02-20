@@ -30,16 +30,6 @@
 /* Fonts area */
 
 @font-face {
-    font-family: 'Bahij Nazanin';
-    src: url('../fonts/BahijNazanin/Bahij-Nazanin.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'iransans';
-    src: url('../fonts/Iransans/iransans.ttf') format('truetype');
-}
-
-@font-face {
     font-family: 'IRANYekanWeb';
     src: url('../fonts/IranYekan/IRANYekanWebRegular.ttf') format('truetype');
 }
@@ -47,11 +37,6 @@
 @font-face {
     font-family: 'Peyda';
     src: url('../fonts/Peyda/01-Standard/TTF/Peyda-Regular.ttf') format('truetype'), url('../fonts/Peyda/woff/PeydaWeb-Regular.woff') format('woff'), url('../fonts/Peyda/woff2/PeydaWeb-Regular.woff2') format('truetype');
-}
-
-@font-face {
-    font-family: 'tanha';
-    src: url('../fonts/Tanha/Tanha-FD-WOL.woff2') format('woff2'), url('../fonts/Tanha/Tanha-FD-WOL.woff') format('woff'), url('../fonts/Tanha/Tanha-FD-WOL.ttf') format('truetype');
 }
 
 @font-face {
