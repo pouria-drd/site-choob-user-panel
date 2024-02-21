@@ -16,7 +16,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
     }, [title, index]);
 
     return (
-        <div className="flex items-center justify-between text-xs md:text-sm gap-2 bg-sc-purple-normal px-2 py-3 rounded-md">
+        <div className="flex items-center justify-between text-xs md:text-sm gap-2 border hover:border-sc-gray-normal px-2 py-3 rounded-md">
             <h6 className="px-2 whitespace-nowrap ">{title}:</h6>
             <fieldset className="flex items-center  gap-2 w-full justify-between r2l">
                 <div className="flex gap-1 w-full items-center">

@@ -9,7 +9,7 @@ const CustomTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
         <p>test</p>
       </div> */}
 
-            <table className="divide-y divide-sc-gray-normal rounded-lg bg-sc-purple-normal border-b w-full r2l">
+            <table className="divide-y divide-sc-gray-normal  bg-sc-purple-normal first:divide-y-0 w-full r2l">
                 {/* Table Header */}
                 <thead className=" rounded-lg">
                     <tr>
@@ -17,7 +17,7 @@ const CustomTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
                         {data.headers.map((header, index) => (
                             <th
                                 key={index}
-                                className="text-center px-2 py-4">
+                                className="text-center text-gray-400 font-light px-2 py-4">
                                 {header}
                             </th>
                         ))}

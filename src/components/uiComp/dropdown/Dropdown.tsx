@@ -66,15 +66,15 @@ const Dropdown = ({ title, options, defaultOption, onSelectOption }: DropdownPro
     };
 
     // CSS class for the arrow icon, rotated if the dropdown is active
-    const arrowIconClass = isOpen ? 'w-4 h-4' : 'w-4 h-4 rotate-180';
+    const arrowIconClass = isOpen ? 'w-3 h-3' : 'w-3 h-3 rotate-180';
 
     return (
-        <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02">
+        <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02 l2r">
             {/* Dropdown header */}
             <div
                 onClick={handleToggleClick}
-                className="flex flex-col justify-between bg-sc-purple-normal transition-all outline-none hover:outline hover:outline-sc-blue-normal text-base rounded cursor-pointer w-full pb-3 divide-y">
-                <span className="text-sc-gray-normal text-right py-1 px-4">{title}</span>
+                className="flex flex-col justify-between bg-sc-purple-normal transition-all outline-none hover:outline-1 hover:outline-sc-blue-normal text-base rounded cursor-pointer w-full pb-3 divide-y">
+                <span className="text-gray-600 text-right py-1 px-4">{title}</span>
                 <div className="flex items-center justify-between pl-6 pt-2 pr-4">
                     {/* Arrow icon indicating dropdown state */}
                     <ArrowUpIcon className={arrowIconClass} />
