@@ -16,9 +16,9 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
     }, [title, index]);
 
     return (
-        <div className="flex items-center justify-between text-xs md:text-sm gap-2 border hover:border-sc-gray-normal px-2 py-3 rounded-md">
-            <h6 className="px-2 whitespace-nowrap ">{title}:</h6>
-            <fieldset className="flex items-center  gap-2 w-full justify-between r2l">
+        <div className="flex flex-col  justify-between text-xs md:text-sm gap-2  px-2 py-3">
+            <h6 className="whitespace-nowrap ss02 font-yekanX">{title}:</h6>
+            <fieldset className="flex items-center   gap-2 w-full justify-between r2l">
                 <div className="flex gap-1 w-full items-center">
                     <input
                         type="radio"
@@ -27,9 +27,9 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         onChange={valueChanged}
                         checked={selectedOption === 1 ? true : false}
                     />
-                    <label className={selectedOption === 1 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 1</label>
+                    <label className={selectedOption === 1 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ ۱</label>
                 </div>
-                <div className="flex gap-1 w-full items-center">
+                <div className="flex gap-1 w-full items-center ss02">
                     <input
                         type="radio"
                         name={`colorOption${index}`}
@@ -37,7 +37,7 @@ function DoorColorSelect({ title, index, onValueChanged }: { title: string; inde
                         onChange={valueChanged}
                         checked={selectedOption === 2 ? true : false}
                     />
-                    <label className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ 2</label>
+                    <label className={selectedOption == 2 ? 'text-sc-blue-normal' : 'text-gray-600'}>رنگ ۲</label>
                 </div>
             </fieldset>
         </div>

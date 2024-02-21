@@ -28,7 +28,7 @@ const StatusChip = ({ text, type = StatusEnum.Info }: StatusChipProps) => {
         }
     }, [type]);
 
-    return <div className={`flex items-center justify-center cursor-default px-4 py-1 w-fit rounded-md  text-xs  ${chipStyle}`}>{text}</div>;
+    return <div className={`flex items-center justify-center cursor-default px-4 py-1 w-fit rounded-xl  text-xs  ${chipStyle}`}>{text}</div>;
 };
 
 export default StatusChip;

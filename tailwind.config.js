@@ -28,6 +28,7 @@ export default {
                 'sc-purple-400': '#6F6F9D',
 
                 'sc-gray': '#F6F9FF',
+                'sc-gray-100': ' #f4f6fa',
                 'sc-green-100': '#F0FDF4',
 
                 'sc-blue-800': '#020347',
