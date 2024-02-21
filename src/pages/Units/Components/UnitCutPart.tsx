@@ -134,7 +134,7 @@ const UnitCutPart = ({ dimensionCutData, isEditable = false, onEdit }: Dimension
                                         <div className="flex items-center gap-1">
                                             <span>{data.x}</span>
                                             <span>x</span>
-                                            <span>{data.x}</span>
+                                            <span>{data.y}</span>
                                         </div>
 
                                         <div className="flex gap-0 items-center r2l w-full text-xs sm:text-sm">[{data.details ? <p className="font-semibold whitespace-nowrap">{splitDetails(data.details)}</p> : <p>---</p>}]</div>

@@ -73,14 +73,6 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
                 isActive={checkIsActive('home')}
             />,
             <SidebarItem
-                key={2}
-                label="محاسبات"
-                icon={<CalculatorIcon />}
-                items={calculationlinks}
-                onClick={onClick}
-                isActive={checkIsActive('dimensions')}
-            />,
-            <SidebarItem
                 key={3}
                 label="یونیت"
                 icon={<CubeIcon className="w-5 h-5" />}
@@ -88,6 +80,15 @@ function Sidebar({ onClick }: { onClick?: () => void }) {
                 onClick={onClick}
                 isActive={checkIsActive('units')}
             />,
+            <SidebarItem
+                key={2}
+                label="محاسبات"
+                icon={<CalculatorIcon />}
+                items={calculationlinks}
+                onClick={onClick}
+                isActive={checkIsActive('dimensions')}
+            />,
+
             <SidebarItem
                 key={4}
                 label="مالی"

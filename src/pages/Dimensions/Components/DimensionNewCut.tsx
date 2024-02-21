@@ -156,7 +156,7 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
         }
 
         //subtract pvc thickness
-        return value - totalSubCount * 0.2;
+        return (value - totalSubCount * 0.2).toFixed(1);
     };
 
     const handleKeyUp = (event: any) => {
