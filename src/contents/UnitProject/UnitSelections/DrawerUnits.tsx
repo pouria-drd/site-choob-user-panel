@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import SimpleDrawerUnit from '../../../pages/Units/Components/Units/DrawerUnits/SimpleDrawerUnit';
 import HiddenHandleDrawerUnit from '../../../pages/Units/Components/Units/DrawerUnits/HiddenHandleDrawerUnit';
+import OpenDrawerUnit from '../../../pages/Units/Components/Units/DrawerUnits/OpenDrawerUnit';
+import HiddenHandleOpenDrawerUnit from '../../../pages/Units/Components/Units/DrawerUnits/HiddenHandleOpenDrawerUnit';
 
 interface UnitProps {
     name: string;
@@ -24,11 +26,34 @@ const DrawerUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
         },
         {
             name: 'با دستگیره مخفی',
-            index: 1,
+            index: 2,
             component: (
                 <HiddenHandleDrawerUnit
                     projectId={projectID}
                     title={`${titleBase} با دستگیره مخفی`}
+                />
+            ),
+            img: 'HiddenHandleDrawer.png',
+        },
+        {
+            name: 'اپن',
+            index: 3,
+            component: (
+                <OpenDrawerUnit
+                    projectId={projectID}
+                    title={`${titleBase} اپن`}
+                />
+            ),
+            img: 'HiddenHandleDrawer.png',
+        },
+
+        {
+            name: 'اپن دستگیره مخفی',
+            index: 4,
+            component: (
+                <HiddenHandleOpenDrawerUnit
+                    projectId={projectID}
+                    title={`${titleBase} اپن دستگیره مخفی`}
                 />
             ),
             img: 'HiddenHandleDrawer.png',

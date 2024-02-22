@@ -20,7 +20,7 @@ interface DropdownOption {
     icon?: ReactNode;
 }
 
-function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title: string }) {
+function OpenDrawerUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
 
     const unitProjectService = new DrawerUnitProjectService();
@@ -32,11 +32,10 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
         width: 0,
         height: 0,
         isEvenDoors: false,
-        topGap: 0,
         legColor: { colorName: 'رنگ 1' },
         drawerDoors: [],
     };
-    const [dto, setDTO] = useState<HiddenHandleDrawerUnitDTO>(defaulDTO);
+    const [dto, setDTO] = useState<SimpleDrawerUnitDTO>(defaulDTO);
 
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();
 
@@ -51,7 +50,8 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
         },
     ];
 
-    const drawerImages = ['HiddenHandleDrawer2.png', 'HiddenHandleDrawer3.png'];
+    const drawerImages = ['SimpleDrawer2.png', 'SimpleDrawer3.png'];
+
     const [defaultDoorOption, setDefaultDoorOption] = useState<DropdownOption>(doorOptions[0]);
 
     const [drawerDoors, setDrawerDoors] = useState<DrawerDoorDTO[]>([
@@ -59,7 +59,7 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
         { height: 0, Color: { colorName: 'رنگ 1' } },
     ]);
 
-    const handleInputChange = (fieldName: keyof HiddenHandleDrawerUnitDTO, value: number | SimpleColorDTO) => {
+    const handleInputChange = (fieldName: keyof SimpleDrawerUnitDTO, value: number | SimpleColorDTO) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, [fieldName]: value };
         });
@@ -127,7 +127,7 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
 
             dto.drawerDoors = dtoDoors;
 
-            var result = await unitProjectService.CalculateHiddenHandleDrawerUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculateOpenDrawerUnit<any>(dtoToSend);
 
             if (result) {
                 setDimensionCutList(result.data);
@@ -200,14 +200,6 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
                                 value={dto.depth}
                                 onValueChange={(v) => handleInputChange('depth', v)}
                             />
-
-                            <NumberInput
-                                label="فاصله کشو بالا با صفحه"
-                                type="cm"
-                                value={dto.topGap}
-                                onValueChange={(v) => handleInputChange('topGap', v)}
-                            />
-
                             <div className="flex flex-col gap-4 w-full ">
                                 <DoorColorSelect
                                     title="پاخور"
@@ -278,4 +270,4 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
     );
 }
 
-export default HiddenHandleDrawerUnit;
+export default OpenDrawerUnit;

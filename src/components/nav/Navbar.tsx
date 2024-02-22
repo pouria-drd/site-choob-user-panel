@@ -21,9 +21,9 @@ const Navbar = ({ onToggle, onForcedIconToggle }: NavbarProps) => {
     }, [onForcedIconToggle]);
 
     return (
-        <div className="flex items-center justify-between lg:justify-end border-b p-4 h-14">
+        <div className="flex items-center justify-between lg:justify-end  p-4 h-14">
             <a
-                className="bg-sc-gray hover:bg-sc-purple-normal transition-all rounded-lg border hover:border-gray-400 p-2"
+                className=" p-2"
                 href="https://sitechoob.ir"
                 target="_blank">
                 <SiteChoobIcon />

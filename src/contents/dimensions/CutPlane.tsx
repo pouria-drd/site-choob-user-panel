@@ -19,11 +19,11 @@ const CutPlane = ({ dimension }: { dimension: DimensionCutModel }) => {
 
         //Y is bigger
         if (x - y + offsetMargin < 0) {
-            if (y / x > 4) setPlaceDimension('w-10 h-20');
+            if (y / x > 3) setPlaceDimension('w-10 h-20');
             else setPlaceDimension('w-16 h-20');
         } //X is bigger
         else if (y - x + offsetMargin < 0) {
-            if (x / y > 4) setPlaceDimension('w-20 h-10');
+            if (x / y > 3) setPlaceDimension('w-20 h-10');
             else setPlaceDimension('w-20 h-16');
         } else {
             setPlaceDimension('w-16 h-16');

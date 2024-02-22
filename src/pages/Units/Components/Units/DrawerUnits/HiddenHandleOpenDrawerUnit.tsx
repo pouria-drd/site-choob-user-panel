@@ -20,7 +20,7 @@ interface DropdownOption {
     icon?: ReactNode;
 }
 
-function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title: string }) {
+function HiddenHandleOpenDrawerUnit({ projectId, title }: { projectId: string; title: string }) {
     const { showToast } = useToast();
 
     const unitProjectService = new DrawerUnitProjectService();
@@ -127,7 +127,7 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
 
             dto.drawerDoors = dtoDoors;
 
-            var result = await unitProjectService.CalculateHiddenHandleDrawerUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculateHiddenHandleOpenDrawerUnit<any>(dtoToSend);
 
             if (result) {
                 setDimensionCutList(result.data);
@@ -278,4 +278,4 @@ function HiddenHandleDrawerUnit({ projectId, title }: { projectId: string; title
     );
 }
 
-export default HiddenHandleDrawerUnit;
+export default HiddenHandleOpenDrawerUnit;
