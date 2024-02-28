@@ -88,7 +88,7 @@
 
 /* Checkbox buttons area */
 input[type='checkbox'] {
-    @apply h-4 w-4 rounded border-gray-400 accent-sc-blue-normal text-sc-blue-normal focus:ring-offset-sc-blue-normal cursor-pointer;
+    @apply w-4 h-4 accent-sc-blue-normal text-sc-blue-normal bg-sc-gray-normal border-sc-gray rounded focus:ring-sc-blue-normal  focus:ring-0;
 }
 
 /* Checkbox buttons area */
@@ -108,7 +108,7 @@ input[type='radio'] {
 /* base-button area */
 
 .base-button {
-    @apply transition-all disabled:cursor-not-allowed disabled:bg-sc-gray-normal text-white text-sm sm:text-base flex items-center justify-center rounded-lg px-4 sm:px-4 py-1 sm:py-1;
+    @apply transition-all disabled:cursor-not-allowed disabled:bg-sc-gray-normal text-white text-xs sm:text-sm  flex items-center justify-center rounded-lg px-4 sm:px-6 py-1.5;
     &.primary {
         @apply bg-sc-blue-normal hover:bg-blue-900;
     }

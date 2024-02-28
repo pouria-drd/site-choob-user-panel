@@ -138,7 +138,7 @@ function DimensionsPage() {
                                 text="ابعاد جدید"
                                 onClick={openModal}
                             />
-                            <h2 className="text-xl md:text-2xl font-bold">لیست ابعاد</h2>
+                            <h2 className="text-lg md:text-xl text-right font-semibold">لیست ابعاد</h2>
                         </div>
 
                         <div className="flex flex-col flex-grow overflow-y-auto">

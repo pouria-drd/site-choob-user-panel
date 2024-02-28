@@ -1,9 +1,10 @@
 interface TableData {
-  headers: string[];
-  rows: Array<Array<string | number | React.ReactNode>>;
+    headers: string[];
+    rows: Array<Array<string | number | React.ReactNode>>;
 }
 
 interface ResponsiveTableProps {
-  data: TableData;
-  addIndex?: boolean;
+    data: TableData;
+    addIndex?: boolean;
+    label?: string;
 }

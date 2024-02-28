@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import FlexTable from './FlexTable';
 import CustomTable from './CustomTable';
 
-const ResponsiveTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
+const ResponsiveTable = ({ data, addIndex = false, label }: ResponsiveTableProps) => {
     const [isMobile, setIsMobile] = useState(false);
 
     const breakpoint = 1200;
@@ -36,6 +36,7 @@ const ResponsiveTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
                 ) : (
                     <CustomTable
                         data={data}
+                        label={label}
                         addIndex={addIndex}
                     />
                 )

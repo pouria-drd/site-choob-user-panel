@@ -115,7 +115,7 @@ function DimensionsHistoryPage() {
             ) : (
                 <div className="flex flex-col gap-6 overflow-hidden w-full h-full pb-16">
                     <div className="flex flex-shrink-0 justify-end items-center font-peyda w-full">
-                        <h2 className="text-xl md:text-2xl font-bold text-right py-1">تاریخچه ابعاد</h2>
+                        <h2 className="text-lg md:text-xl text-right font-semibold">تاریخچه ابعاد</h2>
                     </div>
 
                     <div className="flex flex-col flex-grow overflow-y-auto">

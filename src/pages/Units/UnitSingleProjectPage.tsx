@@ -180,6 +180,7 @@ function UnitSingleProjectPage() {
                                 <ResponsiveTable
                                     data={tableData}
                                     addIndex={true}
+                                    label="لیست یونیت ها"
                                 />
                             </div>
                         </div>
