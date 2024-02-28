@@ -54,7 +54,7 @@ const NumberInput = (props: NumberInporProps) => {
                     type="number"
                     id={uniqueId}
                     value={props.value === 0 ? '' : props.value}
-                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-sc-purple-normal'} ${props.className}`}
+                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-sc-gray-normal focus:border-sc-purple-400'} ${props.className}`}
                     placeholder=" "
                     onFocus={() => setIsOnFocus(true)}
                     onBlur={() => setIsOnFocus(false)}

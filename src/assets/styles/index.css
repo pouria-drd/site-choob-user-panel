@@ -36,7 +36,7 @@
 
 @font-face {
     font-family: 'Peyda';
-    src: url('../fonts/Peyda/02-Farsi_Namerals/TTF/PeydaFaNum-Regular') format('truetype'), url('../fonts/Peyda/woff/PeydaWeb-Regular.woff') format('woff'), url('../fonts/Peyda/woff2/PeydaWeb-Regular.woff2') format('truetype');
+    src: url('../fonts/Peyda/NonEng/TTF/PeydaFaNum-Regular') format('truetype'), url('../fonts/Peyda/NonEng/TTF/fonts/woff/PeydaWeb-Regular.woff') format('woff'), url('../fonts/Peyda/NonEng/TTF/fonts/woff2/PeydaWeb-Regular.woff2') format('truetype');
 }
 /*
 @font-face {

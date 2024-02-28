@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 const CustomTable = ({ data, addIndex = false }: ResponsiveTableProps) => {
     useEffect(() => {}, [data]);
     return (
-        <div className="bg-white flex flex-col rounded-lg font-peyda w-full h-auto p-4 gap-4">
+        <div className="bg-white flex flex-col rounded-lg font-peyda w-full h-auto py-2 gap-4">
             {/* <div className="flex justify-between w-full">
         <p>test</p>
         <p>test</p>
       </div> */}
 
-            <table className="divide-y divide-sc-gray-normal rounded-lg bg-sc-purple-normal first:divide-y-0 w-full r2l">
+            <table className="divide-y divide-sc-gray-normal  bg-sc-purple-normal first:divide-y-0 w-full r2l">
                 {/* Table Header */}
                 <thead className=" rounded-lg">
                     <tr>

@@ -6,6 +6,7 @@ import UnitProjectService from '../../services/UnitProjectService';
 import { ToastStatusEnum, useToast } from '../../components/uiComp/Toast/ToastProvider';
 import Button from '../../components/uiComp/buttons/Button';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../components/uiComp/Inputs/Input';
 
 const NewProjectContent = () => {
     const dimensionService = new DimensionService();
@@ -111,29 +112,16 @@ const NewProjectContent = () => {
         <div className="flex flex-col gap-2 justify-center w-full md:w-[500px]  p-2 r2l">
             {isLoading && <Spinner flex={true} />}
             {!isLoading && projectProps && projectProps.length > 0 && (
-                <div className="flex flex-col gap-2">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label>عنوان پروژه</label>
-                        <input
-                            type="text"
-                            placeholder="عنوان پروژه خود را وارد کنید"
-                            maxLength={32}
-                            className="base-input"
-                            value={dto.title}
-                            onChange={(e) => handleInputChange('title', e.target.value)}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <label>توضیحات (اختیاری)</label>
-                        <input
-                            type="text"
-                            maxLength={100}
-                            placeholder="توضیحات پروژه خود را وارد کنید"
-                            className="base-input"
-                            value={dto.description}
-                            onChange={(e) => handleInputChange('description', e.target.value)}
-                        />
-                    </div>
+                <div className="flex flex-col gap-4">
+                    <Input
+                        label="عنوان پروژه"
+                        onValueChange={(v) => handleInputChange('title', v)}
+                    />
+
+                    <Input
+                        label="توضیحات (اختیاری)"
+                        onValueChange={(v) => handleInputChange('description', v)}
+                    />
 
                     {projectProps.map((p, index) => (
                         <ProjectPropSelect

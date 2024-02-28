@@ -66,21 +66,21 @@ const Dropdown = ({ title, options, defaultOption, onSelectOption }: DropdownPro
     };
 
     // CSS class for the arrow icon, rotated if the dropdown is active
-    const arrowIconClass = isOpen ? 'w-3 h-3' : 'w-3 h-3 rotate-180';
+    const arrowIconClass = isOpen ? 'w-3 h-3 ' : 'w-3 h-3 rotate-180 text-sc-gray-normal';
 
     return (
-        <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02 l2r">
+        <div className="flex flex-col font-peyda text-sc-blue-normal w-full gap-2 ss02 l2r ">
             {/* Dropdown header */}
             <div
                 onClick={handleToggleClick}
-                className="flex flex-col justify-between bg-sc-purple-normal transition-all outline-none hover:outline-1 hover:outline-sc-blue-normal text-base rounded cursor-pointer w-full pb-3 divide-y">
-                <span className="text-gray-600 text-right py-1 px-4">{title}</span>
+                className=" relative flex flex-col justify-between transition-all border border-sc-gray-normal text-base rounded-lg cursor-pointer w-full pb-3">
+                <span className="absolute text-xs bg-white -top-3 text-gray-600 right-5 px-1">{title}</span>
                 <div className="flex items-center justify-between pl-6 pt-2 pr-4">
                     {/* Arrow icon indicating dropdown state */}
                     <ArrowUpIcon className={arrowIconClass} />
 
                     {/* Display selected option or title */}
-                    <div className="flex items-center justify-end gap-2">
+                    <div className={`flex items-center justify-end gap-2 text-sm pt-1 ${!selectedOption && 'text-sc-gray-normal'}`}>
                         {selectedOption?.label || 'انتخاب کنید'}
                         {selectedOption?.icon && <span className="mr-2">{selectedOption.icon}</span>}
                     </div>
@@ -92,7 +92,7 @@ const Dropdown = ({ title, options, defaultOption, onSelectOption }: DropdownPro
                 id="dropdown-content"
                 ref={contentRef}
                 style={{ height: isOpen ? `${contentHeight}px` : '0' }}
-                className={`bg-sc-purple-normal flex flex-col divide-y divide-dashed divide-gray-400 text-sm rounded overflow-hidden transition-all outline-none  px-2 gap-1 ${isOpen ? 'py-2' : ''}`}>
+                className={`flex flex-col  bg-sc-purple-normal divide-gray-400  border-sc-gray-normal text-sm rounded-lg overflow-hidden transition-all outline-none  px-2 gap-1 ${isOpen ? 'py-2' : ''}`}>
                 {options.map((option) => (
                     <div
                         key={option.label}
