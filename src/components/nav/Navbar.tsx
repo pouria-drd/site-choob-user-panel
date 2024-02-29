@@ -12,13 +12,15 @@ const Navbar = ({ onToggle, onForcedIconToggle }: NavbarProps) => {
     const [isToggled, setIsToggled] = useState(false);
 
     const handleToggle = () => {
-        onToggle();
         setIsToggled(!isToggled);
+        onToggle();
     };
 
     useEffect(() => {
-        onForcedIconToggle ? setIsToggled(false) : setIsToggled(true);
+        setIsToggled(onForcedIconToggle);
     }, [onForcedIconToggle]);
+
+    useEffect(() => {});
 
     return (
         <div className="flex items-center justify-between lg:justify-end  p-4 h-14">

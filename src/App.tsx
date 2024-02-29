@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import routes from './routes/Routes';
 import { useAuth } from './context/AuthContext';
 import { UserRolesEnum } from './enums/UserRolesEnum';
@@ -12,7 +12,11 @@ function App() {
     const { userRole, logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
-    const [navbarForcedIconToggle, setNavbarForcedIconToggle] = useState(true);
+    const [navbarForcedIconToggle, setNavbarForcedIconToggle] = useState(false);
+
+    const sidebarOpenedClass = 'w-full h-1/2 md:h-full lg:w-72';
+    const sidebarClosedClass = 'hidden h-full w-72 lg:block';
+    const [responsiveSidebarToggledClass, setResponsiveSidebarToggledClass] = useState(sidebarClosedClass);
 
     const hasToken = sessionStorage.getItem('bearer');
 
@@ -23,19 +27,17 @@ function App() {
     const isUserAuthenticated = userRole && userRole !== UserRolesEnum.GUEST;
 
     const handleToggle = () => {
-        setNavbarForcedIconToggle(false);
         setIsOpen(!isOpen);
     };
 
-    const handleSidbarItemClick = () => {
-        setNavbarForcedIconToggle(true);
-        setIsOpen(!isOpen);
+    const handleSidarItemClick = () => {
+        setIsOpen(false);
     };
 
-    const sidebarOpenedClass = 'w-full h-1/2 md:h-full lg:w-72';
-    const sidebarClosedClass = 'hidden h-full w-72 lg:block';
-
-    const responsiveSidebarToggledClass = isOpen ? sidebarOpenedClass : sidebarClosedClass;
+    useEffect(() => {
+        setNavbarForcedIconToggle(isOpen);
+        setResponsiveSidebarToggledClass(isOpen ? sidebarOpenedClass : sidebarClosedClass);
+    }, [isOpen]);
 
     return (
         <main className="flex flex-col justify-between overflow-hidden h-screen ">
@@ -51,7 +53,7 @@ function App() {
 
                 {isUserAuthenticated && (
                     <div className={responsiveSidebarToggledClass}>
-                        <Sidebar onClick={handleSidbarItemClick} />
+                        <Sidebar onClick={handleSidarItemClick} />
                     </div>
                 )}
             </div>

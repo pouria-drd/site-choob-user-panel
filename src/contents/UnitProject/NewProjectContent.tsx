@@ -116,11 +116,13 @@ const NewProjectContent = () => {
                     <Input
                         label="عنوان پروژه"
                         onValueChange={(v) => handleInputChange('title', v)}
+                        defaultValue={dto.title}
                     />
 
                     <Input
                         label="توضیحات (اختیاری)"
                         onValueChange={(v) => handleInputChange('description', v)}
+                        defaultValue={dto.description}
                     />
 
                     {projectProps.map((p, index) => (

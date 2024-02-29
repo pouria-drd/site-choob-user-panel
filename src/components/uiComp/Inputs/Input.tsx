@@ -14,6 +14,7 @@ interface NumberInporProps {
 const Input = (props: NumberInporProps) => {
     const uniqueId = `numberInput${useId()}`;
 
+    const [hasValue, setHasValue] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>();
 
     useEffect(() => {
@@ -26,21 +27,50 @@ const Input = (props: NumberInporProps) => {
         if (props.getId) props.getId(uniqueId);
     }, [props.getId]);
 
+    useEffect(() => {
+        if (props.defaultValue) {
+            setHasValue(true);
+        } else {
+            setHasValue(false);
+        }
+    }, [props.defaultValue]);
+
     return (
         <div className={`flex flex-col gap-1  ${props.fullWidth && 'w-full'}`}>
             <div className="relative">
                 <input
-                    type="text"
                     id={uniqueId}
                     defaultValue={props.defaultValue}
-                    className={`block px-2.5 pb-2 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border  appearance-none focus:outline-none focus:ring-0 hover:border-sc-purple-400 focus:border-sc-purple-400 peer ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-sc-gray-normal focus:border-sc-purple-400'} ${props.className}`}
+                    type="text"
+                    className={`bg-rasa-blue-25 appearance-none transition-all
+                    outline-none focus:ring-0 
+                    border hover:border-rasa-blue-250 
+                    text-gray-800
+                    rounded-lg px-2.5 pb-2 pt-4 w-full r2l peer 
+                    ${props.hasError ? 'border-red-300 focus:border-red-400' : 'border-sc-gray-normal focus:border-sc-blue-normal'}`}
                     placeholder=" "
                     onChange={(e) => props.onValueChange(e.target.value)}
                 />
+
                 <label
                     htmlFor={uniqueId}
-                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-150 transform -translate-y-4 scale-75 top-2 z-10  bg-white   peer-focus:px-0 peer-focus:text-sc-purple-400  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:left-10 start-1 ">
-                    {props.label}
+                    className={`absolute 
+                    ${hasValue ? 'text-sc-purple-400' : 'text-sc-gray-normal'}
+                  bg-white
+
+                    peer-focus:text-sc-blue-normal
+                    duration-150 transform -translate-y-1/2 
+                    -top-0 right-3 z-10 
+
+                    text-xs
+                    peer-focus:text-rasa-purple-400 
+
+                    peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+                   
+                    peer-focus:-top-1
+
+                    rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-10 -start-3`}>
+                    {`${props.label}`}
                 </label>
             </div>
             {props.hasError && <p className="text-red-400 text-xs pr-1">{errorMessage ? errorMessage : `فیلد ${props.label} اجباری است`}</p>}
