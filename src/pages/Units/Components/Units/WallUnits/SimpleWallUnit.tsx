@@ -30,7 +30,7 @@ function SimpleWallUnit({ projectId, title }: { projectId: string; title: string
 
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
-    const defaultDTO = {
+    const defaultDTO: SimpleWallUnitDTO = {
         depth: 0,
         width: 0,
         height: 0,
@@ -38,6 +38,8 @@ function SimpleWallUnit({ projectId, title }: { projectId: string; title: string
         hasHiddenHandle: false,
         doorExtraHeight: 0,
         doors: [],
+        horizontalDoorsGap: 0,
+        isHorizontalDoor: false,
     };
     const [dto, setDTO] = useState<SimpleWallUnitDTO>(defaultDTO);
 
@@ -67,6 +69,12 @@ function SimpleWallUnit({ projectId, title }: { projectId: string; title: string
     const handleHasHiddenDoor = (v: boolean) => {
         setDTO((prevDTO) => {
             return { ...prevDTO, hasHiddenHandle: v, hiddenHandleTopGap: 0 };
+        });
+    };
+
+    const handleIsHorizontalDoors = (v: boolean) => {
+        setDTO((prevDTO) => {
+            return { ...prevDTO, isHorizontalDoor: v, doorExtraHeight: 0 };
         });
     };
     const handleSelectedOption = (option: DropdownOption) => {
@@ -198,34 +206,55 @@ function SimpleWallUnit({ projectId, title }: { projectId: string; title: string
                                 onValueChange={(v) => handleInputChange('depth', v)}
                             />
 
-                            <NumberInput
-                                label="تعداد طبقه"
-                                type="count"
-                                value={dto.shelfCount}
-                                onValueChange={(v) => handleInputChange('shelfCount', v)}
-                            />
-
-                            <div className="flex flex-col gap-2 w-full">
-                                <div className="flex flex-row items-center gap-1">
-                                    <input
-                                        className="base-input w-full"
-                                        type="checkbox"
-                                        checked={dto.hasHiddenHandle}
-                                        onChange={(e) => handleHasHiddenDoor(e.target.checked)}
-                                    />
-                                    <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
-                                </div>
-
-                                {dto.hasHiddenHandle && (
-                                    <NumberInput
-                                        label="اضافه پایین درب"
-                                        type="cm"
-                                        value={dto.doorExtraHeight}
-                                        onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
-                                    />
-                                )}
+                            <div className="flex flex-row items-center gap-1">
+                                <input
+                                    className="base-input w-full"
+                                    type="checkbox"
+                                    checked={dto.isHorizontalDoor}
+                                    onChange={(e) => handleIsHorizontalDoors(e.target.checked)}
+                                />
+                                <label className="text-xs sm:text-sm md:text-base">درب داشبردی</label>
                             </div>
+                            {dto.isHorizontalDoor && (
+                                <NumberInput
+                                    label="فاصله بین درب ها"
+                                    type="cm"
+                                    value={dto.horizontalDoorsGap}
+                                    onValueChange={(v) => handleInputChange('horizontalDoorsGap', v)}
+                                />
+                            )}
 
+                            {!dto.isHorizontalDoor && (
+                                <>
+                                    <NumberInput
+                                        label="تعداد طبقه"
+                                        type="count"
+                                        value={dto.shelfCount}
+                                        onValueChange={(v) => handleInputChange('shelfCount', v)}
+                                    />
+
+                                    <div className="flex flex-col gap-2 w-full">
+                                        <div className="flex flex-row items-center gap-1">
+                                            <input
+                                                className="base-input w-full"
+                                                type="checkbox"
+                                                checked={dto.hasHiddenHandle}
+                                                onChange={(e) => handleHasHiddenDoor(e.target.checked)}
+                                            />
+                                            <label className="text-xs sm:text-sm md:text-base">دستگیره مخفی</label>
+                                        </div>
+
+                                        {dto.hasHiddenHandle && (
+                                            <NumberInput
+                                                label="اضافه پایین درب"
+                                                type="cm"
+                                                value={dto.doorExtraHeight}
+                                                onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
+                                            />
+                                        )}
+                                    </div>
+                                </>
+                            )}
                             <div className="w-full  r2l">
                                 <Dropdown
                                     title={'تعداد درب'}

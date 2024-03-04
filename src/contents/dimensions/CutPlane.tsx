@@ -89,7 +89,7 @@ const CutPlane = ({ dimension }: { dimension: DimensionCutModel }) => {
                     <span className="text-xs">{currentDimension.x == 0 ? '' : currentDimension.x}</span>
                 </div>
 
-                <div className="absolute top-1/2 transform -translate-y-1/2 mr-2 right-0 text-center z-20">
+                <div className="absolute top-1/2 transform -translate-y-1/2 mr-2 -right-1 text-center z-20">
                     <span className="text-xs">{currentDimension.y == 0 ? '' : currentDimension.y}</span>
                 </div>
 

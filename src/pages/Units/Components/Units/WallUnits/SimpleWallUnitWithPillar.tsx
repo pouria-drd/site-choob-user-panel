@@ -30,16 +30,18 @@ function SimpleWallUnitWithPillar({ projectId, title }: { projectId: string; tit
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
 
-    const defaultDTO = {
+    const defaultDTO: SimpleWallUnitWithPillarDTO = {
         depth: 0,
         width: 0,
         height: 0,
         pillarDepth: 0,
         pillarWidth: 0,
         hasHiddenHandle: false,
-        doorExtraHeight: 0,
         shelfCount: 0,
         doors: [],
+        doorExtraHeight: 0,
+        isHorizontalDoor: false,
+        horizontalDoorsGap: 0,
     };
     const [dto, setDTO] = useState<SimpleWallUnitWithPillarDTO>(defaultDTO);
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();

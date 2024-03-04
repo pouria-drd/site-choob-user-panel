@@ -17,7 +17,6 @@ function UnitSettingsPage() {
         try {
             const result = await unitProjectService.GetUserProperties<UnitProjectPropertiesModel>();
 
-            console.log(result);
             if (result) {
                 setProjectProps(result.properties);
             }

@@ -30,7 +30,7 @@ function FixedWallUnit({ projectId, title }: { projectId: string; title: string 
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
 
-    const defaultDTO = {
+    const defaultDTO: FixedWallUnitDTO = {
         depth: 0,
         width: 0,
         height: 0,
@@ -40,6 +40,8 @@ function FixedWallUnit({ projectId, title }: { projectId: string; title: string 
         fixedWidthColor: { colorName: 'رنگ 1' },
         shelfCount: 0,
         doors: [],
+        isHorizontalDoor: false,
+        horizontalDoorsGap: 0,
     };
     const [dto, setDTO] = useState<FixedWallUnitDTO>(defaultDTO);
 

@@ -38,8 +38,11 @@ function UnitSetting({ data, onUpdate }: { data: UnitProjectPropsModel; onUpdate
         try {
             var result = await unitProjectService.UpdateProperties<any>(prop.index, prop.value);
 
-            if (!result.status) showToast(result.message, ToastStatusEnum.Error);
-            else {
+            if (!result.status) {
+                showToast(result.message, ToastStatusEnum.Error);
+                console.log('prop', result.data);
+                handleInputChange(result.data);
+            } else {
                 showToast(result.message, ToastStatusEnum.Success);
                 onUpdate();
             }

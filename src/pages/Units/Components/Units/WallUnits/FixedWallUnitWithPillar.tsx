@@ -29,7 +29,7 @@ function FixedWallUnitWithPillar({ projectId, title }: { projectId: string; titl
     const [dimensionCutList, setDimensionCutList] = useState<DimensionCutModel[] | undefined>();
     const [isCalculating, setIsCalculating] = useState(false);
 
-    const defaultDTO = {
+    const defaultDTO: FixedWallUnitWithPillarDTO = {
         depth: 0,
         width: 0,
         height: 0,
@@ -41,6 +41,8 @@ function FixedWallUnitWithPillar({ projectId, title }: { projectId: string; titl
         fixedWidthColor: { colorName: 'رنگ 1' },
         shelfCount: 0,
         doors: [],
+        isHorizontalDoor: false,
+        horizontalDoorsGap: 0,
     };
     const [dto, setDTO] = useState<FixedWallUnitWithPillarDTO>(defaultDTO);
     const [addUnitDTO, setAddUnitDTO] = useState<AddUnitDTO>();

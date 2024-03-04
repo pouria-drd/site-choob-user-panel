@@ -5,6 +5,9 @@ interface SimpleWallUnitDTO {
     shelfCount: number;
     hasHiddenHandle: boolean;
     doorExtraHeight: number;
+
+    isHorizontalDoor: boolean;
+    horizontalDoorsGap: number;
     doors: SimpleColorDTO[];
 }
 
