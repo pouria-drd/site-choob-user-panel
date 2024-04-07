@@ -5,6 +5,7 @@ import WallUnits from '../../../contents/UnitProject/UnitSelections/WallUnits';
 import Cube2Icon from '../../../components/icons/Cube2Icon';
 import YakhchalUnits from '../../../contents/UnitProject/UnitSelections/YakhchalUnits';
 import DrawerUnits from '../../../contents/UnitProject/UnitSelections/DrawerUnits';
+import CornerUnits from '../../../contents/UnitProject/UnitSelections/CornerUnits';
 interface unitCatProps {
     name: string;
     index: number;
@@ -22,6 +23,7 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
         { name: 'دیواری', index: 2 },
         { name: 'یخچال', index: 3 },
         { name: 'کشو', index: 4 },
+        { name: 'کنج', index: 5 },
     ];
 
     const onSelection = (unitCat: unitCatProps) => {
@@ -63,6 +65,15 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
                     />
                 );
                 break;
+            case 5:
+                setSelectedUnitCat(
+                    <CornerUnits
+                        projectID={projectID}
+                        catTitle={unitCat.name}
+                        onSelection={onUnitSelect}
+                    />
+                );
+                break;
         }
 
         openUnitCatModal();
@@ -75,12 +86,12 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
 
     return (
         <>
-            <div className="flex flex-wrap  gap-2 p-2  r2l w-full h-full border-b pb-4">
+            <div className="grid grid-cols-2 sm:flex flex-wrap  gap-2 p-2  r2l w-full h-full border-b pb-4">
                 {unitCats.map((u) => (
                     <button
                         onClick={() => onSelection(u)}
                         key={u.index}
-                        className="flex items-center gap-1 rounded-md bg-sc-brown-500 text-sc-brown-800 px-4 py-2 hover:shadow-inner  hover:text-gray-800 hover:scale-105 transition-all">
+                        className="flex col-span-1 w-full justify-center sm:w-fit items-center gap-1 rounded-md bg-sc-brown-500 text-sc-brown-800 px-4 py-2 hover:shadow-inner  hover:text-gray-800 hover:scale-105 transition-all">
                         <Cube2Icon className="w-4" />
                         {u.name}
                     </button>
