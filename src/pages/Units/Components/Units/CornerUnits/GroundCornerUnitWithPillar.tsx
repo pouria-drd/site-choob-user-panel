@@ -166,19 +166,19 @@ function GroundCornerUnitWithPillar({ projectId, title }: { projectId: string; t
                             <NumberInput
                                 label="طول چپ"
                                 type="cm"
-                                value={dto.rightWidth}
+                                value={dto.leftWidth}
                                 onValueChange={(v) => handleInputChange('leftWidth', v)}
                             />
 
                             <NumberInput
-                                label="عمق"
+                                label="عمق راست"
                                 type="cm"
                                 value={dto.rightDepth}
                                 onValueChange={(v) => handleInputChange('rightDepth', v)}
                             />
 
                             <NumberInput
-                                label="عمق"
+                                label="عمق چپ"
                                 type="cm"
                                 value={dto.leftDepth}
                                 onValueChange={(v) => handleInputChange('leftDepth', v)}
