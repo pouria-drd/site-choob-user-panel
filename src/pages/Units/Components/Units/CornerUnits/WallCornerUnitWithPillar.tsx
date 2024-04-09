@@ -251,7 +251,7 @@ function WallCornerUnitWithPillar({ projectId, title }: { projectId: string; tit
                         <div className="w-full flex items-center justify-center py-4 md:py-0">
                             <img
                                 className="w-36 md:w-60"
-                                src="https://cdn.sitechoob.ir/public/units/GroundCornerUnitWithPillarSigns.png"
+                                src="https://cdn.sitechoob.ir/public/units/GroundCornerUnitWithPillar.png"
                             />
                         </div>
                     </div>
