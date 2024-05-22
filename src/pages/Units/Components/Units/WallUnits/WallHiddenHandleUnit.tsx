@@ -273,7 +273,7 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
                             )}
 
                             <NumberInput
-                                label="اضافه به درب بالا"
+                                label="اضافه به درب پایین"
                                 type="cm"
                                 value={dto.doorExtraHeight}
                                 onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
