@@ -154,6 +154,12 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
             return;
         }
 
+        if (!dto.isEvenDoors) {
+            if (dto.bottomDoorHeight <= 0 || !dto.bottomDoorHeight) showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
+            setIsCalculating(false);
+            return;
+        }
+
         try {
             let dtoToSend = dto;
 
