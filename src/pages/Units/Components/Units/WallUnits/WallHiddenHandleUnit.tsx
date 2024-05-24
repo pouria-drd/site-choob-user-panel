@@ -70,9 +70,10 @@ function WallHiddenHandleUnit({ projectId, title }: { projectId: string; title: 
             return { ...prevDTO, [fieldName]: value };
         });
     };
+
     const handleIsEvenDoors = (v: boolean) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, isEvenDoors: v, doorExtraHeight: 0 };
+            return { ...prevDTO, isEvenDoors: v, bottomDoorHeight: 0 };
         });
     };
 

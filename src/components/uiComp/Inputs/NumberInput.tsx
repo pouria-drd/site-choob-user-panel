@@ -58,6 +58,7 @@ const NumberInput = (props: NumberInporProps) => {
                     onFocus={() => setIsOnFocus(true)}
                     onBlur={() => setIsOnFocus(false)}
                     onChange={(e) => props.onValueChange(Number(e.target.value))}
+                    onWheel={(event) => event.currentTarget.blur()}
                 />
                 <label
                     htmlFor={uniqueId}

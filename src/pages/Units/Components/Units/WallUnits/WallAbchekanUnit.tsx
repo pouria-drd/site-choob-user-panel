@@ -62,7 +62,7 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
 
     const handleIsEvenDoors = (v: boolean) => {
         setDTO((prevDTO) => {
-            return { ...prevDTO, isEvenDoors: v, doorExtraHeight: 0 };
+            return { ...prevDTO, isEvenDoors: v, bottomDoorHeight: 0 };
         });
     };
 
@@ -109,6 +109,14 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
             showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
             setIsCalculating(false);
             return;
+        }
+
+        if (dto.hasHiddenHandle) {
+            if (dto.doorsHorizontalGap <= 0 || dto.doorExtraHeight <= 0) {
+                showToast('فیلد ها تکمیل نشده اند.', ToastStatusEnum.Warning, 'خطا');
+                setIsCalculating(false);
+                return;
+            }
         }
 
         try {
@@ -245,21 +253,22 @@ function WallAbchekanUnit({ projectId, title }: { projectId: string; title: stri
                                 </div>
 
                                 {dto.hasHiddenHandle && (
-                                    <NumberInput
-                                        label="اضافه پایین درب"
-                                        type="cm"
-                                        value={dto.doorExtraHeight}
-                                        onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
-                                    />
+                                    <>
+                                        <NumberInput
+                                            label="اضافه پایین درب"
+                                            type="cm"
+                                            value={dto.doorExtraHeight}
+                                            onValueChange={(v) => handleInputChange('doorExtraHeight', v)}
+                                        />
+                                        <NumberInput
+                                            label="فاصله بین درب بالا و پایین"
+                                            type="cm"
+                                            value={dto.doorsHorizontalGap}
+                                            onValueChange={(v) => handleInputChange('doorsHorizontalGap', v)}
+                                        />
+                                    </>
                                 )}
                             </div>
-
-                            <NumberInput
-                                label="فاصله بین درب بالا و پایین"
-                                type="cm"
-                                value={dto.doorsHorizontalGap}
-                                onValueChange={(v) => handleInputChange('doorsHorizontalGap', v)}
-                            />
 
                             <div className="flex flex-row items-center gap-1">
                                 <input
