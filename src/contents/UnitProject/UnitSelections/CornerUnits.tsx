@@ -41,7 +41,7 @@ const CornerUnits = ({ projectID, catTitle, onSelection }: { projectID: string; 
             component: (
                 <SimpleWallCornerUnit
                     projectId={projectID}
-                    title={`${titleBase} دیواری کنار ستون`}
+                    title={`${titleBase} دیواری ساده`}
                 />
             ),
             img: 'SimpleGroundCornerUnit.png',
