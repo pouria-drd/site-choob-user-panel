@@ -91,7 +91,7 @@ function SimpleWallCornerUnit({ projectId, title }: { projectId: string; title: 
 
             dto.doors = dtoDoors;
 
-            var result = await unitProjectService.CalculatedGroundSimpleCornerUnit<any>(dtoToSend);
+            var result = await unitProjectService.CalculatedWallSimpleCornerUnit<any>(dtoToSend);
 
             if (result) {
                 setDimensionCutList(result.data);
