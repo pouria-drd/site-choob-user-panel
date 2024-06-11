@@ -39,11 +39,6 @@ const CustomTable = ({ data, addIndex = false, label }: ResponsiveTableProps) =>
                     ))}
                 </tbody>
             </table>
-
-            {/* <div className="flex justify-between w-full">
-        <p>test</p>
-        <p>test</p>
-      </div> */}
         </div>
     );
 };

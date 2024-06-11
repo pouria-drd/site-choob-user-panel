@@ -1,4 +1,5 @@
 import AxiosBase from './AxiosBase';
+import { API_URL } from '../config';
 
 class DimensionService extends AxiosBase {
     public async GetWoodSheetDimensions<T>() {
@@ -60,6 +61,45 @@ class DimensionService extends AxiosBase {
         const url = `Calculation/Dimension/ImportFromOpticut/${dimensionID}`;
         this.contentType = 'multipart/form-data';
         return this.request<T>({ method: 'put', url, data: data });
+    }
+
+    public async DownloadCutmasterExport(dto: any) {
+        try {
+            const url = API_URL + 'Calculation/ExportCutmaster';
+
+            const token = sessionStorage.getItem('bearer');
+
+            if (token) {
+                const authHeader = `Bearer ${token}`;
+
+                console.log(authHeader);
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: authHeader,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dto),
+                };
+                fetch(url, options)
+                    .then((res) => res.blob())
+                    .then((blob) => {
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'sitechoob-cutmaster.cmr';
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    });
+
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e: any) {
+            return false;
+        }
     }
 }
 

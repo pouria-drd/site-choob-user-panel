@@ -9,8 +9,11 @@ import CopyIcon from '../../../components/icons/CopyIcon';
 import PaperClipIcon from '../../../components/icons/PaperClipIcon';
 import CalculatorIcon from '../../../components/icons/CalculatorIcon';
 
+import Cutmaster from '../../../assets/images/cutmaster.gif';
+
 import Modal from '../../../components/uiComp/modals/Modal';
 import StatusChip from '../../../components/uiComp/chips/StatusChip';
+import CutMasterExport from '../../../contents/dimensions/CutmasterExport';
 
 interface DimensionHeaderProps {
     headerData: DimensionDetailModel;
@@ -23,6 +26,7 @@ interface DimensionHeaderProps {
 
 const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = false, onCopyClicked, onCalculateClicked, onCutMapClicked }: DimensionHeaderProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCutmasterModalOpen, setIsCutmasterModalOpen] = useState(false);
 
     const [pvcColor, setPvcColor] = useState('');
     const [description, setDescription] = useState('');
@@ -33,6 +37,9 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
         setIsModalOpen(false);
         onUpdate();
     };
+
+    const openCutmasterModal = () => setIsCutmasterModalOpen(true);
+    const closeCutmasterModal = () => setIsCutmasterModalOpen(false);
 
     const handleCalculateClick = () => {
         if (onCalculateClicked) onCalculateClicked();
@@ -119,7 +126,15 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
                                 <MapIcon size={18} />
                             </button>
                         )}
-                        <div className="flex gap-4 items-center ">
+                        <div className="flex gap-3 items-center ">
+                            <button
+                                onClick={openCutmasterModal}
+                                className="hover:text-blue-700 text-sc-blue-normal">
+                                <img
+                                    src={Cutmaster}
+                                    className="w-6"
+                                />
+                            </button>
                             {!headerData.sentForCut ? (
                                 <button
                                     onClick={openModal}
@@ -198,15 +213,27 @@ const DimensionDetailHeader = ({ headerData, onUpdate, canSendProcessRequest = f
             </div>
 
             {headerData && (
-                <Modal
-                    title="تعریف ابعاد جدید"
-                    isOpen={isModalOpen}
-                    onClose={closeModal}>
-                    <EditCutContent
-                        onUpdate={closeOnUpdate}
-                        dimension={headerData}
-                    />
-                </Modal>
+                <>
+                    <Modal
+                        title="تعریف ابعاد جدید"
+                        isOpen={isModalOpen}
+                        onClose={closeModal}>
+                        <EditCutContent
+                            onUpdate={closeOnUpdate}
+                            dimension={headerData}
+                        />
+                    </Modal>
+
+                    <Modal
+                        title="خروجی کاتمستر"
+                        isOpen={isCutmasterModalOpen}
+                        onClose={closeCutmasterModal}>
+                        <CutMasterExport
+                            dimensionID={headerData.id}
+                            onSuccess={closeCutmasterModal}
+                        />
+                    </Modal>
+                </>
             )}
         </>
     );

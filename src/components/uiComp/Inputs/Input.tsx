@@ -61,7 +61,7 @@ const Input = (props: NumberInporProps) => {
                     peer-focus:text-sc-blue-normal
                     duration-150 transform -translate-y-1/2 
                     -top-0 right-3 z-10 
-
+                   
                     text-xs
                     peer-focus:text-rasa-purple-400 
 
