@@ -3,6 +3,7 @@ import { useEffect, useId, useState } from 'react';
 interface NumberInporProps {
     label: string;
     value: number;
+    defaultValue?: number;
     type: 'cm' | 'mm' | 'count';
     fullWidth?: boolean;
     className?: string;
@@ -20,6 +21,8 @@ const NumberInput = (props: NumberInporProps) => {
 
     const [errorMessage, setErrorMessage] = useState<string>();
 
+    const [value, setValue] = useState<number>(props.value);
+
     useEffect(() => {
         switch (props.type) {
             case 'cm':
@@ -35,6 +38,8 @@ const NumberInput = (props: NumberInporProps) => {
                 setLabelType('');
                 break;
         }
+
+        setValue(props.value);
     }, [props.value]);
 
     useEffect(() => {
@@ -58,6 +63,7 @@ const NumberInput = (props: NumberInporProps) => {
                     onFocus={() => setIsOnFocus(true)}
                     onBlur={() => setIsOnFocus(false)}
                     onChange={(e) => props.onValueChange(Number(e.target.value))}
+                    value={value}
                     onWheel={(event) => event.currentTarget.blur()}
                 />
                 <label

@@ -34,7 +34,8 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
 
     const dimensionService = new DimensionService();
     const [isProcessing, setIsProcessing] = useState(false);
-    const [formData, setFormData] = useState<DimensionCutModel>({
+
+    const defaultFormData: DimensionCutModel = {
         x: 0,
         y: 0,
         count: 0,
@@ -46,12 +47,13 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
         yGroove: false,
         xGazor: false,
         yGazor: false,
+        fTop: false,
+        fRight: false,
         fBottom: false,
         fLeft: false,
-        fRight: false,
-        fTop: false,
         details: '',
-    });
+    };
+    const [formData, setFormData] = useState<DimensionCutModel>(defaultFormData);
 
     const [maxX, setMaxX] = useState(0);
     const [maxY, setMaxY] = useState(0);
@@ -98,24 +100,7 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
             const result = await dimensionService.AddNewCutDimension<any>(addData);
             showToast(result.message, ToastStatusEnum.Success, 'عملیات موفقیت آمیزبود');
 
-            setFormData({
-                x: 0,
-                y: 0,
-                count: 0,
-                pvctop: false,
-                pvcleft: false,
-                pvcright: false,
-                pvcbottom: false,
-                xGroove: false,
-                yGroove: false,
-                xGazor: false,
-                yGazor: false,
-                fBottom: false,
-                fLeft: false,
-                fRight: false,
-                fTop: false,
-                details: '',
-            });
+            setFormData(defaultFormData);
             onUpdate();
             document.getElementById(widthInputId)?.focus();
         } catch (error) {
@@ -218,6 +203,7 @@ const DimensionNewCut = ({ dimensionId, woodSheetDimensions, onUpdate }: Dimensi
                             fullWidth={true}
                             label="عرض"
                             type="cm"
+                            defaultValue={formData.x}
                             value={formData.y}
                             onValueChange={(v) => handleInputChange('y', v)}
                         />
