@@ -6,6 +6,7 @@ import Cube2Icon from '../../../components/icons/Cube2Icon';
 import YakhchalUnits from '../../../contents/UnitProject/UnitSelections/YakhchalUnits';
 import DrawerUnits from '../../../contents/UnitProject/UnitSelections/DrawerUnits';
 import CornerUnits from '../../../contents/UnitProject/UnitSelections/CornerUnits';
+import TallUnits from '../../../contents/UnitProject/UnitSelections/TallUnits';
 interface unitCatProps {
     name: string;
     index: number;
@@ -24,6 +25,7 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
         { name: 'یخچال', index: 3 },
         { name: 'کشو', index: 4 },
         { name: 'کنج', index: 5 },
+        { name: 'ایستاده', index: 6 },
     ];
 
     const onSelection = (unitCat: unitCatProps) => {
@@ -68,6 +70,15 @@ function UnitSelectionHeader({ projectID, onSelectionChanged }: { projectID: str
             case 5:
                 setSelectedUnitCat(
                     <CornerUnits
+                        projectID={projectID}
+                        catTitle={unitCat.name}
+                        onSelection={onUnitSelect}
+                    />
+                );
+                break;
+            case 6:
+                setSelectedUnitCat(
+                    <TallUnits
                         projectID={projectID}
                         catTitle={unitCat.name}
                         onSelection={onUnitSelect}
